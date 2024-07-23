@@ -14,7 +14,7 @@ public class Shortcut {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shortcut_id")
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
