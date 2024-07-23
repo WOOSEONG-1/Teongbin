@@ -1,7 +1,7 @@
-package com.ssafy.teongbin.User.entity;
+package com.ssafy.teongbin.user.entity;
 
-import com.ssafy.teongbin.Shortcut.entity.Shortcut;
-import com.ssafy.teongbin.Trash.entity.Trashcan;
+import com.ssafy.teongbin.shortcut.entity.Shortcut;
+import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "user")
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 

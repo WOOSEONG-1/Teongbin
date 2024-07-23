@@ -1,10 +1,10 @@
-package com.ssafy.teongbin.Trash.entity;
+package com.ssafy.teongbin.trash.entity;
 
-import com.ssafy.teongbin.Log.entity.Categorylog;
-import com.ssafy.teongbin.Log.entity.Restlog;
+import com.ssafy.teongbin.log.entity.Categorylog;
+import com.ssafy.teongbin.log.entity.Restlog;
+import com.ssafy.teongbin.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.security.core.userdetails.User;
 
 import java.awt.*;
 import java.sql.Time;
@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "trashcan")
 public class Trashcan {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trashcan_id")
     private int id;
 

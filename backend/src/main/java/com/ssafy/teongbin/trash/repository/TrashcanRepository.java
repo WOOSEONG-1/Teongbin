@@ -1,4 +1,4 @@
-package com.ssafy.teongbin.Trash.repository;
+package com.ssafy.teongbin.trash.repository;
 
 import org.springframework.stereotype.Repository;
 

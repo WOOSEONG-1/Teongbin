@@ -1,6 +1,6 @@
-package com.ssafy.teongbin.Log.entity;
+package com.ssafy.teongbin.log.entity;
 
-import com.ssafy.teongbin.Trash.entity.Trashcan;
+import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -11,7 +11,8 @@ import java.sql.Time;
 @Table(name = "categorylog")
 public class Categorylog {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "categorylog_id")
     private int id;
 
     private Time created_at;

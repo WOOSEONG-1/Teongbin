@@ -1,4 +1,4 @@
-package com.ssafy.teongbin.Trash.service;
+package com.ssafy.teongbin.trash.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

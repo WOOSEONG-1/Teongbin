@@ -1,6 +1,6 @@
-package com.ssafy.teongbin.Log.entity;
+package com.ssafy.teongbin.log.entity;
 
-import com.ssafy.teongbin.Trash.entity.Trashcan;
+import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -11,7 +11,8 @@ import java.sql.Time;
 @Table(name = "restlog")
 public class Restlog {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "restlog_id")
     private int id;
 
     private int rest_percent;

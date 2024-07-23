@@ -1,11 +1,10 @@
-package com.ssafy.teongbin.Shortcut.entity;
+package com.ssafy.teongbin.shortcut.entity;
 
-import com.ssafy.teongbin.User.entity.User;
+import com.ssafy.teongbin.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.sql.Time;
 
 @Entity
@@ -13,7 +12,8 @@ import java.sql.Time;
 @Getter
 public class Shortcut {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "shortcut_id")
     private int id;
 
     @ManyToOne

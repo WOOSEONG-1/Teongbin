@@ -1,4 +1,4 @@
-package com.ssafy.teongbin.Log.entity;
+package com.ssafy.teongbin.log.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "category")
 public class Category {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private int id;
 

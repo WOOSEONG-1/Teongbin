@@ -1,4 +1,4 @@
-package com.ssafy.teongbin.User.service;
+package com.ssafy.teongbin.user.service;
 
 import org.springframework.stereotype.Service;
 
