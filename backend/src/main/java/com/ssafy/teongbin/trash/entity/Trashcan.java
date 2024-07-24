@@ -5,25 +5,28 @@ import com.ssafy.teongbin.log.entity.Restlog;
 import com.ssafy.teongbin.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "trashcan")
 public class Trashcan {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trashcan_id")
-    private int id;
+    private Long id;
 
-    private Character serial_number;
+    private String serial_number;
     private String nickname;
     private Point location;
-    private Time created_at;
+    private LocalDateTime created_at;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
