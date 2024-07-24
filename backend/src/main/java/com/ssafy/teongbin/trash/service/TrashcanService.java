@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 
 @Service
@@ -17,15 +18,26 @@ public class TrashcanService {
 
     @Transactional
     public Long join(Trashcan trashcan) {
-        trashcan.setCreated_at(LocalDateTime.now());
         trashcanRepository.save(trashcan);
         return trashcan.getId();
     }
 
     @Transactional
     public void deleteTrashcan(Long trashcanId) {
-        //에러 구현
-        //사용자 인증 구현
+        Trashcan trashcan = trashcanRepository.findById(trashcanId)
+                        .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
         trashcanRepository.deleteById(trashcanId);
+    }
+
+    @Transactional
+    public void update(Long id, String nickname, Point location) {
+        Trashcan trashcan = trashcanRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
+        trashcan.setNickname(nickname);
+        trashcan.setLocation(location);
+    }
+
+    public Trashcan findOne(Long trashcanId) {
+        return trashcanRepository.findById(trashcanId).get();
     }
 }

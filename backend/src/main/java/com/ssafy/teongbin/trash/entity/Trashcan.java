@@ -1,5 +1,6 @@
 package com.ssafy.teongbin.trash.entity;
 
+import com.ssafy.teongbin.common.entity.BaseTime;
 import com.ssafy.teongbin.log.entity.Categorylog;
 import com.ssafy.teongbin.log.entity.Restlog;
 import com.ssafy.teongbin.user.entity.User;
@@ -17,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "trashcan")
-public class Trashcan {
+public class Trashcan extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trashcan_id")
@@ -26,7 +27,6 @@ public class Trashcan {
     private String serial_number;
     private String nickname;
     private Point location;
-    private LocalDateTime created_at;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

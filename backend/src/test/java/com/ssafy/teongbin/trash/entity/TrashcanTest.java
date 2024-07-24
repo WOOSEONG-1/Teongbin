@@ -2,10 +2,6 @@ package com.ssafy.teongbin.trash.entity;
 
 import com.ssafy.teongbin.trash.repository.TrashcanRepository;
 import com.ssafy.teongbin.trash.service.TrashcanService;
-import com.ssafy.teongbin.user.entity.User;
-import com.ssafy.teongbin.user.repository.UserRepository;
-import com.ssafy.teongbin.user.service.UserService;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,10 +18,6 @@ class TrashcanTest {
     TrashcanService trashcanService;
     @Autowired
     TrashcanRepository trashcanRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EntityManager em;
 
     @Test
     public void 쓰레기통등록() {
@@ -48,8 +40,6 @@ class TrashcanTest {
 
     @Test
     public void 쓰레기통삭제() {
-
         trashcanService.deleteTrashcan(1L);
-
     }
 }
