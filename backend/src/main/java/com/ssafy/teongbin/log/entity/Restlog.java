@@ -16,7 +16,7 @@ public class Restlog extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restlog_id")
-    private int id;
+    private Long id;
 
     private int rest_percent;
 

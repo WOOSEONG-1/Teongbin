@@ -1,9 +1,12 @@
 package com.ssafy.teongbin.log.controller;
 
+import com.ssafy.teongbin.log.dto.request.CategorylogRequest;
 import com.ssafy.teongbin.log.dto.request.RestlogRequest;
+import com.ssafy.teongbin.log.dto.response.CategorylogResponse;
 import com.ssafy.teongbin.log.dto.response.RestlogResponse;
 import com.ssafy.teongbin.log.entity.Restlog;
-import com.ssafy.teongbin.log.repository.RestlogService;
+import com.ssafy.teongbin.log.service.CategorylogService;
+import com.ssafy.teongbin.log.service.RestlogService;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.trash.repository.TrashcanRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LogController {
     private final RestlogService restlogService;
-    private final TrashcanRepository trashcanRepository;
+    private final CategorylogService categorylogService;
 
     @PostMapping("/api/v1/trash/rest")
     public RestlogResponse newRestlog(@RequestBody RestlogRequest request) {
-        Trashcan findTrashcan = trashcanRepository.findBySerialNumber(request.getSerial_number());
-        Restlog restlog = new Restlog();
-        restlog.setTrashcan(findTrashcan);
-        restlog.setRest_percent(request.getRest_percent());
-        Long id = restlogService.join(restlog);
+        Long id = restlogService.join(request.getSerial_number(), request.getRest_percent());
         return new RestlogResponse(id);
+    }
+
+    @PostMapping("/api/v1/trash/rest")
+    public CategorylogResponse newCategorylog(@RequestBody CategorylogRequest request) {
+        Long id = categorylogService.join(request.getSerial_number(), request.getCategory_id());
+        return new CategorylogResponse(id);
     }
 }

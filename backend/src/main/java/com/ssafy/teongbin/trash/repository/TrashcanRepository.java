@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TrashcanRepository extends JpaRepository<Trashcan, Long> {
-    Optional<Trashcan> findByLocation(Point location);
+    Trashcan findBySerialNumber(String serialNumber);
 }

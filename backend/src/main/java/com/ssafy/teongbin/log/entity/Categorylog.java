@@ -4,17 +4,19 @@ import com.ssafy.teongbin.common.entity.BaseTime;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Time;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "categorylog")
 public class Categorylog extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categorylog_id")
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "trashcan_id")
