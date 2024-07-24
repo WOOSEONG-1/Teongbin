@@ -4,11 +4,8 @@ import com.ssafy.teongbin.log.dto.request.RestlogRequest;
 import com.ssafy.teongbin.log.dto.response.RestlogResponse;
 import com.ssafy.teongbin.log.entity.Restlog;
 import com.ssafy.teongbin.log.repository.RestlogService;
-import com.ssafy.teongbin.trash.dto.request.NewTrashcanRequest;
-import com.ssafy.teongbin.trash.dto.response.NewTrashcanResponse;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.trash.repository.TrashcanRepository;
-import com.ssafy.teongbin.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +19,10 @@ public class LogController {
 
     @PostMapping("/api/v1/trash/rest")
     public RestlogResponse newRestlog(@RequestBody RestlogRequest request) {
-        Trashcan findTrashcan = trashcanRepository.findById(request.serial_number);
+        Trashcan findTrashcan = trashcanRepository.findBySerialNumber(request.getSerial_number());
         Restlog restlog = new Restlog();
         restlog.setTrashcan(findTrashcan);
-        restlog.setRest_percent(request.getpercent());
+        restlog.setRest_percent(request.getRest_percent());
         Long id = restlogService.join(restlog);
         return new RestlogResponse(id);
     }
