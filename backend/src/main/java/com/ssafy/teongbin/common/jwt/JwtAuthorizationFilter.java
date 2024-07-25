@@ -2,6 +2,8 @@ package com.ssafy.teongbin.common.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.ssafy.teongbin.common.exception.CustomException;
+import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -60,13 +62,17 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             User userEntity = userRepository.findByEmail(email).get();
 
             // JWT 토큰 서명을 통해서 서명이 정상이면 Authentication 객체를 만들어 준다
-            PrincipalDetails principalDetails = new PrincipalDetails((userEntity));
+            PrincipalDetails principalDetails = new PrincipalDetails(userEntity);
             Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
 
             // 강제로 시큐리티의 세션에 접근하여 Authentication 객체를 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         }
+        else{
+            throw new CustomException(ErrorType.NOT_VALID_TOKEN);
+        }
+
         chain.doFilter(request,response);
     }
 

@@ -1,6 +1,11 @@
 package com.ssafy.teongbin.user.service;
 
+import com.ssafy.teongbin.common.exception.CustomException;
+import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
+import com.ssafy.teongbin.common.reseponse.MsgType;
+import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
+import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.repository.UserRepository;
@@ -9,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +35,11 @@ public class UserService {
     }
 
     public User profile (PrincipalDetails user){
-        return userRepository.findByEmail(user.getUsername()).get();
+        Optional<User> ou = userRepository.findByEmail(user.getUsername());
+        if ( ou.isPresent() )
+            return ou.get();
+        else {
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+        }
     }
 }

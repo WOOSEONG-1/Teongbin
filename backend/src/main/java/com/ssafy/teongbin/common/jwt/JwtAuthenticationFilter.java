@@ -3,6 +3,8 @@ package com.ssafy.teongbin.common.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.teongbin.common.exception.CustomException;
+import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.user.dto.request.LoginRequestDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -44,7 +46,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // loginRequestDto가 null인 경우 명확한 예외 발생
         if (loginRequestDto == null || loginRequestDto.getEmail() == null || loginRequestDto.getPassword() == null) {
-            throw new AuthenticationServiceException("Email or password is missing");
+            throw new CustomException(ErrorType.CONTENT_IS_NULL);
         }
 
         // 토큰 만들기
