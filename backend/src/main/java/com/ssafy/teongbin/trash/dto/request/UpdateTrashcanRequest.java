@@ -5,10 +5,7 @@ import lombok.Data;
 import java.awt.*;
 
 @Data
-public class NewTrashcanRequest {
-
-    private String serialNumber;
+public class UpdateTrashcanRequest {
     private String nickname;
     private Point location;
-
 }
