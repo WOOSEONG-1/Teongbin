@@ -24,10 +24,10 @@ public class TrashcanController {
         Trashcan trashcan = new Trashcan();
 
 //        실제 유저 정보 넣는걸로 수정
-        User user = new User();
-        user.setEmail("asdfasd");
-        user.setPassword("Asdfasdf");
-        userService.join(user);
+//        User user = new User();
+//        user.setEmail("asdfasd");
+//        user.setPassword("Asdfasdf");
+//        userService.join(user);
 
         trashcan.setSerial_number(newTrashcanRequest.getSerial_number());
         trashcan.setNickname(newTrashcanRequest.getNickname());
