@@ -3,7 +3,9 @@ package com.ssafy.teongbin.shortcut.controller;
 import com.ssafy.teongbin.shortcut.dto.request.AddShortcutRequestDto;
 import com.ssafy.teongbin.shortcut.dto.request.DeleteShortcutRequestDto;
 import com.ssafy.teongbin.shortcut.dto.response.ShortcutResponseDto;
+import com.ssafy.teongbin.shortcut.entity.Shortcut;
 import com.ssafy.teongbin.shortcut.service.ShortcutService;
+import com.ssafy.teongbin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +18,10 @@ public class ShortcutController {
 
     private final ShortcutService shortcutService;
 
-    // JWT 토큰에서 사용자 정보 추출하는 메서드
 
     // 숏컷 등록
     @PostMapping("/new")
-//    public ShortcutResponseDto addShortcut(@RequestHeader("Authorization") String userToken,
-//    사용자 인증 정보는 나중에 넣자.
+    //    사용자 인증 정보는 나중에 넣자.
     public String addShortcut(@RequestBody AddShortcutRequestDto addShortcutRequestDto) {
         String answer = shortcutService.addShortcut(addShortcutRequestDto);
         return answer;
@@ -29,16 +29,19 @@ public class ShortcutController {
     }
 
     // 숏컷 삭제
-//    @PostMapping("/delete")
-//    public String deleteShortcut(@RequestHeader("Authorization") String userToken,
-//                                 @RequestBody DeleteShortcutRequestDto dto) {
-////        return pass;
-//    }
-//    // 숏컷 리스트
-//    @GetMapping("")
-//    public List getShortcutAll(@RequestHeader("Authorization") String userToken) {
-//        // 리스트로 해야할지 어떨지 모르겟음.
-//    }
+    @PostMapping("/delete")
+    public String deleteShortcut(@RequestBody DeleteShortcutRequestDto deleteShortcutRequestDto) {
+        String answer = shortcutService.deleteShortcut(deleteShortcutRequestDto);
+         return answer;
+    }
+
+    // 숏컷 리스트
+    @GetMapping("")
+    public List getShortcutList() {
+        List<ShortcutResponseDto> shortcuts = shortcutService.getShortcutList();
+        return shortcuts;
+        // 리스트로 해야할지 어떨지 모르겟음.
+    };
 
 
 }
