@@ -39,10 +39,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        System.out.println("인증이나 권한이 필요한 주소 요청이 됨");
+//        System.out.println("인증이나 권한이 필요한 주소 요청이 됨");
 
         String jwtHeader = request.getHeader("Authorization");
-        System.out.println("jwtHeader : " + jwtHeader);
+//        System.out.println("jwtHeader : " + jwtHeader);
 
         // JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
         // 헤더가 존재하는지 확인

@@ -5,6 +5,7 @@ import com.ssafy.teongbin.common.jwt.JwtAuthorizationFilter;
 import com.ssafy.teongbin.common.jwt.JwtProperties;
 import com.ssafy.teongbin.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +13,9 @@ import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,11 +70,28 @@ public class SecurityConfig {
             // /api/v1/admin/** 경로는 ROLE_ADMIN 권한을 가진 사용자만 접근 가능
 //            request.requestMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')");
             // 루트 경로는 모든 사용자 접근 가능
-            request.requestMatchers("/api").authenticated()
-                    .requestMatchers("/user/signup", "/login").permitAll()
+            request.requestMatchers("/**", "/user/signup", "/login", "/static/**", "/hello").permitAll()
                     .anyRequest().permitAll();
         });
+        http.headers(
+            headersConfigurer ->
+                    headersConfigurer
+                            .frameOptions(
+                                    HeadersConfigurer.FrameOptionsConfig::sameOrigin
+                                )
+        );
 
         return http.build();
+    }
+
+    @Bean
+    public WebSecurityCustomizer configure(){
+        return (web) -> {
+            web
+                    .ignoring()
+                    .requestMatchers(
+                            PathRequest.toStaticResources().atCommonLocations()
+                    );
+        };
     }
 }
