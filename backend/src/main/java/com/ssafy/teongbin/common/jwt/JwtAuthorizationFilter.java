@@ -69,7 +69,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         }
-        else{
+        else {
             throw new CustomException(ErrorType.NOT_VALID_TOKEN);
         }
 
