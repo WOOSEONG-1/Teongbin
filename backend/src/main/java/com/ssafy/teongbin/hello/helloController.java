@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/hello")
+@RequestMapping("")
 public class helloController {
 
-    @GetMapping("/test")
+    @GetMapping("")
     public String getHello(){
         return "helloTest";
     }
