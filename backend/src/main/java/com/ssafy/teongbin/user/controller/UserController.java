@@ -1,29 +1,32 @@
 package com.ssafy.teongbin.user.controller;
 
-import com.ssafy.teongbin.user.dto.request.NewUserRequest;
-import com.ssafy.teongbin.user.dto.response.NewUserResponse;
+import com.ssafy.teongbin.common.jwt.PrincipalDetails;
+import com.ssafy.teongbin.common.reseponse.MsgType;
+import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
+import com.ssafy.teongbin.common.reseponse.ResponseUtils;
+import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.service.UserService;
-import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
+
     private final UserService userService;
 
-    @PostMapping("/api/v1/user/signup")
-    public NewUserResponse NewUser(@RequestBody @Valid NewUserRequest request) {
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        Long id = userService.join(user);
-        return new NewUserResponse(id);
+    @PostMapping("/signup")
+    public String signUp (@RequestBody SignUpRequestDto dto) {
+
+        return userService.signUp(dto);
     }
 
+    @GetMapping("/profile")
+    public ResponseEntityDto<User> profile(@AuthenticationPrincipal PrincipalDetails user){
+
+        return ResponseUtils.ok(userService.profile(user), MsgType.SEARCH_SUCCESSFULLY);
+    }
 }

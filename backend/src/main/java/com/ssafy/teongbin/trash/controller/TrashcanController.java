@@ -27,12 +27,8 @@ public class TrashcanController {
     public NewTrashcanResponse newTrashcan(@RequestBody NewTrashcanRequest newTrashcanRequest) {
 
         /**
-         실제 유저 정보 넣는걸로 수정
+         실제 유저 조회해서 넣는걸로 수정
          **/
-        User user = new User();
-        user.setEmail("asdfasd");
-        user.setPassword("Asdfasdf");
-        userService.join(user);
 
         Trashcan trashcan = new Trashcan();
         trashcan.setUser(user);
