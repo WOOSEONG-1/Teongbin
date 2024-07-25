@@ -4,12 +4,15 @@ import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.common.reseponse.MsgType;
 import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
+import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,5 +31,10 @@ public class UserController {
     public ResponseEntityDto<User> profile(@AuthenticationPrincipal PrincipalDetails user){
 
         return ResponseUtils.ok(userService.profile(user), MsgType.SEARCH_SUCCESSFULLY);
+    }
+
+    @GetMapping("/trash")
+    public ResponseEntityDto<List<Trashcan>> userTrashcan(@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userService.userTrashcan(user), MsgType.SEARCH_SUCCESSFULLY);
     }
 }

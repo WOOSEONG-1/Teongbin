@@ -9,6 +9,7 @@ import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.trash.service.TrashcanTestService;
 import com.ssafy.teongbin.trash.service.TrashcanService;
 import com.ssafy.teongbin.user.repository.UserRepository;
+import com.ssafy.teongbin.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class TrashcanController {
     private final TrashcanService trashcanService;
     private final TrashcanTestService trashcanTestService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @PostMapping("/api/v1/trash/new")
     public NewTrashcanResponse newTrashcan(
