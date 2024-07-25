@@ -1,7 +1,9 @@
 package com.ssafy.teongbin.trash.repository;
 
-import org.springframework.stereotype.Repository;
+import com.ssafy.teongbin.trash.entity.Trashcan;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class TrashcanRepository {
+import java.util.List;
+
+public interface TrashcanRepository extends JpaRepository<Trashcan, Long> {
 }
