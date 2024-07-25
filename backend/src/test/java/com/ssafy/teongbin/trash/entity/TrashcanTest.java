@@ -26,7 +26,7 @@ class TrashcanTest {
         trashcan.setNickname("trashcannicname1");
         Point point = new Point(10, 20);
         trashcan.setLocation(point);
-        trashcan.setSerial_number("trashcanserial1");
+        trashcan.setSerialNumber("trashcanserial1");
 
         //when
         Long saveId = trashcanService.join(trashcan);

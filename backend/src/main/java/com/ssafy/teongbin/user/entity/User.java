@@ -1,5 +1,6 @@
 package com.ssafy.teongbin.user.entity;
 
+import com.ssafy.teongbin.common.entity.BaseTime;
 import com.ssafy.teongbin.shortcut.entity.Shortcut;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "user")
-public class User {
+public class User extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -24,7 +25,6 @@ public class User {
     private String name;
     private String role;
     private String password;
-    private Time created_at;
 
     @OneToMany(mappedBy = "user")
     private List<Trashcan> Trashcans = new ArrayList<>();

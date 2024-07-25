@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class NewTrashcanRequest {
 
-    private String serial_number;
+    private String serialNumber;
     private String nickname;
     private Point location;
 

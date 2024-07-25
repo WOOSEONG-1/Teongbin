@@ -22,6 +22,6 @@ public class Shortcut {
 
     private String nickname;
     private Point location;
-    private int zoom_level;
-    private Time created_at;
+    private int zoomLevel;
+    private Time createdAt;
 }

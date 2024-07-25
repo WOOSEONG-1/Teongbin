@@ -24,7 +24,7 @@ public class Trashcan extends BaseTime {
     @Column(name = "trashcan_id")
     private Long id;
 
-    private String serial_number;
+    private String serialNumber;
     private String nickname;
     private Point location;
 

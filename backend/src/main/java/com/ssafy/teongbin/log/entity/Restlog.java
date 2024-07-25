@@ -18,7 +18,7 @@ public class Restlog extends BaseTime {
     @Column(name = "restlog_id")
     private Long id;
 
-    private int rest_percent;
+    private int restPercent;
 
     @ManyToOne
     @JoinColumn(name = "trashcan_id")

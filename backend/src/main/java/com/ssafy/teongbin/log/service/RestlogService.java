@@ -19,7 +19,7 @@ public class RestlogService {
         Trashcan findTrashcan = trashcanRepository.findBySerialNumber(serialNumber);
         Restlog restlog = new Restlog();
         restlog.setTrashcan(findTrashcan);
-        restlog.setRest_percent(restPercent);
+        restlog.setRestPercent(restPercent);
         restlogRepository.save(restlog);
         return restlog.getId();
     }

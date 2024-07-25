@@ -36,7 +36,7 @@ public class TrashcanController {
 
         Trashcan trashcan = new Trashcan();
         trashcan.setUser(user);
-        trashcan.setSerial_number(newTrashcanRequest.getSerial_number());
+        trashcan.setSerialNumber(newTrashcanRequest.getSerialNumber());
         trashcan.setNickname(newTrashcanRequest.getNickname());
         trashcan.setLocation(newTrashcanRequest.getLocation());
         Long id = trashcanService.join(trashcan);

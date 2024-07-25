@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RestlogRequest {
-    private int rest_percent;
-    private String serial_number;
+    private int restPercent;
+    private String serialNumber;
 }

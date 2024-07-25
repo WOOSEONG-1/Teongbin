@@ -22,13 +22,13 @@ public class LogController {
 
     @PostMapping("/api/v1/trash/rest")
     public RestlogResponse newRestlog(@RequestBody RestlogRequest request) {
-        Long id = restlogService.join(request.getSerial_number(), request.getRest_percent());
+        Long id = restlogService.join(request.getSerialNumber(), request.getRestPercent());
         return new RestlogResponse(id);
     }
 
-    @PostMapping("/api/v1/trash/rest")
+    @PostMapping("/api/v1/trash/catlog")
     public CategorylogResponse newCategorylog(@RequestBody CategorylogRequest request) {
-        Long id = categorylogService.join(request.getSerial_number(), request.getCategory_id());
+        Long id = categorylogService.join(request.getSerialNumber(), request.getCategoryId());
         return new CategorylogResponse(id);
     }
 }
