@@ -20,5 +20,5 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private List<Categorylog> categorylogs = new ArrayList<>();
+    private List<Catlog> catlogs = new ArrayList<>();
 }

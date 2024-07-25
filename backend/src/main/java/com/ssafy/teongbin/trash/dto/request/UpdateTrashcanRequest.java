@@ -1,6 +1,5 @@
 package com.ssafy.teongbin.trash.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.awt.*;

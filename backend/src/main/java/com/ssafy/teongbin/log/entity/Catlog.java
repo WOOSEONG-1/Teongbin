@@ -6,13 +6,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
-
 @Entity
 @Getter
 @Setter
 @Table(name = "categorylog")
-public class Categorylog extends BaseTime {
+public class Catlog extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categorylog_id")
