@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 function initMap() {
   const mapOptions = {
@@ -13,6 +13,20 @@ function initMap() {
 onMounted(() => {
   initMap();
 });
+
+function getSetting() {
+  return {
+    center: map.value.getCenter(),
+    zoom: map.value.getZoom(),
+  };
+}
+
+function changeSetting(setting) {
+  map.value.setCenter(setting.center);
+  map.value.setZoom(setting.zoom);
+}
+
+defineExpose({ getSetting, changeSetting });
 </script>
 
 <template>
