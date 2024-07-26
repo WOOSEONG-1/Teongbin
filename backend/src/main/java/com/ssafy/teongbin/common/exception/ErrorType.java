@@ -16,7 +16,10 @@ public enum ErrorType {
     NOT_VALID_TOKEN(401, "토큰이 유효하지 않습니다."),
     NOT_FOUND_SANG(401, "김상훈 유저가 없습니다"),
     //-----------------------쓰레기통 관련 부분---------------------------
-    NOT_FOUND_TRASHCAN(401, "등록된 쓰레기통이 없습니다");
+    NOT_FOUND_TRASHCAN(401, "등록된 쓰레기통이 없습니다"),
+    //-----------------------숏컷 관련 부분---------------------------
+    NOT_FOUND_SHORTCUT(401, "숏컷이 존재하지 않습니다."),
+    USER_SHORTCUT_MISMATCH(401, "유저와 숏컷의 유저 정보가 일치하지 않습니다.");
 
 
     private int code;
