@@ -5,5 +5,5 @@ import lombok.Data;
 
 @Data
 public class DeleteShortcutRequestDto {
-    Long id;
+    Long shortcut_id;
 }

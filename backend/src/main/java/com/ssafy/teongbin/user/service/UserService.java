@@ -24,7 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public String signUp (@RequestBody SignUpRequestDto dto) {
+    public String signUp(@RequestBody SignUpRequestDto dto) {
         User user = User.builder()
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
@@ -34,11 +34,11 @@ public class UserService {
         return "등록 성공";
     }
 
-    public User profile (PrincipalDetails user){
+    public User profile(PrincipalDetails user) {
         Optional<User> ou = userRepository.findByEmail(user.getUsername());
-        if ( ou.isPresent() )
+        if (ou.isPresent()) {
             return ou.get();
-        else {
+        } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
     }

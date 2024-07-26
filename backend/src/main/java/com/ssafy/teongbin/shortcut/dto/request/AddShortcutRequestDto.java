@@ -7,8 +7,8 @@ import java.awt.*;
 @Data
 public class AddShortcutRequestDto {
     String nickname;
-//    private Point location;
-    String location;
+    private Point location;
+//    String location;
     int zoom_level;
 
 }
