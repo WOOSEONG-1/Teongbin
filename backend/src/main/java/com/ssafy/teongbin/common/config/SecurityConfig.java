@@ -70,8 +70,8 @@ public class SecurityConfig {
             // /api/v1/admin/** 경로는 ROLE_ADMIN 권한을 가진 사용자만 접근 가능
 //            request.requestMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')");
             // 루트 경로는 모든 사용자 접근 가능
-            request.requestMatchers("/**", "/user/signup", "/login", "/static/**", "/hello").permitAll()
-                    .anyRequest().permitAll();
+            request.requestMatchers("/user/signup", "/login", "/static/**", "/hello", "/").permitAll()
+                    .anyRequest().authenticated();
         });
         http.headers(
             headersConfigurer ->

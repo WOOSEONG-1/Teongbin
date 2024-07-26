@@ -13,7 +13,7 @@ public class HelloController {
         return "hello";
     }
 
-    @GetMapping("/{word}")
+    @GetMapping("/hello/{word}")
     @ResponseBody
     public String getVarHello(@PathVariable("word") String word){
         return word;
