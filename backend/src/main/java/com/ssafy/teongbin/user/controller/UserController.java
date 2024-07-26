@@ -29,4 +29,6 @@ public class UserController {
 
         return ResponseUtils.ok(userService.profile(user), MsgType.SEARCH_SUCCESSFULLY);
     }
+
+
 }

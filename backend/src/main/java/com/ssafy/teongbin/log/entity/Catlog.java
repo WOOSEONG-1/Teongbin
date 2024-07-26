@@ -1,21 +1,20 @@
 package com.ssafy.teongbin.log.entity;
 
+import com.ssafy.teongbin.common.entity.BaseTime;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
 import lombok.Getter;
-
-import java.sql.Time;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "categorylog")
-public class Categorylog {
+public class Catlog extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categorylog_id")
-    private int id;
-
-    private Time created_at;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "trashcan_id")

@@ -5,13 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequiredArgsConstructor
-@RequestMapping("/hello")
-public class helloController {
+//@RequestMapping("/hello")
+public class HelloController {
 
-    @GetMapping("/test")
+    @GetMapping("/")
     public String getHello(){
-        return "helloTest";
+        return "hello";
     }
 
     @GetMapping("/{word}")
