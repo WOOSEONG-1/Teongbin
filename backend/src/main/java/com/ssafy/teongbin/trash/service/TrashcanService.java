@@ -36,7 +36,6 @@ public class TrashcanService {
         }
 
         Trashcan trashcan = new Trashcan();
-
         trashcan.setUser(user);
         trashcan.setSerialNumber(newTrashcanRequest.getSerialNumber());
         trashcan.setNickname(newTrashcanRequest.getNickname());
@@ -48,10 +47,13 @@ public class TrashcanService {
     @Transactional
     public void deleteTrashcan(Long trashcanId, PrincipalDetails userIn) {
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        Optional<Trashcan> ot = trashcanRepository.findById(trashcanId);
         if ( ou.isPresent() ) {
-            Trashcan trashcan = trashcanRepository.findById(trashcanId)
-                    .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
-            trashcanRepository.deleteById(trashcanId);
+            if ( ot.isPresent() ){
+                trashcanRepository.deleteById(trashcanId);
+            } else {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
         }
         else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
