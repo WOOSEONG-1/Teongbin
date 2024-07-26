@@ -1,15 +1,20 @@
 package com.ssafy.teongbin.trash.controller;
 
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
+import com.ssafy.teongbin.common.reseponse.MsgType;
+import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
+import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.trash.dto.request.NewTrashcanRequest;
 import com.ssafy.teongbin.trash.dto.request.UpdateTrashcanRequest;
 import com.ssafy.teongbin.trash.dto.response.NewTrashcanResponse;
 import com.ssafy.teongbin.trash.dto.response.UpdateTrashcanResponse;
+import com.ssafy.teongbin.trash.dto.response.UserLogDto;
+import com.ssafy.teongbin.trash.dto.response.UserTrashcanDto;
 import com.ssafy.teongbin.trash.entity.Trashcan;
+import com.ssafy.teongbin.trash.repository.TrashcanRepository;
 import com.ssafy.teongbin.trash.service.TrashcanTestService;
 import com.ssafy.teongbin.trash.service.TrashcanService;
-import com.ssafy.teongbin.user.repository.UserRepository;
-import com.ssafy.teongbin.user.service.UserService;
+import com.ssafy.teongbin.trash.service.UserTrashcanService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +28,8 @@ import java.util.List;
 public class TrashcanController {
     private final TrashcanService trashcanService;
     private final TrashcanTestService trashcanTestService;
-    private final UserService userService;
+    private final TrashcanRepository trashcanRepository;
+    private final UserTrashcanService userTrashcanService;
 
     @PostMapping("/api/v1/trash/new")
     public NewTrashcanResponse newTrashcan(
@@ -48,6 +54,16 @@ public class TrashcanController {
         trashcanService.update(id, request.getNickname(),request.getLocation(), userIn);
         Trashcan findTrashcan = trashcanService.findOne(id);
         return new UpdateTrashcanResponse(findTrashcan.getId(), findTrashcan.getNickname(),findTrashcan.getLocation());
+    }
+
+    @GetMapping("/user/trash")
+    public ResponseEntityDto<List<UserTrashcanDto>> userTrashcan(@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userTrashcan(user), MsgType.SEARCH_SUCCESSFULLY);
+    }
+
+    @GetMapping("/user/restlog")
+    public ResponseEntityDto<List<UserLogDto>> userRestlog(@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userRestlog(user), MsgType.SEARCH_SUCCESSFULLY);
     }
 
     //명세서에 없음
