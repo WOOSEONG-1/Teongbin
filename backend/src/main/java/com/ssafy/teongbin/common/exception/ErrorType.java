@@ -17,6 +17,11 @@ public enum ErrorType {
     NOT_FOUND_SANG(401, "김상훈 유저가 없습니다"),
     //-----------------------쓰레기통 관련 부분---------------------------
     NOT_FOUND_TRASHCAN(401, "등록된 쓰레기통이 없습니다"),
+    NOT_FOUND_USERNAME(401, "등록된 사용자 이름이 없습니다"),
+    NOT_FOUND_REST(401, "잔량 기록이 없습니다"),
+    NOT_FOUND_SERIAL(401, "입력된 시리얼 넘버가 없습니다"),
+    INVALID_LOCATION(401, "유효한 위치 범위가 아닙니다."),
+    NOT_FOUND_NICKNAME(401, "입력된 닉네임이 없습니다"),
     //-----------------------숏컷 관련 부분---------------------------
     NOT_FOUND_SHORTCUT(401, "숏컷이 존재하지 않습니다."),
     USER_SHORTCUT_MISMATCH(401, "유저와 숏컷의 유저 정보가 일치하지 않습니다.");
