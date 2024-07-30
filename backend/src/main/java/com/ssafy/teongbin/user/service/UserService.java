@@ -40,9 +40,9 @@ public class UserService {
     // 회원 정보 조회
     public User profile (PrincipalDetails user){
         Optional<User> ou = userRepository.findByEmail(user.getUsername());
-        if ( ou.isPresent() )
+        if (ou.isPresent()) {
             return ou.get();
-        else {
+        } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
     }
