@@ -4,8 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.teongbin.common.exception.CustomException;
+import com.ssafy.teongbin.common.exception.ErrorResponse;
 import com.ssafy.teongbin.common.exception.ErrorType;
+import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.user.dto.request.LoginRequestDto;
+import com.ssafy.teongbin.user.entity.User;
+import com.ssafy.teongbin.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
@@ -26,27 +31,72 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final JwtProperties jwtProperties;
+    private final UserRepository userRepository;
+
+    // 커스텀 로그인 URL 설정
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtProperties jwtProperties, UserRepository userRepository, String loginUrl) {
+        this.authenticationManager = authenticationManager;
+        this.jwtProperties = jwtProperties;
+        this.userRepository = userRepository;
+        setFilterProcessesUrl(loginUrl); // 로그인 URL 설정
+    }
 
     // /login 요청을 하면 로그인 시도를 하기 위해서 실행
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response )
             throws AuthenticationException {
         System.out.println("JWTAuthenticationFilter : 로그인 시도 중");
         // email, password 받아서
         ObjectMapper om = new ObjectMapper();
         LoginRequestDto loginRequestDto = null;
+//        try {
+//        // json 데이터 파싱
+//            loginRequestDto = om.readValue(request.getInputStream(), LoginRequestDto.class);
+//        // 변경된 부분: 로그인 요청 DTO가 올바르게 파싱되었는지 로그를 추가
+////            System.out.println("Parsed loginRequestDto: " + loginRequestDto.getPassword());
+//        } catch (IOException e) {
+//            handleException(response, new CustomException(ErrorType.CONTENT_IS_NULL));
+//            return null;
+//        }
         try {
-        // json 데이터 파싱
             loginRequestDto = om.readValue(request.getInputStream(), LoginRequestDto.class);
-        // 변경된 부분: 로그인 요청 DTO가 올바르게 파싱되었는지 로그를 추가
-//            System.out.println("Parsed loginRequestDto: " + loginRequestDto.getPassword());
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                handleException(response, new CustomException(ErrorType.CONTENT_IS_NULL));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
         }
 
         // loginRequestDto가 null인 경우 명확한 예외 발생
-        if (loginRequestDto == null || loginRequestDto.getEmail() == null || loginRequestDto.getPassword() == null) {
-            throw new CustomException(ErrorType.CONTENT_IS_NULL);
+//        if (loginRequestDto.getEmail() == null || loginRequestDto.getPassword() == null) {
+//            handleException(response, new CustomException(ErrorType.CONTENT_IS_NULL));
+//            return null;
+//        }
+        if (loginRequestDto.getEmail() == null || loginRequestDto.getPassword() == null) {
+            try {
+                handleException(response, new CustomException(ErrorType.CONTENT_IS_NULL));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
+        }
+
+        // User가 DB에 존재하는지 확인
+//        User user = userRepository.findByEmail(loginRequestDto.getEmail())
+//                .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_USER));
+        User user;
+        try {
+            user = userRepository.findByEmail(loginRequestDto.getEmail())
+                    .orElseThrow(() -> new CustomException(ErrorType.NOT_FOUND_USER));
+        } catch (CustomException e) {
+            try {
+                handleException(response, e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
         }
 
         // 토큰 만들기
@@ -54,13 +104,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
         // PrincipalDetailsService의 loadUserByEmail() 함수가 실행됨
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+//        Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         // 다운 캐스팅, authentication 객체가 session 영역에 저장됨 => 로그인이 되었다는 뜻
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("로그인 완료 : " + principalDetails.getUser().getEmail());
-
-        return authentication;
+//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+//        System.out.println("로그인 완료 : " + principalDetails.getUser().getEmail());
+//
+//        return authentication;
+        try {
+            return authenticationManager.authenticate(authenticationToken);
+        } catch (AuthenticationException e) {
+            try {
+                handleException(response, new CustomException(ErrorType.NOT_VALID_TOKEN));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
+        }
 
         // 정상인지 로그인 시도를 해보는 것
         // authenticationManager로 로그인 시도를 하면
@@ -92,4 +152,28 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 사용자한테 응답할 response 헤더에
         response.addHeader(jwtProperties.HEADER_STRING, jwtProperties.TOKEN_PREFIX+jwtToken);
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        // CustomException이 발생한 경우
+        if (failed.getCause() instanceof CustomException) {
+            handleException(response, (CustomException) failed.getCause());
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            ErrorResponse responseDto = ErrorResponse.of(ErrorType.NOT_VALID_TOKEN);
+            response.getWriter().write(new ObjectMapper().writeValueAsString(ResponseUtils.error(responseDto)));
+        }
+    }
+
+    private void handleException(HttpServletResponse response, CustomException e) throws IOException {
+        response.setStatus(e.getErrorType().getCode());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        ErrorResponse responseDto = ErrorResponse.of(e.getErrorType());
+        response.getWriter().write(new ObjectMapper().writeValueAsString(ResponseUtils.error(responseDto)));
+        System.out.println("Error handled: " + e.getMessage());
+    }
+
 }

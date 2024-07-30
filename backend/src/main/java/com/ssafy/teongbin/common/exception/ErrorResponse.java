@@ -12,7 +12,7 @@ public class ErrorResponse {
     private String msg;
 
     @Builder
-    private ErrorResponse(int status, String msg) {
+    public ErrorResponse(int status, String msg) {
         this.status = status;
         this.msg = msg;
     }
