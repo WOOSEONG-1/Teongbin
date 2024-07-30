@@ -43,6 +43,6 @@ public class RestlogService {
         if (restlogId==null) {
             throw new CustomException(ErrorType.FAILED_TO_RESTLOG);
         }
-        return restlog.getId();
+        return restlogId;
     }
 }
