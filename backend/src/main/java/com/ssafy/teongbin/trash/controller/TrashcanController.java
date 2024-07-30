@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/api/v1")
 @RestController
 @RequiredArgsConstructor
 public class TrashcanController {
@@ -31,7 +32,7 @@ public class TrashcanController {
     private final TrashcanRepository trashcanRepository;
     private final UserTrashcanService userTrashcanService;
 
-    @PostMapping("/api/v1/trash/new")
+    @PostMapping("/trash/new")
     public NewTrashcanResponse newTrashcan(
             @RequestBody NewTrashcanRequest newTrashcanRequest,
             @AuthenticationPrincipal PrincipalDetails userIn) {
@@ -39,14 +40,14 @@ public class TrashcanController {
         return new NewTrashcanResponse(id);
     }
 
-    @PostMapping("/api/v1/trash/{trashcan_id}/delete")
+    @PostMapping("/trash/{trashcan_id}/delete")
     public String deleteTrash(@PathVariable Long trashcan_id,
                               @AuthenticationPrincipal PrincipalDetails userIn) {
         trashcanService.deleteTrashcan(trashcan_id, userIn);
         return "Deleted trashcan with ID: " + trashcan_id;
     }
 
-    @PostMapping("/api/v1/trash/{trashcan_id}/update")
+    @PostMapping("/trash/{trashcan_id}/update")
     public UpdateTrashcanResponse UpdateTrashcan(
             @PathVariable("trashcan_id") Long id,
             @RequestBody @Valid UpdateTrashcanRequest request,
@@ -68,7 +69,7 @@ public class TrashcanController {
 
     //명세서에 없음
     //그냥 모든 쓰레기통 확인하고싶어서 만들어봄
-    @GetMapping("/api/v1/trash/all")
+    @GetMapping("/trash/all")
     public List<Trashcan> allTrashcan() {
         return trashcanTestService.findTrashcans();
     }
