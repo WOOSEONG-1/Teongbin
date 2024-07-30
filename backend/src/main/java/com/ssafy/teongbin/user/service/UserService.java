@@ -49,6 +49,8 @@ public class UserService {
 
     // 회원 정보 수정
     public void update (PrincipalDetails user, UpdateUserRequestDto dto ){
+        if ( dto.getName() == null )
+            throw new CustomException(ErrorType.CONTENT_IS_NULL);
         Optional<User> ou = userRepository.findByEmail(user.getUsername());
         if ( ou.isEmpty() )
             throw new CustomException(ErrorType.NOT_FOUND_USER);
