@@ -115,7 +115,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return authenticationManager.authenticate(authenticationToken);
         } catch (AuthenticationException e) {
             try {
-                handleException(response, new CustomException(ErrorType.NOT_VALID_TOKEN));
+                handleException(response, new CustomException(ErrorType.NOT_MATCHING_INFO));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -149,8 +149,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("email", principalDetails.getUser().getEmail())
                 .sign(Algorithm.HMAC512(jwtProperties.SECRET));  // 내 서버가 아는 고유의 값
 
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
         // 사용자한테 응답할 response 헤더에
         response.addHeader(jwtProperties.HEADER_STRING, jwtProperties.TOKEN_PREFIX+jwtToken);
+        response.getWriter().write("{\"message\": \"로그인 성공\", \"token\": \"\n" + "Bearer " + jwtToken + "\"}");
     }
 
     @Override
