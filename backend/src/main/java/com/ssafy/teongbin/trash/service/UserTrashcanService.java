@@ -24,11 +24,24 @@ public class UserTrashcanService {
     private final TrashcanRepository trashcanRepository;
 
     public List<UserTrashcanDto> userTrashcan (PrincipalDetails userIn) {
+        String username = userIn.getUsername();
+        if (username == null || username.trim().isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
+        }
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
         if ( ou.isPresent() ){
             List<Trashcan> lt = trashcanRepository.findByUser(ou.get());
+            if (lt.isEmpty()) {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
             List<UserTrashcanDto> utd = lt.stream()
-                    .map(UserTrashcanDto::new) // UserTrashcanDto클래스의 생성자를 참조(new : 생성자를 호출)
+                    .map(t -> {
+                        try {
+                            return new UserTrashcanDto(t);
+                        } catch (Exception e) {
+                            throw new CustomException(ErrorType.NOT_FOUND_REST);
+                        }
+                    })
                     .collect(Collectors.toList());
             return utd;
         }
@@ -38,11 +51,24 @@ public class UserTrashcanService {
     }
 
     public List<UserLogDto> userRestlog (PrincipalDetails userIn) {
+        String username = userIn.getUsername();
+        if (username==null || username.trim().isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
+        }
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
         if ( ou.isPresent() ){
             List<Trashcan> lt = trashcanRepository.findByUser(ou.get());
+            if (lt.isEmpty()) {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
             List<UserLogDto> uld = lt.stream()
-                    .map(UserLogDto::new) // UserLogDto클래스의 생성자를 참조(new : 생성자를 호출)
+                    .map(t-> {
+                        try {
+                            return new UserLogDto(t);
+                        } catch (Exception e) {
+                            throw new CustomException(ErrorType.NOT_FOUND_REST);
+                        }
+                    })
                     .collect(Collectors.toList());
             return uld;
         }
@@ -50,7 +76,4 @@ public class UserTrashcanService {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
     }
-
-
-
 }

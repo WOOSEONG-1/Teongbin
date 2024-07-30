@@ -15,7 +15,7 @@ public class RestlogController {
 
     @PostMapping("/api/v1/trash/rest")
     public RestlogResponse newRestlog(@RequestBody RestlogRequest request) {
-        Long id = restlogService.join(request.getSerialNumber(), request.getRestPercent());
+        Long id = restlogService.join(request);
         return new RestlogResponse(id);
     }
 }
