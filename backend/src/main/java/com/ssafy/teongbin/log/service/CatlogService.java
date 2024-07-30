@@ -25,7 +25,7 @@ public class CatlogService {
 
     public Long join(CatlogRequest request) {
         Long categoryId = request.getCategoryId();
-        if (categoryId==null) {
+        if (categoryId==null || categoryId<=0) {
             throw new CustomException(ErrorType.FAILED_TO_CATEGORYID);
         }
         Category category = categoryRepository.findById(categoryId)
@@ -35,7 +35,7 @@ public class CatlogService {
             throw new CustomException(ErrorType.NOT_FOUND_CATEGORYNAME);
         }
         String sn = request.getSerialNumber();
-        if (sn==null) {
+        if (sn==null || sn.trim().isEmpty()) {
             throw new CustomException(ErrorType.NOT_FOUND_SERIAL);
         }
         Trashcan trashcan = trashcanRepository.findBySerialNumber(sn);
