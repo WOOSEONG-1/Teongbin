@@ -16,7 +16,7 @@ public class CatlogController {
 
     @PostMapping("/api/v1/trash/catlog")
     public CatlogResponse newCatlog(@RequestBody CatlogRequest request) {
-        Long id = catlogService.join(request.getSerialNumber(), request.getCategoryId());
+        Long id = catlogService.join(request);
         return new CatlogResponse(id);
     }
 }

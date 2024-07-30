@@ -11,7 +11,7 @@ public class UserTrashcanDto {
         this.restPercent = trashcan.getRestlogs().stream()
                 .map(Restlog::getRestPercent)
                 .reduce((first, second) -> second)
-                .orElse(null);
+                .orElse(0);
     }
     private Long trashcanId;
     private int restPercent;
