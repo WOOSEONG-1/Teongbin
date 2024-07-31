@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class Trashcan extends BaseTime {
 
     private String serialNumber;
     private String nickname;
-    private Point location;
+    private Double latitude;
+    private Double longitude;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -33,8 +33,10 @@ public class ShortcutService {
         if (ou.isEmpty()) {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
+        // location 범위 이탈 여부
+
+
         //==============================
-        // 로케이션 범위 이탈 여부 => 나중에 해야함.
         // 줌 레벨 범위 이탈 여부 => 나중에 해야함.
         //==============================
 

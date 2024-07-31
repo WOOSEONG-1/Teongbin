@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.*;
 import java.util.Optional;
 
 @Service
@@ -29,9 +28,11 @@ public class TrashcanService {
         User user;
 
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
-        if ( ou.isPresent() )
+        if ( ou.isPresent() ) {
             user = ou.get();
-        else {
+            System.out.println("user = " + user);
+
+        } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
 
@@ -47,11 +48,11 @@ public class TrashcanService {
             throw new CustomException(ErrorType.NOT_FOUND_NICKNAME);
         }
         trashcan.setNickname(nn);
-        int x = newTrashcanRequest.getLocation().x;
+        double x = newTrashcanRequest.getLocation().getX();
         if (x>180||x<-180) {
             throw new CustomException(ErrorType.INVALID_LOCATION);
         }
-        int y = newTrashcanRequest.getLocation().y;
+        double y = newTrashcanRequest.getLocation().getY();
         if (y>180||y<-180) {
             throw new CustomException(ErrorType.INVALID_LOCATION);
         }
@@ -83,10 +84,10 @@ public class TrashcanService {
             Trashcan trashcan = trashcanRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
             trashcan.setNickname(nickname);
-            if (180<location.x || location.x<-180) {
+            if (180<location.getX() || location.getX()<-180) {
                 throw new CustomException(ErrorType.INVALID_LOCATION);
             }
-            if (180<location.y || location.y<-180) {
+            if (180<location.getY() || location.getY()<-180) {
                 throw new CustomException(ErrorType.INVALID_LOCATION);
             }
             trashcan.setLocation(location);
