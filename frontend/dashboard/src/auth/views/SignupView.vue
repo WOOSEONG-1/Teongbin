@@ -18,7 +18,7 @@ function signup() {
   }
   const data = cloneDeep(signupData.value);
   axios
-    .post("/api/user/signup", data, {
+    .post("/api/v1/user/signup", data, {
       headers: { "Content-Type": "application/json" },
     })
     .then((res) => {
