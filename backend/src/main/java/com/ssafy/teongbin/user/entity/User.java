@@ -59,4 +59,8 @@ public class User extends BaseTime {
         this.roleList.remove("ROLE_ADMIN");
     }
 
+    public void update(String name) {
+        this.name = name;
+    }
+
 }

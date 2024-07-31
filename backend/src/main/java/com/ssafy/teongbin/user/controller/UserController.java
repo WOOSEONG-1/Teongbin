@@ -5,6 +5,7 @@ import com.ssafy.teongbin.common.reseponse.MsgType;
 import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
+import com.ssafy.teongbin.user.dto.request.UpdateUserRequestDto;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +19,26 @@ public class UserController {
 
     private final UserService userService;
 
+    // 회원가입
     @PostMapping("/signup")
     public String signUp (@RequestBody SignUpRequestDto dto) {
 
         return userService.signUp(dto);
     }
 
+    // 회원정보 조회
     @GetMapping("/profile")
     public ResponseEntityDto<User> profile(@AuthenticationPrincipal PrincipalDetails user){
 
         return ResponseUtils.ok(userService.profile(user), MsgType.SEARCH_SUCCESSFULLY);
     }
 
-
+    // 회원정보 수정
+    @PostMapping("/update")
+    public ResponseEntityDto<Void> update(@AuthenticationPrincipal PrincipalDetails user,
+                                          @RequestBody UpdateUserRequestDto dto ){
+        System.out.println(dto);
+        userService.update(user, dto);
+        return ResponseUtils.ok(MsgType.UPDATE_SUCCESSFULLY);
+    }
 }
