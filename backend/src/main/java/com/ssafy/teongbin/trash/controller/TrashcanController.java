@@ -63,7 +63,7 @@ public class TrashcanController {
     }
 
     @GetMapping("/user/restlog")
-    public ResponseEntityDto<List<UserLogDto>> userRestlog(@AuthenticationPrincipal PrincipalDetails user) {
+    public ResponseEntityDto<List<UserLogDto.RestDto>> userRestlog(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userRestlog(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
     }
 
