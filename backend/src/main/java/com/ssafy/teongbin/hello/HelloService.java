@@ -18,7 +18,7 @@ public class HelloService {
     public Hello getHello(Long id){
         Optional<Hello> hello = helloRepository.findById(id);
         if ( hello.isEmpty() ){
-            throw new CustomException(ErrorType.NOT_FOUND_PARK_TYPE);
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
 
         return hello.get();
