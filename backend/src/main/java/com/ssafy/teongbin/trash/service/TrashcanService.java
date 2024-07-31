@@ -36,10 +36,25 @@ public class TrashcanService {
         }
 
         Trashcan trashcan = new Trashcan();
-
         trashcan.setUser(user);
-        trashcan.setSerialNumber(newTrashcanRequest.getSerialNumber());
-        trashcan.setNickname(newTrashcanRequest.getNickname());
+        String sn = newTrashcanRequest.getSerialNumber();
+        if ( sn.isEmpty() ) {
+            throw new CustomException(ErrorType.NOT_FOUND_SERIAL);
+        }
+        trashcan.setSerialNumber(sn);
+        String nn = newTrashcanRequest.getNickname();
+        if ( nn.isEmpty() ) {
+            throw new CustomException(ErrorType.NOT_FOUND_NICKNAME);
+        }
+        trashcan.setNickname(nn);
+        int x = newTrashcanRequest.getLocation().x;
+        if (x>180||x<-180) {
+            throw new CustomException(ErrorType.INVALID_LOCATION);
+        }
+        int y = newTrashcanRequest.getLocation().y;
+        if (y>180||y<-180) {
+            throw new CustomException(ErrorType.INVALID_LOCATION);
+        }
         trashcan.setLocation(newTrashcanRequest.getLocation());
         trashcanRepository.save(trashcan);
         return trashcan.getId();
@@ -48,10 +63,13 @@ public class TrashcanService {
     @Transactional
     public void deleteTrashcan(Long trashcanId, PrincipalDetails userIn) {
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        Optional<Trashcan> ot = trashcanRepository.findById(trashcanId);
         if ( ou.isPresent() ) {
-            Trashcan trashcan = trashcanRepository.findById(trashcanId)
-                    .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
-            trashcanRepository.deleteById(trashcanId);
+            if ( ot.isPresent() ){
+                trashcanRepository.deleteById(trashcanId);
+            } else {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
         }
         else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
@@ -65,6 +83,12 @@ public class TrashcanService {
             Trashcan trashcan = trashcanRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
             trashcan.setNickname(nickname);
+            if (180<location.x || location.x<-180) {
+                throw new CustomException(ErrorType.INVALID_LOCATION);
+            }
+            if (180<location.y || location.y<-180) {
+                throw new CustomException(ErrorType.INVALID_LOCATION);
+            }
             trashcan.setLocation(location);
         }
         else {
@@ -73,6 +97,7 @@ public class TrashcanService {
     }
 
     public Trashcan findOne(Long trashcanId) {
+        // 컨트롤러에서 어차피 값들만 반환할거라 여기서는 엔티티 반환해도 됨
         return trashcanRepository.findById(trashcanId).get();
     }
 }

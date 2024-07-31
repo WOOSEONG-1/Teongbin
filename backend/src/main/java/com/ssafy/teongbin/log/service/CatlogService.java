@@ -1,5 +1,8 @@
 package com.ssafy.teongbin.log.service;
 
+import com.ssafy.teongbin.common.exception.CustomException;
+import com.ssafy.teongbin.common.exception.ErrorType;
+import com.ssafy.teongbin.log.dto.request.CatlogRequest;
 import com.ssafy.teongbin.log.entity.Category;
 import com.ssafy.teongbin.log.entity.Catlog;
 import com.ssafy.teongbin.log.repository.CategoryRepository;
@@ -20,18 +23,33 @@ public class CatlogService {
     private final CategoryRepository categoryRepository;
     private final EntityManager em;
 
-    public Long join(String serialNumber, Long categoryId) {
-//        Category category = categoryRepository.findById(categoryId)
-//                .orElseThrow(()->new IllegalArgumentException("해당 ID의 카테고리를 찾을 수 없습니다."));
-        Category category = new Category();
-        category.setName("캔");
-        em.persist(category);
-        Trashcan trashcan = trashcanRepository.findBySerialNumber(serialNumber);
+    public Long join(CatlogRequest request) {
+        Long categoryId = request.getCategoryId();
+        if (categoryId==null || categoryId<=0) {
+            throw new CustomException(ErrorType.FAILED_TO_CATEGORYID);
+        }
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(()->new CustomException(ErrorType.NOT_FOUND_CATEGORYID));
+        String categoryname = category.getName();
+        if (categoryname==null) {
+            throw new CustomException(ErrorType.NOT_FOUND_CATEGORYNAME);
+        }
+        String sn = request.getSerialNumber();
+        if (sn==null || sn.trim().isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_SERIAL);
+        }
+        Trashcan trashcan = trashcanRepository.findBySerialNumber(sn);
+        if (trashcan==null) {
+            throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+        }
         Catlog catlog = new Catlog();
         catlog.setCategory(category);
         catlog.setTrashcan(trashcan);
         catlogRepository.save(catlog);
-        return catlog.getId();
-
+        Long catlogId = catlog.getId();
+        if (catlogId==null) {
+            throw new CustomException(ErrorType.FAILED_TO_CATLOG);
+        }
+        return catlogId;
     }
 }

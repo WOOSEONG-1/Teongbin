@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     private final UserService userService;
@@ -29,4 +29,6 @@ public class UserController {
 
         return ResponseUtils.ok(userService.profile(user), MsgType.SEARCH_SUCCESSFULLY);
     }
+
+
 }
