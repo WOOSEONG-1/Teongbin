@@ -23,8 +23,7 @@ public class TrashcanService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long join(NewTrashcanRequest newTrashcanRequest, PrincipalDetails userIn) {
-
+    public void join(NewTrashcanRequest newTrashcanRequest, PrincipalDetails userIn) {
         User user;
 
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
@@ -42,31 +41,43 @@ public class TrashcanService {
         if ( sn.isEmpty() ) {
             throw new CustomException(ErrorType.NOT_FOUND_SERIAL);
         }
+
+        // 시리얼 넘버 중복되는지 확인
+        Trashcan ifTrashcan = trashcanRepository.findBySerialNumber(sn);
+        if (ifTrashcan != null) {
+            throw new CustomException(ErrorType.REGISTERED_TRASHCAN);
+        }
+
         trashcan.setSerialNumber(sn);
         String nn = newTrashcanRequest.getNickname();
         if ( nn.isEmpty() ) {
             throw new CustomException(ErrorType.NOT_FOUND_NICKNAME);
         }
         trashcan.setNickname(nn);
-        double x = newTrashcanRequest.getLocation().getX();
+        double x = newTrashcanRequest.getLatitude();
         if (x>180||x<-180) {
             throw new CustomException(ErrorType.INVALID_LOCATION);
         }
-        double y = newTrashcanRequest.getLocation().getY();
+        double y = newTrashcanRequest.getLongitude();
         if (y>180||y<-180) {
             throw new CustomException(ErrorType.INVALID_LOCATION);
         }
-        trashcan.setLocation(newTrashcanRequest.getLocation());
+        trashcan.setLatitude(newTrashcanRequest.getLatitude());
+        trashcan.setLongitude(newTrashcanRequest.getLongitude());
         trashcanRepository.save(trashcan);
-        return trashcan.getId();
     }
 
     @Transactional
     public void deleteTrashcan(Long trashcanId, PrincipalDetails userIn) {
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
         Optional<Trashcan> ot = trashcanRepository.findById(trashcanId);
+
         if ( ou.isPresent() ) {
             if ( ot.isPresent() ){
+                // 토큰 유저와 Trashcan의 user가 다르다면?
+                if (ou.get()!= ot.get().getUser()) {
+                    throw new CustomException(ErrorType.USER_SHORTCUT_MISMATCH);
+                }
                 trashcanRepository.deleteById(trashcanId);
             } else {
                 throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
@@ -78,19 +89,20 @@ public class TrashcanService {
     }
 
     @Transactional
-    public void update(Long id, String nickname, Point location, PrincipalDetails userIn) {
+    public void update(Long id, String nickname, Double latitude, Double longitude, PrincipalDetails userIn) {
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
         if ( ou.isPresent() ) {
             Trashcan trashcan = trashcanRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
             trashcan.setNickname(nickname);
-            if (180<location.getX() || location.getX()<-180) {
+            if (180<latitude || latitude<-180) {
                 throw new CustomException(ErrorType.INVALID_LOCATION);
             }
-            if (180<location.getY() || location.getY()<-180) {
+            if (180<longitude || longitude<-180) {
                 throw new CustomException(ErrorType.INVALID_LOCATION);
             }
-            trashcan.setLocation(location);
+            trashcan.setLatitude(latitude);
+            trashcan.setLongitude(longitude);
         }
         else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);

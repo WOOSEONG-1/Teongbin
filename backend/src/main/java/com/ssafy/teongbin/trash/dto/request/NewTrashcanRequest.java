@@ -8,6 +8,8 @@ public class NewTrashcanRequest {
 
     private String serialNumber;
     private String nickname;
-    private Point location;
+
+    private Double latitude;
+    private Double longitude;
 
 }

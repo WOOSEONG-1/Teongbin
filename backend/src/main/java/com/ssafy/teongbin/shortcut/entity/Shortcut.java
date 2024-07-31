@@ -26,7 +26,8 @@ public class Shortcut extends BaseTime {
     private User user;
 
     private String nickname;
-    private Point location;
+    private Double latitude;
+    private Double longitude;
 
     private int zoom_level;
 

@@ -6,7 +6,8 @@ import lombok.Data;
 @Data
 public class AddShortcutRequestDto {
     String nickname;
-    private Point location;
+    Double latitude;
+    Double longitude;
     int zoom_level;
 
 }

@@ -21,7 +21,10 @@ public class Trashcan extends BaseTime {
     @Column(name = "trashcan_id")
     private Long id;
 
+    @Column(unique = true)
     private String serialNumber;
+
+
     private String nickname;
     private Double latitude;
     private Double longitude;

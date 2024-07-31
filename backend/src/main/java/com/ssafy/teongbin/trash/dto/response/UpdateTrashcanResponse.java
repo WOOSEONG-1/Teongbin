@@ -9,5 +9,6 @@ import lombok.Data;
 public class UpdateTrashcanResponse {
     private Long id;
     private String nickname;
-    private Point location;
+    private Double latitude;
+    private Double longitude;
 }
