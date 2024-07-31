@@ -76,7 +76,7 @@ public class TrashcanService {
             if ( ot.isPresent() ){
                 // 토큰 유저와 Trashcan의 user가 다르다면?
                 if (ou.get()!= ot.get().getUser()) {
-                    throw new CustomException(ErrorType.USER_SHORTCUT_MISMATCH);
+                    throw new CustomException(ErrorType.USER_TRASHCAN_MISMATCH);
                 }
                 trashcanRepository.deleteById(trashcanId);
             } else {
