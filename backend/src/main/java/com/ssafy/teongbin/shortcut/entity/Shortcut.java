@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "shortcut")
@@ -28,8 +26,8 @@ public class Shortcut extends BaseTime {
     private User user;
 
     private String nickname;
-    private Point location;
-//    나중에 Point 재정의해야할 듯함...
+    private Double latitude;
+    private Double longitude;
 
     private int zoom_level;
 

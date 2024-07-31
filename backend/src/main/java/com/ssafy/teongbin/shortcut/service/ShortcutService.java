@@ -33,15 +33,26 @@ public class ShortcutService {
         if (ou.isEmpty()) {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
+        // latitude, longitude 범위 이탈 여부
+        Double latitude = addShortcutRequestDto.getLatitude();
+        Double longitude = addShortcutRequestDto.getLongitude();
+
+        if (latitude>180||latitude<-180) {
+            throw new CustomException(ErrorType.INVALID_LOCATION);
+        }
+        if (longitude>180||longitude<-180) {
+            throw new CustomException(ErrorType.INVALID_LOCATION);
+        }
+
         //==============================
-        // 로케이션 범위 이탈 여부 => 나중에 해야함.
         // 줌 레벨 범위 이탈 여부 => 나중에 해야함.
         //==============================
 
         Shortcut shortcut = Shortcut.builder()
                 .user(ou.get())
                 .nickname(addShortcutRequestDto.getNickname())
-                .location(addShortcutRequestDto.getLocation())
+                .latitude(addShortcutRequestDto.getLatitude())
+                .longitude(addShortcutRequestDto.getLongitude())
                 .zoom_level(addShortcutRequestDto.getZoom_level())
                 .build();
         shortcutRepository.save(shortcut);
@@ -83,7 +94,8 @@ public class ShortcutService {
                         ShortcutResponseDto
                                 .fromEntity(
                                         shortcut.getNickname(),
-                                        shortcut.getLocation(),
+                                        shortcut.getLatitude(),
+                                        shortcut.getLongitude(),
                                         shortcut.getZoom_level())
                 )
                 .toList();
