@@ -3,7 +3,8 @@ package com.ssafy.teongbin.trash.service;
 import com.ssafy.teongbin.common.exception.CustomException;
 import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
-import com.ssafy.teongbin.log.entity.Restlog;
+import com.ssafy.teongbin.log.entity.Catlog;
+import com.ssafy.teongbin.trash.dto.response.TrashcanCatlogDto;
 import com.ssafy.teongbin.trash.dto.response.UserLogDto;
 import com.ssafy.teongbin.trash.dto.response.UserTrashcanDto;
 import com.ssafy.teongbin.trash.entity.Trashcan;
@@ -13,9 +14,7 @@ import com.ssafy.teongbin.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,6 +70,46 @@ public class UserTrashcanService {
             return uld;
         }
         else {
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+        }
+    }
+
+    public List<TrashcanCatlogDto> trashcanCatlog(PrincipalDetails userIn, Long trashcanId) {
+        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        if (ou.isPresent()) {
+            Optional<Trashcan> ot = trashcanRepository.findById(trashcanId);
+            if (ot.isPresent()) {
+                Map<Long, TrashcanCatlogDto> categoryMap = new HashMap<>();
+
+                TrashcanCatlogDto tcd1 = new TrashcanCatlogDto();
+                tcd1.setCategoryId(1L);
+                tcd1.setCount(0);
+                categoryMap.put(1L, tcd1);
+
+                TrashcanCatlogDto tcd2 = new TrashcanCatlogDto();
+                tcd2.setCategoryId(2L);
+                tcd2.setCount(0);
+                categoryMap.put(2L, tcd2);
+
+                TrashcanCatlogDto tcd3 = new TrashcanCatlogDto();
+                tcd3.setCategoryId(3L);
+                tcd3.setCount(0);
+                categoryMap.put(3L, tcd3);
+
+                List<Catlog> catlogs = ot.get().getCatlogs();
+
+                for (Catlog catlog : catlogs) {
+                    Long categoryId = catlog.getId();
+                    TrashcanCatlogDto catlogDto = categoryMap.get(categoryId);
+                    if (catlogDto !=null) {
+                        catlogDto.setCount(catlogDto.getCount()+1);
+                    }
+                }
+                return new ArrayList<>(categoryMap.values());
+            } else {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
+        } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
     }

@@ -15,7 +15,8 @@ public enum MsgType {
     UPDATE_SUCCESSFULLY("수정 성공"),
     GENERATE_TOKEN_SUCCESSFULLY("토큰 생성 성공"),
     SEARCH_TRASH_LIST_SUCCESSFULLY("쓰레기통 리스트 조회 성공"),
-    SEARCH_REST_LIST_SUCCESSFULLY("잔량 조회 성공");
+    SEARCH_REST_LIST_SUCCESSFULLY("잔량 조회 성공"),
+    SEARCH_CAT_LOG_SUCCESSFULLY("카테고리 통계 조회 성공");
     private final String msg;
 
     MsgType(String msg){

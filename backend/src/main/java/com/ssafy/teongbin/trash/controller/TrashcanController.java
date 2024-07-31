@@ -6,10 +6,7 @@ import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.trash.dto.request.NewTrashcanRequest;
 import com.ssafy.teongbin.trash.dto.request.UpdateTrashcanRequest;
-import com.ssafy.teongbin.trash.dto.response.NewTrashcanResponse;
-import com.ssafy.teongbin.trash.dto.response.UpdateTrashcanResponse;
-import com.ssafy.teongbin.trash.dto.response.UserLogDto;
-import com.ssafy.teongbin.trash.dto.response.UserTrashcanDto;
+import com.ssafy.teongbin.trash.dto.response.*;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.trash.repository.TrashcanRepository;
 import com.ssafy.teongbin.trash.service.TrashcanTestService;
@@ -65,6 +62,13 @@ public class TrashcanController {
     @GetMapping("/user/restlog")
     public ResponseEntityDto<List<UserLogDto.RestDto>> userRestlog(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userRestlog(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
+    }
+
+    @GetMapping("/{trashcan_id}/catlog")
+    public ResponseEntityDto<List<TrashcanCatlogDto>> TrashcanCatlog(
+            @AuthenticationPrincipal PrincipalDetails user,
+            @PathVariable("trashcan_id") Long trashcanId) {
+        return ResponseUtils.ok(userTrashcanService.trashcanCatlog(user, trashcanId), MsgType.SEARCH_CAT_LOG_SUCCESSFULLY);
     }
 
     //명세서에 없음
