@@ -11,6 +11,7 @@ public enum ErrorCategory {
     SHORTCUT_ERROR("숏컷 에러");
 
 
+
     String category;
 
     ErrorCategory(String category) {
