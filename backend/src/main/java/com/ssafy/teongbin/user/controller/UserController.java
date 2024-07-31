@@ -37,7 +37,6 @@ public class UserController {
     @PostMapping("/update")
     public ResponseEntityDto<Void> update(@AuthenticationPrincipal PrincipalDetails user,
                                           @RequestBody UpdateUserRequestDto dto ){
-        System.out.println(dto);
         userService.update(user, dto);
         return ResponseUtils.ok(MsgType.UPDATE_SUCCESSFULLY);
     }

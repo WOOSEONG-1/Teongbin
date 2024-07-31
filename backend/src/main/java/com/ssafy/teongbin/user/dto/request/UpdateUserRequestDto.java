@@ -9,4 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 public class UpdateUserRequestDto {
     String name;
+    String password;
 }

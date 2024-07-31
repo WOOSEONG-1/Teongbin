@@ -25,6 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -45,7 +47,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response )
             throws AuthenticationException {
-        System.out.println("JWTAuthenticationFilter : 로그인 시도 중");
+//        System.out.println("JWTAuthenticationFilter : 로그인 시도 중");
         // email, password 받아서
         ObjectMapper om = new ObjectMapper();
         LoginRequestDto loginRequestDto = null;
@@ -137,7 +139,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult)
             throws IOException, ServletException {
-        System.out.println("successfulAuthentication 실행됨 : 인증 완료");
+//        System.out.println("successfulAuthentication 실행됨 : 인증 완료");
 
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 
@@ -154,7 +156,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 사용자한테 응답할 response 헤더에
         response.addHeader(jwtProperties.HEADER_STRING, jwtProperties.TOKEN_PREFIX+jwtToken);
-        response.getWriter().write("{\"message\": \"로그인 성공\", \"token\": \"\n" + "Bearer " + jwtToken + "\"}");
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("data", "Bearer " + jwtToken);
+        responseBody.put("msg", "로그인 성공");
+
+        // ObjectMapper를 사용하여 HashMap을 JSON 문자열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResponse = objectMapper.writeValueAsString(responseBody);
+
+        // 사용자에게 응답으로 JSON 문자열 전송
+        response.getWriter().write(jsonResponse);
+//        response.getWriter().write("{\"message\": \"로그인 성공\", \"token\": \"\n" + "Bearer " + jwtToken + "\"}");
     }
 
     @Override
@@ -177,7 +189,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setCharacterEncoding("UTF-8");
         ErrorResponse responseDto = ErrorResponse.of(e.getErrorType());
         response.getWriter().write(new ObjectMapper().writeValueAsString(ResponseUtils.error(responseDto)));
-        System.out.println("Error handled: " + e.getMessage());
+//        System.out.println("Error handled: " + e.getMessage());
     }
 
 }
