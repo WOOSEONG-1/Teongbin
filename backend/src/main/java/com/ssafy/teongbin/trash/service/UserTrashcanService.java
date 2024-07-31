@@ -3,6 +3,7 @@ package com.ssafy.teongbin.trash.service;
 import com.ssafy.teongbin.common.exception.CustomException;
 import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
+import com.ssafy.teongbin.log.entity.Restlog;
 import com.ssafy.teongbin.trash.dto.response.UserLogDto;
 import com.ssafy.teongbin.trash.dto.response.UserTrashcanDto;
 import com.ssafy.teongbin.trash.entity.Trashcan;
@@ -12,6 +13,7 @@ import com.ssafy.teongbin.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,7 +52,7 @@ public class UserTrashcanService {
         }
     }
 
-    public List<UserLogDto> userRestlog (PrincipalDetails userIn) {
+    public List<UserLogDto.RestDto> userRestlog (PrincipalDetails userIn) {
         String username = userIn.getUsername();
         if (username==null || username.trim().isEmpty()) {
             throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
@@ -61,14 +63,10 @@ public class UserTrashcanService {
             if (lt.isEmpty()) {
                 throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
             }
-            List<UserLogDto> uld = lt.stream()
-                    .map(t-> {
-                        try {
-                            return new UserLogDto(t);
-                        } catch (Exception e) {
-                            throw new CustomException(ErrorType.NOT_FOUND_REST);
-                        }
-                    })
+            List<UserLogDto.RestDto> uld = lt.stream()
+                    .flatMap(trashcan -> trashcan.getRestlogs().stream())
+                    .map(UserLogDto.RestDto::new)
+                    .sorted(Comparator.comparing(UserLogDto.RestDto::getCreatedAt).reversed())
                     .collect(Collectors.toList());
             return uld;
         }
