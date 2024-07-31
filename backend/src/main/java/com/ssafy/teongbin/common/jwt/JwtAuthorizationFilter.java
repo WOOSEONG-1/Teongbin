@@ -86,6 +86,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         response.setCharacterEncoding("UTF-8");
         ErrorResponse responseDto = ErrorResponse.of(e.getErrorType());
         response.getWriter().write(new ObjectMapper().writeValueAsString(responseDto));
-        System.out.println("Error handled: " + e.getMessage());
+//        System.out.println("Error handled: " + e.getMessage());
     }
 }

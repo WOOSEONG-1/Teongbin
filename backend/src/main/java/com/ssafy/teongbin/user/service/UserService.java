@@ -49,12 +49,23 @@ public class UserService {
 
     // 회원 정보 수정
     public void update (PrincipalDetails user, UpdateUserRequestDto dto ){
-        if ( dto.getName() == null )
-            throw new CustomException(ErrorType.CONTENT_IS_NULL);
         Optional<User> ou = userRepository.findByEmail(user.getUsername());
         if ( ou.isEmpty() )
             throw new CustomException(ErrorType.NOT_FOUND_USER);
-        ou.get().update(dto.getName());
+
+        User target = ou.get();
+
+        // name 수정
+        if ( dto.getName() != null ){
+            target.updateName(dto.getName());
+        }
+
+        // password 수정
+        if ( dto.getPassword() != null ){
+            String enc_pw = passwordEncoder.encode(dto.getPassword());
+            target.updatePassword(enc_pw);
+        }
+
         userRepository.save(ou.get());
     }
 }

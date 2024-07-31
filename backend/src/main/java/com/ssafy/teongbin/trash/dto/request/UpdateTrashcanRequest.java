@@ -7,5 +7,7 @@ import java.awt.*;
 @Data
 public class UpdateTrashcanRequest {
     private String nickname;
-    private Point location;
+
+    private Double latitude;
+    private Double longitude;
 }
