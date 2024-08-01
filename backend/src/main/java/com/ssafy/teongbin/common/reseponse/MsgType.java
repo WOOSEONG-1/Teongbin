@@ -19,7 +19,8 @@ public enum MsgType {
     //==================== 쓰레기통
     DELETE_TRASHCAN_SUCCESSFULLY("쓰레기통 삭제 성공"),
     ADD_TRASHCAN_SUCCESSFULLY("쓰레기통 등록 성공"),
-    UPDATE_TRASHCAN_SUCCESSFULLY("쓰레기통 수정 성공");
+    UPDATE_TRASHCAN_SUCCESSFULLY("쓰레기통 수정 성공"),
+    SEARCH_CAT_LOG_SUCCESSFULLY("카테고리 통계 조회 성공");
     private final String msg;
 
     MsgType(String msg){

@@ -31,8 +31,8 @@ public enum ErrorType {
     NOT_FOUND_CATEGORYID(401, "DB에 저장된 카테고리 분류가 없습니다", ErrorCategory.CATEGORY_ERROR.getCategory()),
     NOT_FOUND_CATEGORYNAME(401, "카테고리 이름을 조회할 수 없습니다", ErrorCategory.CATEGORY_ERROR.getCategory()),
     //-----------------------숏컷 관련 부분---------------------------
-    NOT_FOUND_SHORTCUT(401, "숏컷이 존재하지 않습니다.", ErrorCategory.SHORTCUT_ERROR.getCategory()),
-    USER_SHORTCUT_MISMATCH(401, "유저와 숏컷의 유저 정보가 일치하지 않습니다.", ErrorCategory.SHORTCUT_ERROR.getCategory());
+    NOT_FOUND_SHORTCUT(401, "숏컷이 존재하지 않습니다.", "d"),
+    USER_SHORTCUT_MISMATCH(401, "유저와 숏컷의 유저 정보가 일치하지 않습니다.", "d");
 
 
     private int code;
