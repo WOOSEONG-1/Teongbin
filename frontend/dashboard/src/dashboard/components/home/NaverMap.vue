@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
+const map = ref();
+
 function initMap() {
   const mapOptions = {
     center: new naver.maps.LatLng(35.20389, 126.8069),
@@ -21,9 +23,12 @@ function getSetting() {
   };
 }
 
-function changeSetting(setting) {
-  map.value.setCenter(setting.center);
-  map.value.setZoom(setting.zoom);
+function changeSetting(shortcut) {
+  map.value.setCenter(new naver.maps.LatLng(
+    shortcut.latitude,
+    shortcut.longitude
+  ));
+  map.value.setZoom(shortcut.zoom_level);
 }
 
 defineExpose({ getSetting, changeSetting });
