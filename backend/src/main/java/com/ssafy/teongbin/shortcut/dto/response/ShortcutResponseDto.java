@@ -15,7 +15,7 @@ public class ShortcutResponseDto {
 
 
     public static ShortcutResponseDto fromEntity(String nickname, Double latitude, Double longitude, int zoom_level) {
-        return new ShortcutResponseDto(nickname, longitude,latitude, zoom_level);
+        return new ShortcutResponseDto(nickname, latitude,longitude, zoom_level);
     }
 
 
