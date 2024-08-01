@@ -1,4 +1,17 @@
-<script setup></script>
+<script setup>
+import { useAuthStore } from "@/auth/stores/auth";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function logout() {
+  const authStore = useAuthStore();
+  sessionStorage.removeItem("teongbinToken");
+  authStore.loginState = false;
+
+  router.push("/user/login");
+}
+</script>
 
 <template>
   <aside>
@@ -16,7 +29,7 @@
       </div>
       <div>
         <div class="menu-box">
-          <button class="menu-item logout-btn">Logout</button>
+          <button class="menu-item logout-btn" @click="logout">Logout</button>
         </div>
       </div>
     </div>
@@ -51,7 +64,7 @@ aside {
   color: black;
 }
 .logout-btn {
-  border: none;
   background: none;
+  border: none;
 }
 </style>
