@@ -79,32 +79,38 @@ public class UserTrashcanService {
         if (ou.isPresent()) {
             Optional<Trashcan> ot = trashcanRepository.findById(trashcanId);
             if (ot.isPresent()) {
-                Map<Long, TrashcanCatlogDto> categoryMap = new HashMap<>();
 
                 TrashcanCatlogDto tcd1 = new TrashcanCatlogDto();
                 tcd1.setCategoryId(1L);
                 tcd1.setCount(0);
-                categoryMap.put(1L, tcd1);
 
                 TrashcanCatlogDto tcd2 = new TrashcanCatlogDto();
                 tcd2.setCategoryId(2L);
                 tcd2.setCount(0);
-                categoryMap.put(2L, tcd2);
 
                 TrashcanCatlogDto tcd3 = new TrashcanCatlogDto();
                 tcd3.setCategoryId(3L);
                 tcd3.setCount(0);
-                categoryMap.put(3L, tcd3);
 
                 List<Catlog> catlogs = ot.get().getCatlogs();
 
                 for (Catlog catlog : catlogs) {
-                    Long categoryId = catlog.getId();
-                    TrashcanCatlogDto catlogDto = categoryMap.get(categoryId);
-                    if (catlogDto !=null) {
-                        catlogDto.setCount(catlogDto.getCount()+1);
+                    Long categoryId = catlog.getCategory().getId();
+                    if (categoryId==1L) {
+                        tcd1.setCount(tcd1.getCount()+1);
+                    } else if (categoryId==2L) {
+                        tcd2.setCount(tcd2.getCount()+1);
+                    } else if (categoryId==3L) {
+                        tcd3.setCount(tcd3.getCount()+1);
+                    } else {
+                        throw new CustomException(ErrorType.NOT_FOUND_CATEGORYID);
                     }
                 }
+                Map<Long, TrashcanCatlogDto> categoryMap = new HashMap<>();
+                categoryMap.put(1L, tcd1);
+                categoryMap.put(2L, tcd2);
+                categoryMap.put(3L, tcd3);
+
                 return new ArrayList<>(categoryMap.values());
             } else {
                 throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);

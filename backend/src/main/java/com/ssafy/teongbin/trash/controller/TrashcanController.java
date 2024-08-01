@@ -30,28 +30,27 @@ public class TrashcanController {
     private final UserTrashcanService userTrashcanService;
 
     @PostMapping("/new")
-    public NewTrashcanResponse newTrashcan(
+    public ResponseEntityDto<Void> newTrashcan(
             @RequestBody NewTrashcanRequest newTrashcanRequest,
             @AuthenticationPrincipal PrincipalDetails userIn) {
-        Long id = trashcanService.join(newTrashcanRequest, userIn);
-        return new NewTrashcanResponse(id);
+        trashcanService.join(newTrashcanRequest, userIn);
+        return ResponseUtils.ok(MsgType.ADD_TRASHCAN_SUCCESSFULLY);
     }
 
     @PostMapping("/{trashcan_id}/delete")
-    public String deleteTrash(@PathVariable Long trashcan_id,
+    public ResponseEntityDto<Void> deleteTrash(@PathVariable Long trashcan_id,
                               @AuthenticationPrincipal PrincipalDetails userIn) {
         trashcanService.deleteTrashcan(trashcan_id, userIn);
-        return "Deleted trashcan with ID: " + trashcan_id;
+        return ResponseUtils.ok(MsgType.DELETE_TRASHCAN_SUCCESSFULLY);
     }
 
     @PostMapping("/{trashcan_id}/update")
-    public UpdateTrashcanResponse UpdateTrashcan(
+    public ResponseEntityDto<Void> UpdateTrashcan(
             @PathVariable("trashcan_id") Long id,
             @RequestBody @Valid UpdateTrashcanRequest request,
             @AuthenticationPrincipal PrincipalDetails userIn) {
-        trashcanService.update(id, request.getNickname(),request.getLocation(), userIn);
-        Trashcan findTrashcan = trashcanService.findOne(id);
-        return new UpdateTrashcanResponse(findTrashcan.getId(), findTrashcan.getNickname(),findTrashcan.getLocation());
+        trashcanService.update(id, request.getNickname(), request.getLatitude(), request.getLongitude(), userIn);
+        return ResponseUtils.ok(MsgType.UPDATE_TRASHCAN_SUCCESSFULLY);
     }
 
     @GetMapping("/user/trashcan")
