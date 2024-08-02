@@ -5,6 +5,7 @@ import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
 import com.ssafy.teongbin.user.dto.request.UpdateUserRequestDto;
+import com.ssafy.teongbin.user.dto.response.ProfileResponseDto;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +39,14 @@ public class UserService {
     }
 
     // 회원 정보 조회
-    public User profile (PrincipalDetails user){
+    public ProfileResponseDto profile (PrincipalDetails user){
         Optional<User> ou = userRepository.findByEmail(user.getUsername());
         if (ou.isPresent()) {
-            return ou.get();
+            User us = ou.get();
+            return ProfileResponseDto.builder()
+                    .email(us.getEmail())
+                    .name(us.getName())
+                    .build();
         } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
