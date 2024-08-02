@@ -4,10 +4,7 @@ import com.ssafy.teongbin.common.exception.CustomException;
 import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.log.entity.Catlog;
-import com.ssafy.teongbin.trash.dto.response.TrashcanCatlogDto;
-import com.ssafy.teongbin.trash.dto.response.UserLogDto;
-import com.ssafy.teongbin.trash.dto.response.UserTrashcanDto;
-import com.ssafy.teongbin.trash.dto.response.UserTrashcanRestDto;
+import com.ssafy.teongbin.trash.dto.response.*;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.trash.repository.TrashcanRepository;
 import com.ssafy.teongbin.user.entity.User;
@@ -45,6 +42,24 @@ public class UserTrashcanService {
                         }
                     })
                     .collect(Collectors.toList());
+            return utd;
+        }
+        else {
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+        }
+    }
+
+    public List<UserTrashcanRestDtoV2> userTrashcanRestV2 (PrincipalDetails userIn) {
+        String username = userIn.getUsername();
+        if (username == null || username.trim().isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
+        }
+        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        if (ou.isPresent()) {
+            List<UserTrashcanRestDtoV2> utd = trashcanRepository.findTrashcanRestDtoV2ByUser(ou.get());
+            if (utd.isEmpty()) {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
             return utd;
         }
         else {

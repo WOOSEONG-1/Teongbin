@@ -58,6 +58,12 @@ public class TrashcanController {
         return ResponseUtils.ok(userTrashcanService.userTrashcanRest(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
 
+    @GetMapping("/user/trashcan/restV2")
+    public ResponseEntityDto<List<UserTrashcanRestDtoV2>> userTrashcanRestV2(@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userTrashcanRestV2(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
+    }
+
+
     @GetMapping("/user/trashcan")
     public ResponseEntityDto<List<UserTrashcanDto>> userTrashcan(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userTrashcan(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
