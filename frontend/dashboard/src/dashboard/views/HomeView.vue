@@ -3,6 +3,7 @@ import { ref } from "vue";
 import DashboardLayout from "@/dashboard/layouts/DashboardLayout.vue";
 import Shortcut from "@/dashboard/components/home/Shortcut.vue";
 import NaverMap from "@/dashboard/components/home/NaverMap.vue";
+import TrashcanList from "@/dashboard/components/home/TrashcanList.vue";
 
 import { getTrashcanList, getTrashcanRest, getUserInfo } from "@/dashboard/js/remote";
 
@@ -38,6 +39,7 @@ getTrashcan();
     />
     <div class="info-container">
       <NaverMap ref="$mapRef" />
+      <TrashcanList />
     </div>
   </DashboardLayout>
 </template>
