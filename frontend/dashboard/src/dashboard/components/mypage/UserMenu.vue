@@ -2,37 +2,11 @@
 import AddTrashcan from "@/dashboard/components/mypage/AddTrashcan.vue";
 import RenameTrashcan from "@/dashboard/components/mypage/RenameTrashcan.vue";
 import RemoveTrashcan from "@/dashboard/components/mypage/RemoveTrashcan.vue";
-
-import axios from "axios";
-import { onMounted, ref } from "vue";
+import { useUserStore } from "@/dashboard/stores/user";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 
+const userStore = useUserStore();
 const trashcanStore = useTrashcanStore();
-const userName = ref();
-
-function getUserInfo() {
-  userName.value = sessionStorage.getItem("teongbinUserName");
-
-  if (userName.value == null) {
-    axios
-      .get("/api/v1/user/profile", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: sessionStorage.getItem("teongbinToken"),
-        },
-      })
-      .then((res) => {
-        userName.value = res.data.data.name;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-}
-
-onMounted(() => {
-  getUserInfo();
-});
 </script>
 
 <template>
@@ -43,7 +17,7 @@ onMounted(() => {
           <th>사명</th>
         </tr>
         <tr>
-          <td>{{ userName }}</td>
+          <td>{{ userStore.userName }}</td>
         </tr>
         <tr>
           <th>제품 수</th>

@@ -2,6 +2,11 @@
 import MyPageLayout from "@/dashboard/layouts/MyPageLayout.vue";
 import UserMenu from "../components/mypage/UserMenu.vue";
 import AllProduct from "@/dashboard/components/mypage/AllProduct.vue";
+
+import { getProductList, getUserInfo } from "@/dashboard/js/remote";
+
+getUserInfo(false);
+getProductList(false);
 </script>
 
 <template>

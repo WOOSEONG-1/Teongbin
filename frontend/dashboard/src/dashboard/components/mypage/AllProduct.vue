@@ -1,27 +1,7 @@
 <script setup>
-import { onMounted } from "vue";
-import axios from "axios";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 
 const trashcanStore = useTrashcanStore();
-function getProductList() {
-  axios
-    .get("/api/v1/trash/user/trashcan", {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
-    .then((res) => {
-      trashcanStore.trashcanList = res.data.data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-onMounted(() => {
-  getProductList();
-});
 </script>
 
 <template>
