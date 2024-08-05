@@ -12,6 +12,7 @@ import com.ssafy.teongbin.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -113,6 +114,29 @@ public class UserTrashcanService {
             return uld;
         }
         else {
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+        }
+    }
+
+    public List<UserLogDto.RestDto> userRestlogV2 (PrincipalDetails userIn) {
+        String username = userIn.getUsername();
+        if (username == null || username.trim().isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
+        }
+        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        if (ou.isPresent()) {
+            List<Trashcan> lt = trashcanRepository.findByUser(ou.get());
+            if (lt.isEmpty()) {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
+            List<Long> trashcanIds = lt.stream()
+                    .map(Trashcan::getId)
+                    .collect(Collectors.toList());
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime nowMinus3 = now.minusDays(3);
+            List<UserLogDto.RestDto> uld = trashcanRepository.findRestDto(trashcanIds, nowMinus3);
+            return uld;
+        } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
     }
