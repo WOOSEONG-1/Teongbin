@@ -4,6 +4,8 @@ import DashboardLayout from "@/dashboard/layouts/DashboardLayout.vue";
 import Shortcut from "@/dashboard/components/home/Shortcut.vue";
 import NaverMap from "@/dashboard/components/home/NaverMap.vue";
 
+import { getProductList, getUserInfo } from "@/dashboard/js/remote";
+
 const $mapRef = ref();
 const center = ref();
 
@@ -14,6 +16,9 @@ function getSetting() {
 function changeSetting(setting) {
   $mapRef.value.changeSetting(setting);
 }
+
+getUserInfo(false);
+getProductList(false);
 </script>
 
 <template>
@@ -29,4 +34,9 @@ function changeSetting(setting) {
   </DashboardLayout>
 </template>
 
-<style scoped></style>
+<style scoped>
+.info-container {
+  display: flex;
+  padding: 1rem;
+}
+</style>

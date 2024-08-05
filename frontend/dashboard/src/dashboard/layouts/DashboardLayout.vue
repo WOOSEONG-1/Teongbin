@@ -29,5 +29,6 @@ main {
   float: left;
   margin: 1rem;
   border-radius: 5px;
+  width: 80%;
 }
 </style>
