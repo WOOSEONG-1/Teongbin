@@ -4,7 +4,7 @@ import DashboardLayout from "@/dashboard/layouts/DashboardLayout.vue";
 import Shortcut from "@/dashboard/components/home/Shortcut.vue";
 import NaverMap from "@/dashboard/components/home/NaverMap.vue";
 
-import { getProductList, getUserInfo } from "@/dashboard/js/remote";
+import { getTrashcanList, getTrashcanRest, getUserInfo } from "@/dashboard/js/remote";
 
 const $mapRef = ref();
 const center = ref();
@@ -18,7 +18,15 @@ function changeSetting(setting) {
 }
 
 getUserInfo(false);
-getProductList(false);
+
+async function getTrashcan() {
+  const success = await getTrashcanList(false);
+  if(success) {
+    getTrashcanRest();
+    setInterval(() => getTrashcanRest(), 600000);
+  }
+}
+getTrashcan();
 </script>
 
 <template>
