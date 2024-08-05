@@ -29,4 +29,9 @@ function changeSetting(setting) {
   </DashboardLayout>
 </template>
 
-<style scoped></style>
+<style scoped>
+.info-container {
+  display: flex;
+  padding: 1rem;
+}
+</style>
