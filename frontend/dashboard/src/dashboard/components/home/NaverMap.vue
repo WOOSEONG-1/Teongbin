@@ -31,7 +31,13 @@ function changeSetting(shortcut) {
   map.value.setZoom(shortcut.zoom_level);
 }
 
-defineExpose({ getSetting, changeSetting });
+function moveCenter(trashcan) {
+  map.value.setCenter(
+    new naver.maps.LatLng(trashcan.latitude, trashcan.longitude)
+  );
+}
+
+defineExpose({ getSetting, changeSetting, moveCenter });
 </script>
 
 <template>
