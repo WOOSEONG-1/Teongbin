@@ -7,10 +7,11 @@ const trashcanStore = useTrashcanStore();
 <template>
   <section class="product-state-section">
     <div class="product-state-container">
-      <div
+      <button
         v-for="(trashcan, idx) in trashcanStore.trashcanList"
         :key="idx"
         class="product-state-item"
+        @click="$emit('moveCenter', trashcan)"
       >
         <div class="text-info-container">
           <div class="trashcan-text-info nickname">{{ trashcan.nickname }}</div>
@@ -26,7 +27,7 @@ const trashcanStore = useTrashcanStore();
             }"
           ></i>
         </div>
-      </div>
+      </button>
     </div>
   </section>
 </template>
@@ -46,8 +47,12 @@ const trashcanStore = useTrashcanStore();
 }
 .product-state-item {
   display: flex;
-  padding: 1rem;
-  padding-bottom: 0;
+  margin: 1rem;
+  margin-bottom: 0;
+}
+button {
+  background: none;
+  border: none;
 }
 .text-info-container {
   align-content: center;
@@ -60,7 +65,7 @@ const trashcanStore = useTrashcanStore();
   align-items: center;
   overflow-x: scroll;
   margin-right: 1rem;
-  height: 50%;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,7 +74,7 @@ const trashcanStore = useTrashcanStore();
   font-size: 1rem;
 }
 .trashcan-img {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 .trashcan-enough {
   color: greenyellow;
