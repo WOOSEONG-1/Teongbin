@@ -37,7 +37,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-size: 80px;
-      text-shadow: 0 0 0 rgba(255, 215, 0, 0.7), 0 0 5px rgba(255, 215, 0, 0.5), 0 0 0px rgba(255, 215, 0, 0.3);  }
+      text-shadow: 0 0 0 #3CB371, 0 0 5px #3CB371, 0 0 0px #3CB371;  }
   
   </style>
   

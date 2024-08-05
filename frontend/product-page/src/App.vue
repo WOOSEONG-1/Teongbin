@@ -3,35 +3,17 @@
     <header :class="['navbar-custom', { 'navbar-scrolled': isScrolled }]" style="width:100%">
       <nav class="navbar px-5 d-flex justify-content-between flex-nowrap" style="min-width: 1200px; max-width:1500px;"
         data-aos="fade-up" data-aos-duration="1500">
-        <RouterLink :to="{ name: 'home' }" class="nav-brand pe-4">
           <img src="@/assets/tr_logo.png" alt="logo" style="width: 70px; height: 70px;">
-        </RouterLink>
-        <div class="container-custom d-flex flex-nowrap">
+          
+          
+          <div class="container-custom d-flex flex-nowrap">
           <ul class="navbar-nav d-flex flex-row flex-nowrap">
-            
-            <li class="nav-item d-flex align-items-center" v-if="!store.isLogin">
-              <div class="btn btn-success">
-                <a href="https://i11c101.p.ssafy.io/main/" style="text-decoration: none; color: white; font-weight: bold;">가입하기</a>
-              </div>
+            <li class="nav-item d-flex align-items-center" >
+                <a href="https://i11c101.p.ssafy.io/main/user/login" class="btn btn-success" style="text-decoration: none;">
+                  가입하기
+                </a>
             </li>
-            <li class="dropdown nav-item d-flex align-items-center justify" v-else>
-              <a href="#" class="align-items-center text-decoration-none dropdown-toggle d-flex"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <strong class="nav-link me-3" :style="{ 'color': isScrolledColor }">마이 페이지</strong>
-              </a>
-              <ul class="dropdown-menu text-small shadow" style="position: absolute;">
-                <li>
-                  <RouterLink class="dropdown-item fw-bold" 
-                    :to="{name:'profile', params:{username:store.username}}">
-                    Profile
-                  </RouterLink>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item fw-bold" href="#" @click="store.logoutEvent">Sign out</a></li>
-              </ul>
-            </li>
+
           </ul>
         </div>
       </nav>
@@ -42,8 +24,8 @@
     </main>
 
     <footer class="row">
-      <h3 class="fs-5 fw-bold">SSAFY Final Project - Financial</h3>
-      <p class="mb-0">Hwang-Wooseong, Jeon-Gicheol - Service &nbsp;&nbsp;🏁</p>
+      <h3 class="fs-5 fw-bold">텅빈</h3>
+      <p class="mb-0">ⓒ All rights reserved</p>
     </footer>
   </div>
 </template>

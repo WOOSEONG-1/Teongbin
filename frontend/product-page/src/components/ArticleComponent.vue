@@ -31,7 +31,7 @@
         >
         <div class="row justify-content-between">
             <div class="col-5" style="margin: auto 0;">
-                <img src="../assets/cleaner2.webp" alt="home_img" style="width:100%;">
+                <img src="../assets/cleaner.webp" alt="home_img" style="width:100%;">
             </div>
             <div class="col-6">
                 <h1 class="my-3 fw-bold">쓰레기통 잔량 확인 서비스</h1>
@@ -57,52 +57,29 @@
         <article class="container" data-aos="fade-left" data-aos-duration="700" data-aos-once="false" style="padding-top: 0px;">
             <div class="row justify-content-between">
                 <div class="col-7">
-                    <h1 class="my-3 fw-bold">국가 간 환율 계산 서비스</h1>
+                    <h1 class="my-3 fw-bold">AI 분리수거 인식 기능</h1>
                     <br>
                     <div class="my-3">
-                        <h3>
-                            <u>원화뿐만 아닌 타 국가 화폐간 환율 계산 지원</u>
+                        <h3 class="mt-4">
+                            분리수거에 어려움을 겪는 사람들을 돕습니다.
                         </h3>
+
                         <h4 class="mt-4">
-                            다양한 국가의 원화 기준 환율을 계산하여
+                            스마트한 AI 인식 기능으로
                         </h4>
+
                         <h4>
-                            국가간 환율 계산 서비스를 제공합니다.
+                            사용자에게 버려야할 곳을 알려줍니다
                         </h4>
                     </div>
                 </div>
                 <div class="col-5" style="margin: auto 0;">
-                    <img src="../assets/5.webp" alt="home_img" style="width:100%;">
+                    <img src="../assets/category3.webp" alt="home_img" style="width:100%;">
                 </div>
             </div>
         </article>
         
-        <!-- right -->
-        <article class="container justify-content-start"
-        data-aos="fade-right" data-aos-duration="700" data-aos-once="false"
-        >
-        <div class="row justify-content-between">
-            <div class="col-5" style="margin: auto 0;">
-                    <img src="../assets/8.webp" alt="home_img" style="width:100%;">
-                </div>
-                <div class="col-6">
-                    <h1 class="my-3 fw-bold">예금 / 적금 추천</h1>
-                    <h2 class="my-3 fw-bold">알고리즘 서비스</h2>
-                    <br>
-                    <div class="my-3">
-                        <h4>
-                            빅데이터와 AI를 통해
-                        </h4>
-                        <h4>
-                            사용자에게 가장 적합한 상품들을
-                        </h4>
-                        <h4>
-                            추천할 수 있도록 서비스합니다.
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </article>
+
 
     </div>
 </template>
