@@ -41,7 +41,7 @@ function moveCenter(trashcan) {
   );
 }
 
-function createShortcutMarker(shortcut) {
+function createShortcutMarker(shortcut, color) {
   const position = new naver.maps.LatLng(shortcut.latitude, shortcut.longitude);
   const marker = new naver.maps.Marker({
     position: position,
@@ -49,7 +49,7 @@ function createShortcutMarker(shortcut) {
     title: shortcut.nickname,
     icon: {
       content: [
-        `<i class="bi bi-flag-fill" style="font-size: 1.5rem;"></i>`,
+        `<i class="bi bi-flag-fill" style="font-size: 1.5rem; color: rgb(${color.red}, ${color.green}, ${color.blue});"></i>`,
       ].join(""),
       size: new naver.maps.Size(32, 32),
       origin: new naver.maps.Point(0, 0),
@@ -70,8 +70,11 @@ shortcutStore.$subscribe((mutation, state) => {
 
     const shortcutList = mutation.events.target._value;
 
-    shortcutList.forEach((shortcut) => {
-      const marker = createShortcutMarker(shortcut);
+    shortcutList.forEach((shortcut, idx) => {
+      const marker = createShortcutMarker(
+        shortcut,
+        shortcutStore.colorList.at(idx)
+      );
       mapStore.shortcutMarkerList.push(marker);
     });
   }

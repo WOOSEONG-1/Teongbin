@@ -70,6 +70,10 @@ export function getTrashcanRest() {
     });
 }
 
+function getRandomNum(seed) {
+  return ((seed * seed * seed + 9 * seed * seed + seed) * 29) % 32 * 6;
+}
+
 export async function addShortcut(setting) {
   const success = await axios
     .post("/api/v1/user/shortcut/new", setting, {
@@ -97,6 +101,16 @@ export function getShortcutList() {
     })
     .then((res) => {
       shortcutStore.shortcutList = res.data.data;
+      shortcutStore.shortcutList.forEach((shortcut, idx) => {
+        const r = getRandomNum(idx);
+        const g = getRandomNum(r);
+        const b = getRandomNum(g);
+        shortcutStore.colorList.push({
+          red: r,
+          green: g,
+          blue: b,
+        });
+      });
     })
     .catch((error) => {
       console.log(error);

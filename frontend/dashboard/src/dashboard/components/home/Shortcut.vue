@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
-import axios from "axios";
+import { addShortcut, getShortcutList } from "@/dashboard/js/remote";
 
 const shortcutStore = useShortcutStore();
 
@@ -26,7 +26,7 @@ watch(
       toggleInput();
       shortcutName.value = "";
       const success = await addShortcut(shortcut);
-      if(success) getShortcutList();
+      if (success) getShortcutList();
     }
   }
 );
@@ -40,19 +40,11 @@ function toggleInput() {
   }
 }
 
-function postNewShortcut(setting) {
-  axios
-    .post("/api/v1/user/shortcut/new", setting, {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
-    .then((res) => {
-      updateShortcutList();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+function colorStyle(idx) {
+  const color = shortcutStore.colorList.at(idx);
+  return {
+    color: `rgb(${color.red}, ${color.green}, ${color.blue})`,
+  };
 }
 
 getShortcutList();
@@ -71,7 +63,9 @@ function deleteShortcut(idx) {
         :key="idx"
         @click="$emit('changeSetting', shortcut)"
       >
-        {{ shortcut.nickname }}
+        <div :style="colorStyle(idx)">
+          {{ shortcut.nickname }}
+        </div>
       </button>
     </div>
     <div class="shortcut-menu-container">
@@ -175,10 +169,10 @@ function deleteShortcut(idx) {
 }
 
 .scroll-container:hover::-webkit-scrollbar-thumb {
-    background: #888;
+  background: #888;
 }
 
 .scroll-container:hover::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 </style>
