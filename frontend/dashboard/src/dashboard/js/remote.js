@@ -25,22 +25,19 @@ export function getUserInfo(reload) {
 
 export async function getTrashcanList(reload) {
   let success = true;
-
-  if (trashcanStore.trashcanList.length == 0 || reload) {
-    axios
-      .get("/api/v1/trash/user/trashcan", {
-        headers: {
-          Authorization: sessionStorage.getItem("teongbinToken"),
-        },
-      })
-      .then((res) => {
-        trashcanStore.trashcanList = res.data.data;
-      })
-      .catch((error) => {
-        success = false;
-        console.log(error);
-      });
-  }
+  await axios
+    .get("/api/v1/trash/user/trashcan", {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      trashcanStore.trashcanList = res.data.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      success = false;
+    });
 
   return success;
 }
