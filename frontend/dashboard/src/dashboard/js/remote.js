@@ -69,3 +69,36 @@ export function getTrashcanRest() {
       console.log(error);
     });
 }
+
+export async function addShortcut(setting) {
+  const success = await axios
+    .post("/api/v1/user/shortcut/new", setting, {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      return true;
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+
+  return success;
+}
+
+export function getShortcutList() {
+  axios
+    .get("/api/v1/user/shortcut", {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      shortcutStore.shortcutList = res.data.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}

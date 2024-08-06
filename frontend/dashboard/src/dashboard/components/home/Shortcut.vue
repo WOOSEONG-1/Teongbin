@@ -14,7 +14,7 @@ const props = defineProps({
 
 watch(
   () => props.shortcut,
-  (setting) => {
+  async (setting) => {
     if (setting) {
       const shortcut = {
         nickname: shortcutName.value,
@@ -25,7 +25,8 @@ watch(
 
       toggleInput();
       shortcutName.value = "";
-      postNewShortcut(shortcut);
+      const success = await addShortcut(shortcut);
+      if(success) getShortcutList();
     }
   }
 );
@@ -54,25 +55,7 @@ function postNewShortcut(setting) {
     });
 }
 
-function updateShortcutList() {
-  axios
-    .get("/api/v1/user/shortcut", {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
-    .then((res) => {
-      shortcutStore.shortcutList.splice(0, shortcutStore.shortcutList.length);
-      res.data.data.forEach((shortcut) => {
-        shortcutStore.shortcutList.push(shortcut);
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-updateShortcutList();
+getShortcutList();
 
 function deleteShortcut(idx) {
   shortcutStore.shortcutList.splice(idx, 1);
