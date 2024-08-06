@@ -39,3 +39,50 @@ export function getProductList(reload) {
       });
   }
 }
+
+function getRandomNum(seed) {
+  return ((seed * seed * seed + 9 * seed * seed + seed) * 29) % 32 * 6;
+}
+
+export async function addShortcut(setting) {
+  const success = await axios
+    .post("/api/v1/user/shortcut/new", setting, {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      return true;
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+
+  return success;
+}
+
+export function getShortcutList() {
+  axios
+    .get("/api/v1/user/shortcut", {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      shortcutStore.shortcutList = res.data.data;
+      shortcutStore.shortcutList.forEach((shortcut, idx) => {
+        const r = getRandomNum(idx);
+        const g = getRandomNum(r);
+        const b = getRandomNum(g);
+        shortcutStore.colorList.push({
+          red: r,
+          green: g,
+          blue: b,
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
