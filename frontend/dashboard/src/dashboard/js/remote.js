@@ -23,21 +23,48 @@ export function getUserInfo(reload) {
   }
 }
 
-export function getProductList(reload) {
-  if (trashcanStore.trashcanList.length == 0 || reload) {
-    axios
-      .get("/api/v1/trash/user/trashcan", {
-        headers: {
-          Authorization: sessionStorage.getItem("teongbinToken"),
-        },
-      })
-      .then((res) => {
-        trashcanStore.trashcanList = res.data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+export async function getTrashcanList(reload) {
+  let success = true;
+  await axios
+    .get("/api/v1/trash/user/trashcan", {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      trashcanStore.trashcanList = res.data.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      success = false;
+    });
+
+  return success;
+}
+
+export function getTrashcanRest() {
+  axios
+    .get("/api/v1/trash/user/trashcan/rest", {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      const trashcanStateList = res.data.data;
+      if (trashcanStateList.length == trashcanStore.trashcanList.length) {
+        trashcanStateList.forEach((trashcanState) => {
+          const trashcan = trashcanStore.trashcanList.find(
+            (trashcan) => trashcan.trashcanId === trashcanState.trashcanId
+          );
+          if (trashcan) {
+            trashcan.restPercent = trashcanState.restPercent;
+          }
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function getRandomNum(seed) {
