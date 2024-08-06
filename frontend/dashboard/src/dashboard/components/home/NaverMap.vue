@@ -46,6 +46,7 @@ function createShortcutMarker(shortcut) {
   const marker = new naver.maps.Marker({
     position: position,
     map: map.value,
+    title: shortcut.nickname,
     icon: {
       content: [
         `<i class="bi bi-flag-fill" style="font-size: 1.5rem;"></i>`,
@@ -72,6 +73,53 @@ shortcutStore.$subscribe((mutation, state) => {
     shortcutList.forEach((shortcut) => {
       const marker = createShortcutMarker(shortcut);
       mapStore.shortcutMarkerList.push(marker);
+    });
+  }
+});
+
+function createTrashcanMarker(trashcan) {
+  const restPercent = trashcan.restPercent;
+  let rest;
+  if (restPercent >= 70) {
+    rest = "color: red";
+  } else if (restPercent >= 30) {
+    rest = "color: yellow";
+  } else {
+    rest = "color: greenyellow";
+  }
+
+  const position = new naver.maps.LatLng(trashcan.latitude, trashcan.longitude);
+  const marker = new naver.maps.Marker({
+    position: position,
+    map: map.value,
+    title: trashcan.nickname,
+    icon: {
+      content: [
+        `<i class="bi bi-trash2-fill" style="font-size: 2rem; ${rest};"></i>`,
+      ].join(""),
+      size: new naver.maps.Size(32, 32),
+      origin: new naver.maps.Point(0, 0),
+      anchor: new naver.maps.Point(16, 32),
+    },
+    draggable: false,
+  });
+
+  return marker;
+}
+
+trashcanStore.$subscribe((mutation, state) => {
+  if (state.trashcanList) {
+    mapStore.trashcanMarkerList.forEach((marker) => {
+      marker.setMap(null);
+    });
+    mapStore.trashcanMarkerList = [];
+
+    const trashcanList = mutation.events.target._value;
+
+    trashcanList.forEach((trashcan) => {
+      const marker = createTrashcanMarker(trashcan);
+
+      mapStore.trashcanMarkerList.push(marker);
     });
   }
 });
