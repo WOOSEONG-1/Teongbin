@@ -3,10 +3,10 @@ import MyPageLayout from "@/dashboard/layouts/MyPageLayout.vue";
 import UserMenu from "../components/mypage/UserMenu.vue";
 import AllProduct from "@/dashboard/components/mypage/AllProduct.vue";
 
-import { getTrashcanList, getUserInfo } from "@/dashboard/js/remote";
+import { getProductList, getUserInfo } from "@/dashboard/js/remote";
 
 getUserInfo(false);
-getTrashcanList(false);
+getProductList(false);
 </script>
 
 <template>

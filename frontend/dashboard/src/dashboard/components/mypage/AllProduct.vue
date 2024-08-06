@@ -64,8 +64,6 @@ const trashcanStore = useTrashcanStore();
 }
 .trashcan-info-data {
   width: 9.5rem;
-  overflow: hidden;
-  padding: 0 0.5rem;
 }
 .trashcan-serial-number {
   font-size: 1rem;

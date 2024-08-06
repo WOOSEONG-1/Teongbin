@@ -23,9 +23,7 @@ export function getUserInfo(reload) {
   }
 }
 
-export async function getTrashcanList(reload) {
-  let success = true;
-
+export function getProductList(reload) {
   if (trashcanStore.trashcanList.length == 0 || reload) {
     axios
       .get("/api/v1/trash/user/trashcan", {
@@ -37,35 +35,7 @@ export async function getTrashcanList(reload) {
         trashcanStore.trashcanList = res.data.data;
       })
       .catch((error) => {
-        success = false;
         console.log(error);
       });
   }
-
-  return success;
-}
-
-export function getTrashcanRest() {
-  axios
-    .get("/api/v1/trash/user/trashcan/rest", {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
-    .then((res) => {
-      const trashcanStateList = res.data.data;
-      if (trashcanStateList.length == trashcanStore.trashcanList.length) {
-        trashcanStateList.forEach((trashcanState) => {
-          const trashcan = trashcanStore.trashcanList.find(
-            (trashcan) => trashcan.trashcanId === trashcanState.trashcanId
-          );
-          if (trashcan) {
-            trashcan.restPercent = trashcanState.restPercent;
-          }
-        });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 }
