@@ -1,5 +1,8 @@
 package com.ssafy.teongbin.log.controller;
 
+import com.ssafy.teongbin.common.reseponse.MsgType;
+import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
+import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.log.dto.request.RestlogRequest;
 import com.ssafy.teongbin.log.dto.response.RestlogResponse;
 import com.ssafy.teongbin.log.service.RestlogService;
@@ -14,8 +17,8 @@ public class RestlogController {
     private final RestlogService restlogService;
 
     @PostMapping("/api/v1/trash/rest")
-    public RestlogResponse newRestlog(@RequestBody RestlogRequest request) {
-        Long id = restlogService.join(request);
-        return new RestlogResponse(id);
+    public ResponseEntityDto<Long> newRestlog(@RequestBody RestlogRequest request) {
+        return ResponseUtils.ok(restlogService.join(request), MsgType.ADD_RESTLOG_SUCCESSFULLY);
+
     }
 }
