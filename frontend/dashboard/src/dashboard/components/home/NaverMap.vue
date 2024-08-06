@@ -2,9 +2,11 @@
 import { ref, onMounted } from "vue";
 import { useMapStore } from "@/dashboard/stores/map";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
+import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 
 const mapStore = useMapStore();
 const shortcutStore = useShortcutStore();
+const trashcanStore = useTrashcanStore();
 
 const map = ref();
 
