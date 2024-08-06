@@ -43,7 +43,6 @@ function postNewShortcut(setting) {
   axios
     .post("/api/v1/user/shortcut/new", setting, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: sessionStorage.getItem("teongbinToken"),
       },
     })
@@ -87,7 +86,7 @@ function deleteShortcut(idx) {
         class="shortcut-item shortcut-btn"
         v-for="(shortcut, idx) in shortcutStore.shortcutList"
         :key="idx"
-        @click="$emit('changeSetting', idx)"
+        @click="$emit('changeSetting', shortcut)"
       >
         {{ shortcut.nickname }}
       </button>
@@ -178,7 +177,6 @@ function deleteShortcut(idx) {
 }
 
 .scroll-container:hover {
-  overflow-x: auto;
 }
 
 .scroll-container::-webkit-scrollbar {
