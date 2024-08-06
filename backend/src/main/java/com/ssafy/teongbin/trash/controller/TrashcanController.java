@@ -65,10 +65,16 @@ public class TrashcanController {
         return ResponseUtils.ok(userTrashcanService.userTrashcanRestV2(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
 
-
-    @GetMapping("/user/trashcan")
+    // 성능 최적화 전 버전
+    @GetMapping("/user/trashcanV1")
     public ResponseEntityDto<List<UserTrashcanDto>> userTrashcan(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userTrashcan(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
+    }
+
+    // 성능 최적화 후
+    @GetMapping("/user/trashcan")
+    public ResponseEntityDto<List<UserTrashcanDto>> userTrashcanV2 (@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userTrashcanV2(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
 
     // 날짜별 필터링 하기 전 버전
@@ -77,7 +83,7 @@ public class TrashcanController {
         return ResponseUtils.ok(userTrashcanService.userRestlog(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
     }
 
-    //3일 기준 필터링
+    // 3일 기준 필터링 + 성능 최적화
     @GetMapping("/user/restlog")
     public ResponseEntityDto<List<UserLogDto.RestDto>> userRestlogV2(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userRestlogV2(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
@@ -89,6 +95,7 @@ public class TrashcanController {
             @PathVariable("trashcan_id") Long trashcanId) {
         return ResponseUtils.ok(userTrashcanService.trashcanCatlog(user, trashcanId), MsgType.SEARCH_CAT_LOG_SUCCESSFULLY);
     }
+
 
     //명세서에 없음
     //그냥 모든 쓰레기통 확인하고싶어서 만들어봄
