@@ -10,7 +10,6 @@ import com.ssafy.teongbin.trash.repository.TrashcanRepository;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -90,24 +89,6 @@ public class UserTrashcanService {
                     })
                     .collect(Collectors.toList());
             return utd;
-        }
-        else {
-            throw new CustomException(ErrorType.NOT_FOUND_USER);
-        }
-    }
-
-    public List<UserTrashcanDto> userTrashcanV2 (PrincipalDetails userIn) {
-        String username = userIn.getUsername();
-        if (username == null || username.trim().isEmpty()) {
-            throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
-        }
-        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
-        if ( ou.isPresent() ){
-            List<UserTrashcanDto> lt = trashcanRepository.findTrashcanDtosByUser(ou.get());
-            if (lt.isEmpty()) {
-                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
-            }
-            return lt;
         }
         else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
