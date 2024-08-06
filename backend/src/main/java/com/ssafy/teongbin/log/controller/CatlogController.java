@@ -1,5 +1,8 @@
 package com.ssafy.teongbin.log.controller;
 
+import com.ssafy.teongbin.common.reseponse.MsgType;
+import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
+import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.log.dto.request.CatlogRequest;
 import com.ssafy.teongbin.log.dto.response.CatlogResponse;
 import com.ssafy.teongbin.log.service.CatlogService;
@@ -15,8 +18,7 @@ public class CatlogController {
     private final CatlogService catlogService;
 
     @PostMapping("/api/v1/trash/catlog")
-    public CatlogResponse newCatlog(@RequestBody CatlogRequest request) {
-        Long id = catlogService.join(request);
-        return new CatlogResponse(id);
+    public ResponseEntityDto<Long> newCatlog(@RequestBody CatlogRequest request) {
+        return ResponseUtils.ok(catlogService.join(request),MsgType.ADD_CATLOG_SUCCESSFULLY);
     }
 }
