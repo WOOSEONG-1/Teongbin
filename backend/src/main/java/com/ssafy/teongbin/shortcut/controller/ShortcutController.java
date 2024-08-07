@@ -41,10 +41,8 @@ public class ShortcutController {
 
     // 숏컷 리스트
     @GetMapping("")
-    public ResponseEntityDto<List> getShortcutList(@AuthenticationPrincipal PrincipalDetails user) {
+    public ResponseEntityDto<List<ShortcutResponseDto>> getShortcutList(@AuthenticationPrincipal PrincipalDetails user) {
         List<ShortcutResponseDto> shortcuts = shortcutService.getShortcutList(user);
         return ResponseUtils.ok(shortcuts, MsgType.SEARCH_SHORTCUT_LIST_SUCCESSFULLY);
-    };
-
-
+    }
 }
