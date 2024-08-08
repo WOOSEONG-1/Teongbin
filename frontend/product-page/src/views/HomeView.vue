@@ -1,21 +1,33 @@
-<template >
+<template>
   <section style="position:relative;" class="mb-5">
-    <!-- <img src="@/assets/main_image2.webp" alt="main_img" data-aos="zoom-out" data-aos-duration="800"> -->
     <img src="@/assets/main_image2.webp" alt="main_img" data-aos-duration="800">
-    <div class="overlay-text">
-      <h1>텅빈과 함께</h1>
-      <h1>스마트한 쓰레기통 관리를 시작하세요</h1>
-      <h4>
-        <a href="https://i11c101.p.ssafy.io/main/user/login" class="join-button btn btn-success">
-          가입하기
-        </a>
+    <div class="overlay-text fade-in">
+      <h1>텅빈과 함께하는</h1>
+      <h1>스마트한 쓰레기통 관리</h1>
+      <h4 style="margin-top: 50px;">
+        <div class="row text-center justify-content-center my-3">
+          <button class="join-button btn btn-warning" onclick="window.location.href='https://i11c101.p.ssafy.io/main/'"
+            style="width: 200px; height: 75px;  color: #151619;">
+            <b id="start">시작하기</b>
+          </button>
+        </div>
+        <!-- <div class="row text-center justify-content-center my-3">
+          <button class="join-button btn" onclick="window.location.href='https://i11c101.p.ssafy.io/main/'"
+            style="width: 200px; height: 75px;  color: white; background-color: #0055FF;">
+            <b id="start">시작하기</b>
+          </button>
+        </div>
+        <div class="row text-center justify-content-center my-3">
+          <button class="join-button btn btn-warning" onclick="window.location.href='https://i11c101.p.ssafy.io/main/'"
+            style="width: 200px; height: 75px;  color: white; background-color: #00AAFF;">
+            <b id="start">시작하기</b>
+          </button>
+        </div> -->
       </h4>
+      <div class="scroll-button" @click="scrollToContent">
+        <img src="@/assets/chevron-down.svg" alt="Scroll Down" class="scroll-icon" />
+      </div>
     </div>
-
-    <!-- <div class="overlay-text" data-aos="fade-down" data-aos-duration="1500">
-    </div> -->
-    <!-- <h4 data-aos="fade-down" data-aos-duration="1500">쓰레기통 관리를 더욱 간편하게 ! </h4>
-    <h4 data-aos="fade-down" data-aos-duration="1500">한 번에, 손 쉽게 !</h4> -->
   </section>
   <div class="container-content">
     <ArticleComponent />
@@ -26,45 +38,79 @@
 import { ref } from 'vue'
 import ArticleComponent from '@/components/ArticleComponent.vue';
 
+const scrollToContent = () => {
+  const contentSection = document.querySelector('.container-content');
+  contentSection.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 
 <style scoped>
-.brand-name {
-  background: linear-gradient(45deg, #FFD700, #FFFFFF 25%, #FFD700);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 100px;
-  font-weight: bold;
-  text-shadow: 0 0 0 rgba(255, 215, 0, 0.7), 0 0 5px rgba(255, 215, 0, 0.5), 0 0 5px rgba(255, 215, 0, 0.3);
-}
-
-.brand-sub-name {
-  background: linear-gradient(45deg, #FFD700, #FFFFFF 25%, #FFD700);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 80px;
-  text-shadow: 0 0 0 #3CB371, 0 0 5px #3CB371, 0 0 0px #3CB371;
-}
-
 .overlay-text {
   position: absolute;
-  top: 40%; /* 원하는 위치로 조정 */
-  left: 30%; /* 원하는 위치로 조정 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 텍스트 가독성 향상을 위한 그림자 */
+  text-align: center;
+  text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.5);
 }
 
-.overlay-text h1, .overlay-text h4 {
-  margin: 5px 0;
+.overlay-text h1 {
+  margin: 20px 0;
+  font-size: 4em;
+  /* text-shadow: 20px black; */
 }
 
+.overlay-text h4 {
+  margin-top: 50px;
+}
 
 .join-button {
-  /* text-decoration: none; */
-  font-size: 1em;
+  font-size: 1.5em;
 }
 
+.scroll-button {
+  margin-top: 80px;
 
+  cursor: pointer;
+  animation: bounce 2s infinite;
+}
+
+.scroll-icon {
+  width: 64px;
+  /* 아이콘의 너비 조정 */
+  height: 64px;
+  /* 아이콘의 높이 조정 */
+  stroke: #3c2424;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+#start {
+  font-family: "Orbit", sans-serif;
+  /* font-weight: 400; */
+  font-style: normal;
+  letter-spacing: 4px;
+}
 </style>

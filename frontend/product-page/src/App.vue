@@ -1,27 +1,10 @@
 <template>
   <div class="container-fluid" style="padding: 0;">
-    <!-- <header :class="['navbar-custom', { 'navbar-scrolled': isScrolled }]" style="width:100%">
-      <nav class="navbar px-5 d-flex justify-content-between flex-nowrap" style="min-width: 1200px; max-width:1500px;"
-        data-aos="fade-up" data-aos-duration="1500">
-          <img src="@/assets/tr_logo.png" alt="logo" style="width: 70px; height: 70px;">
-          
-          
-          <div class="container-custom d-flex flex-nowrap">
-          <ul class="navbar-nav d-flex flex-row flex-nowrap">
-            <li class="nav-item d-flex align-items-center" >
-
-            </li>
-
-          </ul>
-        </div>
-      </nav>
-    </header> -->
-
     <main>
       <RouterView />
     </main>
 
-    <footer class="row">
+    <footer class="row custom-footer" style="margin: 0;">
       <h3 class="fs-5 fw-bold">텅빈</h3>
       <p class="mb-0">ⓒ All rights reserved</p>
     </footer>
@@ -51,7 +34,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
-
 </script>
 
 <style scoped>
@@ -111,12 +93,18 @@ footer {
   margin-top: 30px;
   margin-bottom: 0px;
   padding-top: 20px;
-  background-color: whitesmoke;
+  background-color: #2E3B4E; 
+  color: #CCCCCC; 
   height: 100px;
   width: 100%;
-  border-top: 2px solid whitesmoke;
+  border-top: 2px solid #2E3B4E; 
   text-align: center;
   display: flex;
   align-content: start;
+}
+
+.custom-footer h3,
+.custom-footer p {
+  color: #CCCCCC; 
 }
 </style>
