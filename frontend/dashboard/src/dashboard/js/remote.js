@@ -115,7 +115,7 @@ export async function removeSubscribeTrashcan() {
 
   idList.forEach(async (id) => {
     await axios
-      .post(`/api/v1/trash/${id}/delete`, {
+      .post(`/api/v1/trash/${id}/delete`, null, {
         headers: {
           Authorization: sessionStorage.getItem("teongbinToken"),
         },
@@ -127,11 +127,14 @@ export async function removeSubscribeTrashcan() {
         console.log(error);
       });
   });
-  trashcanStore.selectTrashcanList.splice(
-    0,
-    trashcanStore.selectTrashcanList.length
-  );
-  getShortcutList();
+  
+  try {
+    await Promise.all(deletePromises);
+    trashcanStore.selectTrashcanList.splice(0, trashcanStore.selectTrashcanList.length);
+    getTrashcanList();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function getRandomNum(seed) {
