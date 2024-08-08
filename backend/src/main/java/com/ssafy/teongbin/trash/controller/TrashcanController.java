@@ -53,14 +53,41 @@ public class TrashcanController {
         return ResponseUtils.ok(MsgType.UPDATE_TRASHCAN_SUCCESSFULLY);
     }
 
-    @GetMapping("/user/trashcan")
+    // 성능 최적화 하기 전 버전
+    @GetMapping("/user/trashcan/restV1")
+    public ResponseEntityDto<List<UserTrashcanRestDto>> userTrashcanRest(@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userTrashcanRest(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
+    }
+
+    // 성능 최적화 한 후 버전
+    @GetMapping("/user/trashcan/rest")
+    public ResponseEntityDto<List<UserTrashcanRestDtoV2>> userTrashcanRestV2(@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userTrashcanRestV2(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
+    }
+
+    // 성능 최적화 전 버전
+    @GetMapping("/user/trashcanV1")
     public ResponseEntityDto<List<UserTrashcanDto>> userTrashcan(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userTrashcan(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
 
-    @GetMapping("/user/restlog")
+    // 성능 최적화 후
+    @GetMapping("/user/trashcan")
+    public ResponseEntityDto<List<UserTrashcanDto>> userTrashcanV2 (@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userTrashcanV2(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
+    }
+
+
+    // 날짜별 필터링 하기 전 버전
+    @GetMapping("/user/restlogV1")
     public ResponseEntityDto<List<UserLogDto.RestDto>> userRestlog(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userRestlog(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
+    }
+
+    //3일 기준 필터링 + 성능 최적화
+    @GetMapping("/user/restlog")
+    public ResponseEntityDto<List<UserLogDto.RestDto>> userRestlogV2(@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userRestlogV2(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
     }
 
     @GetMapping("/{trashcan_id}/catlog")

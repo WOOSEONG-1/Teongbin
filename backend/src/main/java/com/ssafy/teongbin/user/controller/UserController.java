@@ -6,6 +6,7 @@ import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
 import com.ssafy.teongbin.user.dto.request.UpdateUserRequestDto;
+import com.ssafy.teongbin.user.dto.response.ProfileResponseDto;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class UserController {
 
     // 회원정보 조회
     @GetMapping("/profile")
-    public ResponseEntityDto<User> profile(@AuthenticationPrincipal PrincipalDetails user){
+    public ResponseEntityDto<ProfileResponseDto> profile(@AuthenticationPrincipal PrincipalDetails user){
 
         return ResponseUtils.ok(userService.profile(user), MsgType.SEARCH_SUCCESSFULLY);
     }
