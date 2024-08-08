@@ -1,10 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { cloneDeep } from "lodash";
-import { useTrashcanStore } from "@/dashboard/stores/trashcan";
-import axios from "axios";
-
-const trashcanStore = useTrashcanStore();
+import { addTrashcan } from "@/dashboard/js/remote";
 
 const trashcanData = ref({
   serialNumber: "",
@@ -13,25 +10,10 @@ const trashcanData = ref({
   nickname: "",
 });
 
-function postNewTrashcan(data) {
-  axios
-    .post("/api/v1/trash/new", data, {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken")
-      }
-    })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-function addTrashcan() {
+function addNewTrashcan() {
   const data = cloneDeep(trashcanData.value);
 
-  postNewTrashcan(data);
+  addTrashcan(data);
 
   resetInput();
 }
@@ -128,7 +110,7 @@ function resetInput() {
             type="button"
             class="btn"
             data-bs-dismiss="modal"
-            @click="addTrashcan"
+            @click="addNewTrashcan"
           >
             등록
           </button>

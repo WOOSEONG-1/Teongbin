@@ -5,7 +5,7 @@ const trashcanStore = useTrashcanStore();
 </script>
 
 <template>
-  <div class="product-container">
+  <div class="product-container scroll-container">
     <div
       class="trashcan-info-container"
       v-for="(trashcan, idx) in trashcanStore.trashcanList"
@@ -42,7 +42,28 @@ const trashcanStore = useTrashcanStore();
 .product-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  height: min-content;
+  height: 500px;
+}
+.scroll-container {
+  overflow-y: scroll;
+  position: relative;
+  margin-right: 8px;
+  padding-right: 8px;
+}
+.scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.scroll-container:hover::-webkit-scrollbar-thumb {
+  background: #888;
+}
+.scroll-container:hover::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 .trashcan-info-container {
   border: 1px solid black;
@@ -63,9 +84,10 @@ const trashcanStore = useTrashcanStore();
   border-right: 1px double silver;
 }
 .trashcan-info-data {
-  width: 9.5rem;
+  width: 8.5rem;
   overflow: hidden;
   padding: 0 0.5rem;
+  font-size: 1.2rem;
 }
 .trashcan-serial-number {
   font-size: 1rem;

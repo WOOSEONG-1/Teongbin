@@ -12,6 +12,7 @@ import {
 } from "@/dashboard/js/remote";
 
 const $mapRef = ref();
+const center = ref();
 
 function getSetting() {
   center.value = $mapRef.value.getSetting();
@@ -30,7 +31,6 @@ getUserInfo(false);
 async function getTrashcan() {
   const success = await getTrashcanList(false);
   if (success) {
-    getTrashcanRest();
     setInterval(() => getTrashcanRest(), 600000);
   }
 }
