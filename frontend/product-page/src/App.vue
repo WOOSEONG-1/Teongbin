@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid">
-    <header :class="['navbar-custom', { 'navbar-scrolled': isScrolled }]" style="width:100%">
+  <div class="container-fluid" style="padding: 0;">
+    <!-- <header :class="['navbar-custom', { 'navbar-scrolled': isScrolled }]" style="width:100%">
       <nav class="navbar px-5 d-flex justify-content-between flex-nowrap" style="min-width: 1200px; max-width:1500px;"
         data-aos="fade-up" data-aos-duration="1500">
           <img src="@/assets/tr_logo.png" alt="logo" style="width: 70px; height: 70px;">
@@ -15,7 +15,7 @@
           </ul>
         </div>
       </nav>
-    </header>
+    </header> -->
 
     <main>
       <RouterView />
