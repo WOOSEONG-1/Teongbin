@@ -25,6 +25,22 @@ export function getUserInfo(reload) {
   }
 }
 
+export function changeUserInfo(name, password) {
+  const data = {
+    password: password,
+    name: name,
+  }
+  axios.post("/api/v1/user/update", data, {
+    headers: {
+      Authorization: sessionStorage.getItem("teongbinToken"),
+    },
+  }).then((res) => {
+    getUserInfo();
+  }).catch((error) => {
+
+  })
+}
+
 export function addTrashcan(data) {
   axios
     .post("/api/v1/trash/new", data, {
