@@ -3,6 +3,7 @@ import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { ref } from "vue";
 import { Modal } from "bootstrap";
 import { modifyTrashcanInfo } from "@/dashboard/js/remote";
+import { cloneDeep } from "lodash";
 
 const trashcanStore = useTrashcanStore();
 
@@ -10,7 +11,7 @@ const modifyInfoModal = ref();
 
 function checkSelectTrashcan() {
   if (trashcanStore.selectTrashcanList.length == 1) {
-    trashcanStore.trashcanInfo = trashcanStore.trashcanList[trashcanStore.selectTrashcanList[0]];
+    trashcanStore.trashcanInfo = cloneDeep(trashcanStore.trashcanList[trashcanStore.selectTrashcanList[0]]);
     const modalInstance = new Modal(modifyInfoModal.value);
     modalInstance.show();
   }
