@@ -70,7 +70,7 @@ const scrollToContent = () => {
 }
 
 .scroll-button {
-  margin-top: 80px;
+  margin-top: 110px;
 
   cursor: pointer;
   animation: bounce 2s infinite;
