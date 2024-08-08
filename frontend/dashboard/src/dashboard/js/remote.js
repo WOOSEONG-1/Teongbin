@@ -2,6 +2,7 @@ import axios from "axios";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { useUserStore } from "@/dashboard/stores/user";
+import { cloneDeep } from "lodash";
 
 const shortcutStore = useShortcutStore();
 const trashcanStore = useTrashcanStore();
@@ -28,8 +29,8 @@ export function addTrashcan(data) {
   axios
     .post("/api/v1/trash/new", data, {
       headers: {
-        Authorization: sessionStorage.getItem("teongbinToken")
-      }
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
     })
     .then((res) => {
       getTrashcanList();
@@ -82,6 +83,28 @@ export function getTrashcanRest() {
     .catch((error) => {
       console.log(error);
     });
+}
+
+export function modifyTrashcanInfo() {
+  const data = cloneDeep(trashcanStore.trashcanInfo);
+
+  const postData = {
+    latitude: data.latitude,
+    longitude: data.longitude,
+    nickname: data.nickname,
+  };
+
+  axios
+    .post(`/api/v1/trash/${data.trashcanId}/update`, postData, {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      getTrashcanList();
+      trashcanStore.selectTrashcanList.splice(0, 1);
+    })
+    .catch((error) => {});
 }
 
 function getRandomNum(seed) {

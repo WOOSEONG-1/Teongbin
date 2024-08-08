@@ -2,13 +2,21 @@
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 
 const trashcanStore = useTrashcanStore();
+
+function selectTrashcan(idx) {
+  const found = trashcanStore.selectTrashcanList.findIndex((select) => select == idx);
+  if(found == -1) trashcanStore.selectTrashcanList.push(idx);
+  else trashcanStore.selectTrashcanList.splice(found, 1);
+}
 </script>
 
 <template>
   <div class="product-container scroll-container">
-    <div
+    <button
       class="trashcan-info-container"
       v-for="(trashcan, idx) in trashcanStore.trashcanList"
+      @click="selectTrashcan(idx)"
+      :class="{ select: trashcanStore.selectTrashcanList.includes(idx) }"
     >
       <div class="trashcan-info horizontal-line">
         <div class="trashcan-info-label">별칭</div>
@@ -34,7 +42,7 @@ const trashcanStore = useTrashcanStore();
           {{ trashcan.longitude }}
         </div>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -43,6 +51,14 @@ const trashcanStore = useTrashcanStore();
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   height: 500px;
+}
+button {
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+.select {
+  background: #EEE;
 }
 .scroll-container {
   overflow-y: scroll;
