@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useShortcutStore } from "@/dashboard/stores/shortcut";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { useUserStore } from "@/dashboard/stores/user";
 
+const shortcutStore = useShortcutStore();
 const trashcanStore = useTrashcanStore();
 const userStore = useUserStore();
 
@@ -10,7 +12,6 @@ export function getUserInfo(reload) {
     axios
       .get("/api/v1/user/profile", {
         headers: {
-          "Content-Type": "application/json",
           Authorization: sessionStorage.getItem("teongbinToken"),
         },
       })

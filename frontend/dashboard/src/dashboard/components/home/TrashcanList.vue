@@ -1,33 +1,43 @@
 <script setup>
+import { useMapStore } from "@/dashboard/stores/map";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 
+const mapStore = useMapStore();
 const trashcanStore = useTrashcanStore();
 </script>
 
 <template>
   <section class="product-state-section">
     <div class="product-state-container">
-      <button
-        v-for="(trashcan, idx) in trashcanStore.trashcanList"
-        :key="idx"
-        class="product-state-item"
-        @click="$emit('moveCenter', trashcan)"
-      >
-        <div class="text-info-container">
-          <div class="trashcan-text-info nickname">{{ trashcan.nickname }}</div>
-          <div class="trashcan-text-info">{{ trashcan.restPercent }}</div>
-        </div>
-        <div>
-          <i
-            class="bi bi-trash2-fill trashcan-img"
-            :class="{
-              'trashcan-lack': trashcan.restPerceont >= 70,
-              'trashcan-half': trashcan.restPercent >= 30,
-              'trashcan-enough': trashcan.restPercent < 30,
-            }"
-          ></i>
-        </div>
-      </button>
+      <div v-for="(trashcan, idx) in trashcanStore.trashcanList" :key="idx">
+        <button
+          v-if="
+            mapStore.bounds._min._lat <= trashcan.latitude &&
+            trashcan.latitude <= mapStore.bounds._max._lat &&
+            mapStore.bounds._min._lng <= trashcan.longitude &&
+            trashcan.longitude <= mapStore.bounds._max._lng
+          "
+          @click="$emit('moveCenter', trashcan)"
+          class="product-state-item"
+        >
+          <div class="text-info-container">
+            <div class="trashcan-text-info nickname">
+              {{ trashcan.nickname }}
+            </div>
+            <div class="trashcan-text-info">{{ trashcan.restPercent }}</div>
+          </div>
+          <div>
+            <i
+              class="bi bi-trash2-fill trashcan-img"
+              :class="{
+                'trashcan-lack': trashcan.restPerceont >= 70,
+                'trashcan-half': trashcan.restPercent >= 30,
+                'trashcan-enough': trashcan.restPercent < 30,
+              }"
+            ></i>
+          </div>
+        </button>
+      </div>
     </div>
   </section>
 </template>
