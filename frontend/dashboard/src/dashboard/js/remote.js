@@ -24,7 +24,22 @@ export function getUserInfo(reload) {
   }
 }
 
-export async function getTrashcanList(reload) {
+export function addTrashcan(data) {
+  axios
+    .post("/api/v1/trash/new", data, {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken")
+      }
+    })
+    .then((res) => {
+      getTrashcanList();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+export async function getTrashcanList() {
   let success = true;
   await axios
     .get("/api/v1/trash/user/trashcan", {
@@ -34,6 +49,7 @@ export async function getTrashcanList(reload) {
     })
     .then((res) => {
       trashcanStore.trashcanList = res.data.data;
+      getTrashcanRest();
     })
     .catch((error) => {
       console.log(error);
@@ -69,7 +85,7 @@ export function getTrashcanRest() {
 }
 
 function getRandomNum(seed) {
-  return ((seed * seed * seed + 9 * seed * seed + seed) * 29) % 32 * 6;
+  return (((seed * seed * seed + 9 * seed * seed + seed) * 29) % 32) * 6;
 }
 
 export async function addShortcut(setting) {
