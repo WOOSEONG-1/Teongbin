@@ -9,9 +9,7 @@
           <div class="container-custom d-flex flex-nowrap">
           <ul class="navbar-nav d-flex flex-row flex-nowrap">
             <li class="nav-item d-flex align-items-center" >
-                <a href="https://i11c101.p.ssafy.io/main/user/login" class="btn btn-success" style="text-decoration: none;">
-                  가입하기
-                </a>
+
             </li>
 
           </ul>
