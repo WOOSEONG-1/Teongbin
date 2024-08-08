@@ -107,6 +107,33 @@ export function modifyTrashcanInfo() {
     .catch((error) => {});
 }
 
+export async function removeSubscribeTrashcan() {
+  const idList = [];
+  trashcanStore.selectTrashcanList.forEach((trashcanIdx) => {
+    idList.push(trashcanStore.trashcanList[trashcanIdx].trashcanId);
+  });
+
+  idList.forEach(async (id) => {
+    await axios
+      .post(`/api/v1/trash/${id}/delete`, {
+        headers: {
+          Authorization: sessionStorage.getItem("teongbinToken"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  trashcanStore.selectTrashcanList.splice(
+    0,
+    trashcanStore.selectTrashcanList.length
+  );
+  getShortcutList();
+}
+
 function getRandomNum(seed) {
   return (((seed * seed * seed + 9 * seed * seed + seed) * 29) % 32) * 6;
 }
