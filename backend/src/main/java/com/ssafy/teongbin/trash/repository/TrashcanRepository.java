@@ -1,6 +1,7 @@
 package com.ssafy.teongbin.trash.repository;
 
 import com.ssafy.teongbin.trash.dto.response.UserLogDto;
+import com.ssafy.teongbin.trash.dto.response.UserTrashcanDto;
 import com.ssafy.teongbin.trash.dto.response.UserTrashcanRestDtoV2;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.user.entity.User;
@@ -29,4 +30,11 @@ public interface TrashcanRepository extends JpaRepository<Trashcan, Long> {
             "AND r.createdAt >= :nowMinus3 " +
             "ORDER BY r.createdAt DESC")
     List<UserLogDto.RestDto> findRestDto(@Param("trashcanIds") List<Long> trashcanIds, @Param("nowMinus3") LocalDateTime nowMinus3);
+
+    @Query("SELECT new com.ssafy.teongbin.trash.dto.response.UserTrashcanDto(t) From Trashcan t WHERE t.user = :user")
+    List<UserTrashcanDto> findTrashcanDtosByUser(@Param("user") User user);
+
+    @Query("SELECT t FROM Trashcan t JOIN FETCH t.catlogs WHERE t.id = :trashcanId")
+    Optional<Trashcan> findTrashcanById(@Param("trashcanId") Long trashcanId);
+
 }

@@ -4,7 +4,6 @@ import com.ssafy.teongbin.common.reseponse.MsgType;
 import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.log.dto.request.CatlogRequest;
-import com.ssafy.teongbin.log.dto.response.CatlogResponse;
 import com.ssafy.teongbin.log.service.CatlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

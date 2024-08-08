@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
-import axios from "axios";
+import { addShortcut, getShortcutList } from "@/dashboard/js/remote";
 
 const shortcutStore = useShortcutStore();
 
@@ -14,7 +14,7 @@ const props = defineProps({
 
 watch(
   () => props.shortcut,
-  (setting) => {
+  async (setting) => {
     if (setting) {
       const shortcut = {
         nickname: shortcutName.value,
@@ -25,7 +25,8 @@ watch(
 
       toggleInput();
       shortcutName.value = "";
-      postNewShortcut(shortcut);
+      const success = await addShortcut(shortcut);
+      if (success) getShortcutList();
     }
   }
 );
@@ -39,40 +40,14 @@ function toggleInput() {
   }
 }
 
-function postNewShortcut(setting) {
-  axios
-    .post("/api/v1/user/shortcut/new", setting, {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
-    .then((res) => {
-      updateShortcutList();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+function colorStyle(idx) {
+  const color = shortcutStore.colorList.at(idx);
+  return {
+    color: `rgb(${color.red}, ${color.green}, ${color.blue})`,
+  };
 }
 
-function updateShortcutList() {
-  axios
-    .get("/api/v1/user/shortcut", {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
-    .then((res) => {
-      shortcutStore.shortcutList.splice(0, shortcutStore.shortcutList.length);
-      res.data.data.forEach((shortcut) => {
-        shortcutStore.shortcutList.push(shortcut);
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-updateShortcutList();
+getShortcutList();
 
 function deleteShortcut(idx) {
   shortcutStore.shortcutList.splice(idx, 1);
@@ -88,7 +63,9 @@ function deleteShortcut(idx) {
         :key="idx"
         @click="$emit('changeSetting', shortcut)"
       >
-        {{ shortcut.nickname }}
+        <div :style="colorStyle(idx)">
+          {{ shortcut.nickname }}
+        </div>
       </button>
     </div>
     <div class="shortcut-menu-container">
@@ -192,10 +169,10 @@ function deleteShortcut(idx) {
 }
 
 .scroll-container:hover::-webkit-scrollbar-thumb {
-    background: #888;
+  background: #888;
 }
 
 .scroll-container:hover::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 </style>

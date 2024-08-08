@@ -95,6 +95,24 @@ public class UserTrashcanService {
         }
     }
 
+    public List<UserTrashcanDto> userTrashcanV2 (PrincipalDetails userIn) {
+        String username = userIn.getUsername();
+        if (username == null || username.trim().isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
+        }
+        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        if ( ou.isPresent() ){
+            List<UserTrashcanDto> lt = trashcanRepository.findTrashcanDtosByUser(ou.get());
+            if (lt.isEmpty()) {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
+            return lt;
+        }
+        else {
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+        }
+    }
+
     public List<UserLogDto.RestDto> userRestlog (PrincipalDetails userIn) {
         String username = userIn.getUsername();
         if (username==null || username.trim().isEmpty()) {
