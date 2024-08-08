@@ -1,6 +1,7 @@
 package com.ssafy.teongbin.user.entity;
 
 import com.ssafy.teongbin.common.entity.BaseTime;
+import com.ssafy.teongbin.mail.entity.Code;
 import com.ssafy.teongbin.shortcut.entity.Shortcut;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
@@ -67,6 +68,7 @@ public class User extends BaseTime {
         this.password = password;
     }
 
-
+    @OneToMany(mappedBy = "user")
+    private List<Code> Codes = new ArrayList<>();
 
 }
