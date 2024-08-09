@@ -24,10 +24,8 @@ public class MailController {
 
     @ResponseBody
     @PostMapping("/api/v1/user/email")
-    public ResponseEntityDto<Void> MailSend(
-            @RequestBody MailDto mailDto,
-            @AuthenticationPrincipal PrincipalDetails userIn) {
-        int number = mailService.sendMail(mailDto, userIn);
+    public ResponseEntityDto<Void> MailSend(@RequestBody MailDto mailDto) {
+        int number = mailService.sendMail(mailDto);
         String num = String.valueOf(number);
         if (num.length() != 6 || !num.matches("\\d{6}")) {
             return ResponseUtils.error(ErrorResponse.of(ErrorType.FAILED_TO_GENERATECODE));
@@ -38,10 +36,8 @@ public class MailController {
 
     @ResponseBody
     @PostMapping("api/v1/user/verify")
-    public ResponseEntityDto<Void> verifyCode(
-            @RequestBody ApproveRequestDto approveRequestDto,
-            @AuthenticationPrincipal PrincipalDetails userIn) {
-        boolean isVerified = mailVerificationService.verifyCode(approveRequestDto, userIn);
+    public ResponseEntityDto<Void> verifyCode(@RequestBody ApproveRequestDto approveRequestDto) {
+        boolean isVerified = mailVerificationService.verifyCode(approveRequestDto);
         if (isVerified){
             return ResponseUtils.ok(MsgType.EMAILVERIFY_SUCCESSFULLY);
         } else {

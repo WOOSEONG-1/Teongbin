@@ -8,4 +8,7 @@ import lombok.Getter;
 public class ProfileResponseDto {
     String email;
     String name;
+    Double latitude;
+    Double longitude;
+    int zoom_level;
 }
