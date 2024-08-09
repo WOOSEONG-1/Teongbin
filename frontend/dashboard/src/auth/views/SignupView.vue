@@ -1,10 +1,9 @@
 <script setup>
 import AuthLayout from "@/auth/layouts/AuthLayout.vue";
 import { cloneDeep } from "lodash";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import axios from "axios";
 import "@/auth/assets/css/account.css";
 
 const router = useRouter();
@@ -12,20 +11,17 @@ const signupData = ref({ email: "", name: "", password: "" });
 const passwordConfirm = ref("");
 const signupModal = ref();
 
-function signup() {
+async function handleSignup() {
   if (signupData.value.password != passwordConfirm.value) {
     return false;
   }
   const data = cloneDeep(signupData.value);
-  axios
-    .post("/api/v1/user/signup", data, {
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
-      const modalInstance = new Modal(signupModal.value);
-      modalInstance.show();
-    })
-    .catch((error) => {});
+
+  const success = await signup(data);
+  if (success) {
+    const modalInstance = new Modal(signupModal.value);
+    modalInstance.show();
+  }
 }
 
 function gotoLogin() {
@@ -87,7 +83,7 @@ function gotoLogin() {
           />
           <label class="input-label">회사명</label>
         </div>
-        <button type="button" @click="signup" class="box submit-btn">
+        <button type="button" @click="handleSignup" class="box submit-btn">
           계정 생성
         </button>
 
