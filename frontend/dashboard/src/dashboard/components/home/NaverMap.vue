@@ -36,8 +36,6 @@ function initMap() {
   });
 }
 
-
-
 function getSetting() {
   return {
     center: map.value.getCenter(),
