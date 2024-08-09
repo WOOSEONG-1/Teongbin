@@ -8,6 +8,17 @@ const props = defineProps({
   shortcut: Object,
 });
 
+const handleWheel = (event) => {
+  if (event.deltaY !== 0) {
+    event.preventDefault();
+    shortcutContainer.value.scrollLeft += event.deltaY;
+  }
+};
+
+onMounted(() => {
+  shortcutContainer.value.addEventListener("wheel", handleWheel);
+});
+
 function colorStyle(idx) {
   const color = shortcutStore.colorList.at(idx);
   return {
