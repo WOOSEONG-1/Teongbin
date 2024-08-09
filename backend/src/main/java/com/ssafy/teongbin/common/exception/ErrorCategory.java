@@ -10,6 +10,7 @@ public enum ErrorCategory {
     TRASHCAN_ERROR("쓰레기통 에러"),
     RESTLOG_ERROR("잔량 로그 에러"),
     CATEGORY_ERROR("카테고리 에러"),
+    EMAILVERIFY_ERROR("이메일 인증 에러"),
     SHORTCUT_ERROR("숏컷 에러");
 
 
