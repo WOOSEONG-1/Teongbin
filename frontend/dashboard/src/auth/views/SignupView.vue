@@ -88,7 +88,7 @@ function gotoLogin() {
           <label class="input-label">회사명</label>
         </div>
         <button type="button" @click="signup" class="box submit-btn">
-          Create Account
+          계정 생성
         </button>
 
         <div
@@ -115,10 +115,12 @@ function gotoLogin() {
                 ></button>
               </div>
               <div class="modal-body">
-                {{ signupData.email }}의 회원가입이 완료되었습니다
-              </div>
-              <div class="modal-body">
-                확인을 눌러 로그인 페이지로 이동하세요
+                <div class="navigator-text">
+                  {{ signupData.email }}의 회원가입이 완료되었습니다
+                </div>
+                <div class="navigator-text">
+                  확인을 눌러 로그인 페이지로 이동하세요
+                </div>
               </div>
               <div class="modal-footer">
                 <button
@@ -139,6 +141,9 @@ function gotoLogin() {
 </template>
 
 <style scoped>
+.navigator-text {
+  font-size: 1.2rem;
+}
 .input-error {
   color: red;
 }
