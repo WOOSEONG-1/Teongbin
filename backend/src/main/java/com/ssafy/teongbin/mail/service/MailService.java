@@ -1,25 +1,16 @@
 package com.ssafy.teongbin.mail.service;
 
-import com.ssafy.teongbin.common.exception.CustomException;
-import com.ssafy.teongbin.common.exception.ErrorType;
-import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.mail.dto.MailDto;
-import com.ssafy.teongbin.user.entity.User;
-import com.ssafy.teongbin.user.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MailService {
 
     private final JavaMailSender javaMailSender;
-    private final UserRepository userRepository;
     private final RedisService redisService;
 
     private static String senderEmail = "teongbin@gmail.com";
@@ -49,18 +40,11 @@ public class MailService {
         return message;
     }
 
-    public int sendMail(MailDto mailDto, PrincipalDetails userIn) {
-        User user;
-
-        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
-        if ( ou.isPresent() ) {
-            String mail = mailDto.getEmail().trim();
-            MimeMessage message = createMail(mail);
-            javaMailSender.send(message);
-            redisService.saveVerificationCode(mail, String.valueOf(number));
-            return number;
-        } else {
-            throw new CustomException(ErrorType.NOT_FOUND_USER);
-        }
+    public int sendMail(MailDto mailDto) {
+        String mail = mailDto.getEmail().trim();
+        MimeMessage message = createMail(mail);
+        javaMailSender.send(message);
+        redisService.saveVerificationCode(mail, String.valueOf(number));
+        return number;
     }
 }
