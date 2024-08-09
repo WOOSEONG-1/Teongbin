@@ -14,11 +14,11 @@ const router = createRouter({
       name: 'product',
       component: () => import('@/dashboard/views/ProductView.vue')
     },
-    {
-      path: '/myPage/pwd',
-      name: 'pwd',
-      component: () => import('@/dashboard/views/PwdChange.vue')
-    },
+    // {
+    //   path: '/myPage/pwd',
+    //   name: 'pwd',
+    //   component: () => import('@/dashboard/views/PwdChange.vue')
+    // },
     {
       path: '/user/login',
       name: 'login',

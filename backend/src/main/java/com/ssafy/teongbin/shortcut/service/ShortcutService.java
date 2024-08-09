@@ -10,9 +10,7 @@ import com.ssafy.teongbin.shortcut.entity.Shortcut;
 import com.ssafy.teongbin.shortcut.repository.ShortcutRepository;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.repository.UserRepository;
-import com.ssafy.teongbin.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +22,6 @@ import java.util.Optional;
 public class ShortcutService {
     private final ShortcutRepository shortcutRepository;
     private final UserRepository userRepository;
-    private final UserService userService;
 
     // 숏컷 등록
     @Transactional
@@ -37,15 +34,19 @@ public class ShortcutService {
         Double latitude = addShortcutRequestDto.getLatitude();
         Double longitude = addShortcutRequestDto.getLongitude();
 
-        if (latitude>180||latitude<-180) {
+        if (latitude > 90 || latitude < -90) {
             throw new CustomException(ErrorType.INVALID_LOCATION);
         }
-        if (longitude>180||longitude<-180) {
+        if (longitude > 180 || longitude < -180) {
             throw new CustomException(ErrorType.INVALID_LOCATION);
         }
 
         //==============================
         // 줌 레벨 범위 이탈 여부 => 나중에 해야함.
+//        int zoom_level = addShortcutRequestDto.getZoom_level();
+//        if (zoom_level < 0) {
+//            throw new CustomException(ErrorType.INVALID_ZOOM_LEVEL);
+//        }
         //==============================
 
         Shortcut shortcut = Shortcut.builder()
@@ -72,7 +73,7 @@ public class ShortcutService {
             throw new CustomException(ErrorType.NOT_FOUND_SHORTCUT);
         }
         // 유저와 shortcut의 user가 다르다면?
-        if (ou.get()!= optionalShortcut.get().getUser()) {
+        if (ou.get() != optionalShortcut.get().getUser()) {
             throw new CustomException(ErrorType.USER_SHORTCUT_MISMATCH);
         }
         // 삭제 로직
