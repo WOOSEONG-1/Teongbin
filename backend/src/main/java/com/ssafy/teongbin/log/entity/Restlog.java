@@ -1,5 +1,9 @@
 package com.ssafy.teongbin.log.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ssafy.teongbin.common.entity.BaseTime;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
@@ -20,5 +24,6 @@ public class Restlog extends BaseTime {
 
     @ManyToOne
     @JoinColumn(name = "trashcan_id")
+    @JsonBackReference
     private Trashcan trashcan;
 }

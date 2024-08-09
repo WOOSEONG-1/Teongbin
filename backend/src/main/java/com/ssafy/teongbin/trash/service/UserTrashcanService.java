@@ -4,16 +4,20 @@ import com.ssafy.teongbin.common.exception.CustomException;
 import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.log.entity.Catlog;
+import com.ssafy.teongbin.log.repository.RestlogRepository;
 import com.ssafy.teongbin.trash.dto.response.*;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import com.ssafy.teongbin.trash.repository.TrashcanRepository;
 import com.ssafy.teongbin.user.entity.User;
 import com.ssafy.teongbin.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +26,9 @@ public class UserTrashcanService {
 
     private final UserRepository userRepository;
     private final TrashcanRepository trashcanRepository;
+    private final RedisTemplate<String, Object> jsonRedisTemplate;
+    private final RedisTemplate<String, String> stringRedisTemplate;
+    private final RestlogRepository restlogRepository;
 
     public List<UserTrashcanRestDto> userTrashcanRest (PrincipalDetails userIn) {
         String username = userIn.getUsername();
@@ -154,6 +161,51 @@ public class UserTrashcanService {
             LocalDateTime nowMinus3 = now.minusDays(3);
             List<UserLogDto.RestDto> uld = trashcanRepository.findRestDto(trashcanIds, nowMinus3);
             return uld;
+        } else {
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+        }
+    }
+
+//    Redis 캐싱 기반 RestLog 조회
+    public List<UserLogDto.RestDto> userRestLogWithCaching (PrincipalDetails userIn) {
+        String username = userIn.getUsername();
+        if (username == null || username.trim().isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_USERNAME);
+        }
+        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        if (ou.isPresent()) {
+            List<Trashcan> lt = trashcanRepository.findByUser(ou.get());
+            if (lt.isEmpty()) {
+                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+            }
+            List<Long> trashcanIds = lt.stream()
+                    .map(Trashcan::getId)
+                    .collect(Collectors.toList());
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime nowMinus3 = now.minusDays(7);
+
+            List<UserLogDto.RestDto> allLogs = new ArrayList<>();
+            for (Long trashcanId : trashcanIds) {
+                String redisKey = "TRASHCAN_LOGS_" + trashcanId;
+                List<UserLogDto.RestDto> cachedLogs = (List<UserLogDto.RestDto>) jsonRedisTemplate.opsForValue().get(redisKey);
+
+                if (cachedLogs == null) {
+                    List<UserLogDto.RestDto> uld = restlogRepository.
+                            findRecentLogsByTrashcanIdAndHours(trashcanId, nowMinus3).stream()
+                            .map( restlog -> {
+                                return new UserLogDto.RestDto(restlog);
+                            })
+                            .toList();
+                    if (!uld.isEmpty()) {
+                        jsonRedisTemplate.opsForValue().set(redisKey, uld, 3, TimeUnit.DAYS);
+                    }
+                    allLogs.addAll(uld);
+                } else {
+                    allLogs.addAll(cachedLogs);
+                }
+            }
+            System.out.println(allLogs);
+            return allLogs;
         } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }

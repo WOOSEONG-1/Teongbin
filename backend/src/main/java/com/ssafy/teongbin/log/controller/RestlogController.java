@@ -18,6 +18,5 @@ public class RestlogController {
     @PostMapping("/api/v1/trash/rest")
     public ResponseEntityDto<Long> newRestlog(@RequestBody RestlogRequest request) {
         return ResponseUtils.ok(restlogService.join(request), MsgType.ADD_RESTLOG_SUCCESSFULLY);
-
     }
 }

@@ -17,6 +17,10 @@ function initMap() {
   };
 
   map.value = new naver.maps.Map("map", mapOptions);
+
+  naver.maps.Event.addListener(map.value, "bounds_changed", (bounds) => {
+    mapStore.bounds = bounds;
+  });
 }
 
 onMounted(() => {
@@ -140,7 +144,6 @@ defineExpose({ getSetting, changeSetting, moveCenter });
 
 <style scoped>
 .map-section {
-  padding: 40px;
   float: left;
   padding-right: 1rem;
 }

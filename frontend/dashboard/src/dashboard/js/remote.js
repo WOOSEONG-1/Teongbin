@@ -1,7 +1,10 @@
 import axios from "axios";
+import { useShortcutStore } from "@/dashboard/stores/shortcut";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { useUserStore } from "@/dashboard/stores/user";
+import { cloneDeep } from "lodash";
 
+const shortcutStore = useShortcutStore();
 const trashcanStore = useTrashcanStore();
 const userStore = useUserStore();
 
@@ -10,7 +13,6 @@ export function getUserInfo(reload) {
     axios
       .get("/api/v1/user/profile", {
         headers: {
-          "Content-Type": "application/json",
           Authorization: sessionStorage.getItem("teongbinToken"),
         },
       })
@@ -23,7 +25,22 @@ export function getUserInfo(reload) {
   }
 }
 
-export async function getTrashcanList(reload) {
+export function addTrashcan(data) {
+  axios
+    .post("/api/v1/trash/new", data, {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      getTrashcanList();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+export async function getTrashcanList() {
   let success = true;
   await axios
     .get("/api/v1/trash/user/trashcan", {
@@ -33,6 +50,7 @@ export async function getTrashcanList(reload) {
     })
     .then((res) => {
       trashcanStore.trashcanList = res.data.data;
+      getTrashcanRest();
     })
     .catch((error) => {
       console.log(error);
@@ -67,8 +85,57 @@ export function getTrashcanRest() {
     });
 }
 
+export function modifyTrashcanInfo() {
+  const data = cloneDeep(trashcanStore.trashcanInfo);
+
+  const postData = {
+    latitude: data.latitude,
+    longitude: data.longitude,
+    nickname: data.nickname,
+  };
+
+  axios
+    .post(`/api/v1/trash/${data.trashcanId}/update`, postData, {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      getTrashcanList();
+      trashcanStore.selectTrashcanList.splice(0, 1);
+    })
+    .catch((error) => {});
+}
+
+export async function removeSubscribeTrashcan() {
+  const idList = [];
+  trashcanStore.selectTrashcanList.forEach((trashcanIdx) => {
+    idList.push(trashcanStore.trashcanList[trashcanIdx].trashcanId);
+  });
+
+  idList.forEach(async (id) => {
+    await axios
+      .post(`/api/v1/trash/${id}/delete`, {
+        headers: {
+          Authorization: sessionStorage.getItem("teongbinToken"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+  trashcanStore.selectTrashcanList.splice(
+    0,
+    trashcanStore.selectTrashcanList.length
+  );
+  getShortcutList();
+}
+
 function getRandomNum(seed) {
-  return ((seed * seed * seed + 9 * seed * seed + seed) * 29) % 32 * 6;
+  return (((seed * seed * seed + 9 * seed * seed + seed) * 29) % 32) * 6;
 }
 
 export async function addShortcut(setting) {

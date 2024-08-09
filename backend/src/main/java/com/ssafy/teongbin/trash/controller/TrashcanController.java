@@ -40,6 +40,7 @@ public class TrashcanController {
     @PostMapping("/{trashcan_id}/delete")
     public ResponseEntityDto<Void> deleteTrash(@PathVariable Long trashcan_id,
                               @AuthenticationPrincipal PrincipalDetails userIn) {
+        System.out.println("hi");
         trashcanService.deleteTrashcan(trashcan_id, userIn);
         return ResponseUtils.ok(MsgType.DELETE_TRASHCAN_SUCCESSFULLY);
     }
@@ -95,6 +96,12 @@ public class TrashcanController {
             @AuthenticationPrincipal PrincipalDetails user,
             @PathVariable("trashcan_id") Long trashcanId) {
         return ResponseUtils.ok(userTrashcanService.trashcanCatlog(user, trashcanId), MsgType.SEARCH_CAT_LOG_SUCCESSFULLY);
+    }
+
+    // 72 시간 이내 발생한 쓰레기통 로그 조회
+    @GetMapping("/user/trashcan/test")
+    public ResponseEntityDto<List<UserLogDto.RestDto>> userRecentLogs (@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userRestLogWithCaching(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
 
     //명세서에 없음
