@@ -29,16 +29,17 @@ export function changeUserInfo(name, password) {
   const data = {
     password: password,
     name: name,
-  }
-  axios.post("/api/v1/user/update", data, {
-    headers: {
-      Authorization: sessionStorage.getItem("teongbinToken"),
-    },
-  }).then((res) => {
-    getUserInfo();
-  }).catch((error) => {
-
-  })
+  };
+  axios
+    .post("/api/v1/user/update", data, {
+      headers: {
+        Authorization: sessionStorage.getItem("teongbinToken"),
+      },
+    })
+    .then((res) => {
+      getUserInfo();
+    })
+    .catch((error) => {});
 }
 
 export function addTrashcan(data) {
@@ -129,8 +130,8 @@ export async function removeSubscribeTrashcan() {
     idList.push(trashcanStore.trashcanList[trashcanIdx].trashcanId);
   });
 
-  idList.forEach(async (id) => {
-    await axios
+  const deletePromises = idList.map((id) => {
+    return axios
       .post(`/api/v1/trash/${id}/delete`, null, {
         headers: {
           Authorization: sessionStorage.getItem("teongbinToken"),
@@ -143,10 +144,13 @@ export async function removeSubscribeTrashcan() {
         console.log(error);
       });
   });
-  
+
   try {
     await Promise.all(deletePromises);
-    trashcanStore.selectTrashcanList.splice(0, trashcanStore.selectTrashcanList.length);
+    trashcanStore.selectTrashcanList.splice(
+      0,
+      trashcanStore.selectTrashcanList.length
+    );
     getTrashcanList();
   } catch (error) {
     console.log(error);
