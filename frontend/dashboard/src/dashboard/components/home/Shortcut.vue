@@ -75,7 +75,9 @@ function renameShortcut(shortcut) {
   rename.value = "";
 }
 
-function removeShortcut(shortcut) {}
+function removeShortcut(shortcut) {
+  postRemoveShortcut(shortcut);
+}
 
 const shortcutInputVisible = ref(false);
 const menuText = ref("숏컷등록");

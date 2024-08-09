@@ -201,3 +201,12 @@ export function postRenameShortcut(shortcut, newNickname) {
     })
     .catch((res) => {});
 }
+
+export function postRemoveShortcut(shortcut) {
+  apiClient
+    .post(`/api/v1/user/shortcut/${shortcut.shortcut_id}/delete`, null)
+    .then((res) => {
+      getShortcutList();
+    })
+    .catch((error) => {});
+}
