@@ -46,6 +46,9 @@ public class UserService {
             return ProfileResponseDto.builder()
                     .email(us.getEmail())
                     .name(us.getName())
+                    .latitude(us.getLatitude())
+                    .longitude(us.getLongitude())
+                    .zoom_level(us.getZoom_level())
                     .build();
         } else {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
@@ -70,6 +73,19 @@ public class UserService {
             String enc_pw = passwordEncoder.encode(dto.getPassword());
             target.updatePassword(enc_pw);
         }
+
+        // latitude 수정
+        if ( dto.getLatitude() != null ){
+            target.updateLatitude(dto.getLatitude());
+        }
+
+        // longitude 수정
+        if ( dto.getLongitude() != null ){
+            target.updateLongitude(dto.getLongitude());
+        }
+
+        // zoom_level 수정
+        target.updateZoomLevel(dto.getZoom_level());
 
         userRepository.save(ou.get());
     }

@@ -41,4 +41,6 @@ public class UserController {
         userService.update(user, dto);
         return ResponseUtils.ok(MsgType.UPDATE_SUCCESSFULLY);
     }
+
+
 }
