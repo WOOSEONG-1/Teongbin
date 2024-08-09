@@ -189,3 +189,15 @@ export function getShortcutList() {
     })
     .catch((error) => {});
 }
+
+export function postRenameShortcut(shortcut, newNickname) {
+  const data = {
+    nickname: newNickname,
+  };
+  apiClient
+    .post(`/api/v1/user/shortcut/${shortcut.shortcut_id}/update`, data)
+    .then((res) => {
+      getShortcutList();
+    })
+    .catch((res) => {});
+}

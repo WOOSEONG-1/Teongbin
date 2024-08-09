@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
-import { addShortcut, getShortcutList } from "@/dashboard/js/remote";
+import { addShortcut, getShortcutList, postRenameShortcut } from "@/dashboard/js/remote";
 const shortcutStore = useShortcutStore();
 
 const props = defineProps({
@@ -57,18 +57,23 @@ function mouseleave() {
     leaveTimeout.value = setTimeout(() => {
       clearTimeout(hoverTimeout.value);
       select.value = -1;
+      rename.value = "";
       if (renameInputVisible.value) {
-        toggleRename();
+        toggleRenameInput();
       }
     }, 500);
   }
 }
 
-function toggleRename() {
+function toggleRenameInput() {
   renameInputVisible.value = !renameInputVisible.value;
 }
 
-function renameShortcut(shortcut) {}
+function renameShortcut(shortcut) {
+  postRenameShortcut(shortcut, rename.value);
+  toggleRenameInput();
+  rename.value = "";
+}
 
 function removeShortcut(shortcut) {}
 
@@ -128,7 +133,7 @@ getShortcutList();
             <button>
               <i
                 class="bi bi-pencil-square manage-img"
-                @click="toggleRename(idx)"
+                @click="toggleRenameInput()"
               ></i>
             </button>
             <div
