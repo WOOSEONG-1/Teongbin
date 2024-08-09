@@ -55,7 +55,7 @@ public class TrashcanService {
         }
         trashcan.setNickname(nn);
         double x = newTrashcanRequest.getLatitude();
-        if (x>180||x<-180) {
+        if (x>90||x<-90) {
             throw new CustomException(ErrorType.INVALID_LOCATION);
         }
         double y = newTrashcanRequest.getLongitude();
@@ -95,7 +95,7 @@ public class TrashcanService {
             Trashcan trashcan = trashcanRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
             trashcan.setNickname(nickname);
-            if (180<latitude || latitude<-180) {
+            if (90<latitude || latitude<-90) {
                 throw new CustomException(ErrorType.INVALID_LOCATION);
             }
             if (180<longitude || longitude<-180) {
