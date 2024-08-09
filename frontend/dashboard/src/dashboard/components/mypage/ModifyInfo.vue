@@ -1,56 +1,46 @@
 <script setup>
+import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { ref } from "vue";
+import { Modal } from "bootstrap";
+import { modifyTrashcanInfo } from "@/dashboard/js/remote";
 import { cloneDeep } from "lodash";
-import { addTrashcan } from "@/dashboard/js/remote";
 
-const trashcanData = ref({
-  serialNumber: "",
-  latitude: 0,
-  longitude: 0,
-  nickname: "",
-});
+const trashcanStore = useTrashcanStore();
 
-function addNewTrashcan() {
-  const data = cloneDeep(trashcanData.value);
+const modifyInfoModal = ref();
 
-  addTrashcan(data);
-
-  resetInput();
+function checkSelectTrashcan() {
+  if (trashcanStore.selectTrashcanList.length == 1) {
+    trashcanStore.trashcanInfo = cloneDeep(trashcanStore.trashcanList[trashcanStore.selectTrashcanList[0]]);
+    const modalInstance = new Modal(modifyInfoModal.value);
+    modalInstance.show();
+  }
 }
 
-function resetInput() {
-  trashcanData.value.serialNumber = "";
-  trashcanData.value.nickname = "";
-  trashcanData.value.latitude = 0;
-  trashcanData.value.longitude = 0;
+function modifyInfo() {
+  modifyTrashcanInfo();
 }
 </script>
 
 <template>
-  <button
-    type="button"
-    class="btn"
-    data-bs-toggle="modal"
-    data-bs-target="#addProduct"
-  >
-    제품 등록
+  <button type="button" class="btn" @click="checkSelectTrashcan">
+    정보 변경
   </button>
 
   <div
     class="modal fade"
-    id="addProduct"
+    id="modifyInfo"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
+    ref="modifyInfoModal"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">
-            제품 및 설치 정보
-          </h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">제품 정보</h1>
           <button
             type="button"
             class="btn-close"
@@ -66,8 +56,9 @@ function resetInput() {
             <input
               type="text"
               class="form-control"
-              v-model="trashcanData.serialNumber"
+              v-model="trashcanStore.trashcanInfo.serialNumber"
               aria-describedby="basic-addon1"
+              readonly
             />
           </div>
           <div class="input-group mb-3">
@@ -77,7 +68,7 @@ function resetInput() {
             <input
               type="text"
               class="form-control"
-              v-model="trashcanData.nickname"
+              v-model="trashcanStore.trashcanInfo.nickname"
               aria-describedby="basic-addon1"
             />
           </div>
@@ -88,7 +79,7 @@ function resetInput() {
             <input
               type="text"
               class="form-control"
-              v-model="trashcanData.latitude"
+              v-model="trashcanStore.trashcanInfo.latitude"
               aria-describedby="basic-addon1"
             />
             <span class="input-group-text info-input" id="longitude-label"
@@ -97,7 +88,7 @@ function resetInput() {
             <input
               type="text"
               class="form-control"
-              v-model="trashcanData.longitude"
+              v-model="trashcanStore.trashcanInfo.longitude"
               aria-describedby="basic-addon1"
             />
           </div>
@@ -110,19 +101,12 @@ function resetInput() {
             type="button"
             class="btn"
             data-bs-dismiss="modal"
-            @click="addNewTrashcan"
+            @click="modifyInfo"
           >
-            등록
+            수정
           </button>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.info-input {
-  width: 4rem;
-  justify-content: center;
-}
-</style>

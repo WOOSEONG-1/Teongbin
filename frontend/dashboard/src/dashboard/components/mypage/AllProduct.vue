@@ -2,13 +2,21 @@
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 
 const trashcanStore = useTrashcanStore();
+
+function selectTrashcan(idx) {
+  const found = trashcanStore.selectTrashcanList.findIndex((select) => select == idx);
+  if(found == -1) trashcanStore.selectTrashcanList.push(idx);
+  else trashcanStore.selectTrashcanList.splice(found, 1);
+}
 </script>
 
 <template>
-  <div class="product-container">
-    <div
+  <div class="product-container scroll-container">
+    <button
       class="trashcan-info-container"
       v-for="(trashcan, idx) in trashcanStore.trashcanList"
+      @click="selectTrashcan(idx)"
+      :class="{ select: trashcanStore.selectTrashcanList.includes(idx) }"
     >
       <div class="trashcan-info horizontal-line">
         <div class="trashcan-info-label">별칭</div>
@@ -34,7 +42,7 @@ const trashcanStore = useTrashcanStore();
           {{ trashcan.longitude }}
         </div>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -42,11 +50,41 @@ const trashcanStore = useTrashcanStore();
 .product-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  height: min-content;
+  height: 500px;
+}
+button {
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+.select {
+  background: #EEE;
+}
+.scroll-container {
+  overflow-y: scroll;
+  position: relative;
+  margin-right: 8px;
+  padding-right: 8px;
+}
+.scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.scroll-container:hover::-webkit-scrollbar-thumb {
+  background: #888;
+}
+.scroll-container:hover::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 .trashcan-info-container {
   border: 1px solid black;
   margin: 1rem 0 0 1rem;
+  height: fit-content;
 }
 .trashcan-info {
   display: flex;
@@ -63,7 +101,10 @@ const trashcanStore = useTrashcanStore();
   border-right: 1px double silver;
 }
 .trashcan-info-data {
-  width: 9.5rem;
+  width: 8.5rem;
+  overflow: hidden;
+  padding: 0 0.5rem;
+  font-size: 1.2rem;
 }
 .trashcan-serial-number {
   font-size: 1rem;

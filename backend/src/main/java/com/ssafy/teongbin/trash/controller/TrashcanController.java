@@ -40,6 +40,7 @@ public class TrashcanController {
     @PostMapping("/{trashcan_id}/delete")
     public ResponseEntityDto<Void> deleteTrash(@PathVariable Long trashcan_id,
                               @AuthenticationPrincipal PrincipalDetails userIn) {
+        System.out.println("hi");
         trashcanService.deleteTrashcan(trashcan_id, userIn);
         return ResponseUtils.ok(MsgType.DELETE_TRASHCAN_SUCCESSFULLY);
     }
@@ -65,11 +66,18 @@ public class TrashcanController {
         return ResponseUtils.ok(userTrashcanService.userTrashcanRestV2(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
 
-
-    @GetMapping("/user/trashcan")
+    // 성능 최적화 전 버전
+    @GetMapping("/user/trashcanV1")
     public ResponseEntityDto<List<UserTrashcanDto>> userTrashcan(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userTrashcan(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
+
+    // 성능 최적화 후
+    @GetMapping("/user/trashcan")
+    public ResponseEntityDto<List<UserTrashcanDto>> userTrashcanV2 (@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userTrashcanV2(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
+    }
+
 
     // 날짜별 필터링 하기 전 버전
     @GetMapping("/user/restlogV1")
@@ -77,7 +85,7 @@ public class TrashcanController {
         return ResponseUtils.ok(userTrashcanService.userRestlog(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
     }
 
-    //3일 기준 필터링
+    //3일 기준 필터링 + 성능 최적화
     @GetMapping("/user/restlog")
     public ResponseEntityDto<List<UserLogDto.RestDto>> userRestlogV2(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userRestlogV2(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
@@ -88,6 +96,12 @@ public class TrashcanController {
             @AuthenticationPrincipal PrincipalDetails user,
             @PathVariable("trashcan_id") Long trashcanId) {
         return ResponseUtils.ok(userTrashcanService.trashcanCatlog(user, trashcanId), MsgType.SEARCH_CAT_LOG_SUCCESSFULLY);
+    }
+
+    // 72 시간 이내 발생한 쓰레기통 로그 조회
+    @GetMapping("/user/trashcan/test")
+    public ResponseEntityDto<List<UserLogDto.RestDto>> userRecentLogs (@AuthenticationPrincipal PrincipalDetails user) {
+        return ResponseUtils.ok(userTrashcanService.userRestLogWithCaching(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
 
     //명세서에 없음

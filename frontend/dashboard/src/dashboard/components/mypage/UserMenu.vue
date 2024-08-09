@@ -1,6 +1,6 @@
 <script setup>
 import AddTrashcan from "@/dashboard/components/mypage/AddTrashcan.vue";
-import RenameTrashcan from "@/dashboard/components/mypage/RenameTrashcan.vue";
+import ModifyInfo from "@/dashboard/components/mypage/ModifyInfo.vue";
 import RemoveTrashcan from "@/dashboard/components/mypage/RemoveTrashcan.vue";
 import { useUserStore } from "@/dashboard/stores/user";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
@@ -32,7 +32,7 @@ const trashcanStore = useTrashcanStore();
         </tr>
         <tr>
           <th>
-            <RenameTrashcan />
+            <ModifyInfo />
           </th>
         </tr>
         <tr>

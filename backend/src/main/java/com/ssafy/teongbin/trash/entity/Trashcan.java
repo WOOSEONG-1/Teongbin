@@ -1,5 +1,6 @@
 package com.ssafy.teongbin.trash.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.teongbin.common.entity.BaseTime;
 import com.ssafy.teongbin.log.entity.Catlog;
 import com.ssafy.teongbin.log.entity.Restlog;
@@ -37,5 +38,6 @@ public class Trashcan extends BaseTime {
     private List<Catlog> catlogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "trashcan")
+    @JsonManagedReference
     private List<Restlog> restlogs = new ArrayList<>();
 }

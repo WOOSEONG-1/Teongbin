@@ -4,7 +4,6 @@ import com.ssafy.teongbin.common.reseponse.MsgType;
 import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.log.dto.request.RestlogRequest;
-import com.ssafy.teongbin.log.dto.response.RestlogResponse;
 import com.ssafy.teongbin.log.service.RestlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,5 @@ public class RestlogController {
     @PostMapping("/api/v1/trash/rest")
     public ResponseEntityDto<Long> newRestlog(@RequestBody RestlogRequest request) {
         return ResponseUtils.ok(restlogService.join(request), MsgType.ADD_RESTLOG_SUCCESSFULLY);
-
     }
 }

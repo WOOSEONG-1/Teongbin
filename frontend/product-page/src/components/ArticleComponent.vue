@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-5" style="margin: auto 0;">
-                    <img src="../assets/press2.png" alt="home_img" style="width:100%;">
+                    <img src="../assets/press2.png" alt="home_img" style="width:100%; height: auto;">
                 </div>
             </div>
         </article>
@@ -31,7 +31,7 @@
         >
         <div class="row justify-content-between">
             <div class="col-5" style="margin: auto 0;">
-                <img src="../assets/cleaner.webp" alt="home_img" style="width:100%;">
+                <img src="../assets/cleaner.webp" alt="home_img" style="width:100%; height: auto;">
             </div>
             <div class="col-6">
                 <h1 class="my-3 fw-bold">쓰레기통 잔량 확인 서비스</h1>
@@ -61,7 +61,7 @@
                     <br>
                     <div class="my-3">
                         <h3 class="mt-4">
-                            분리수거에 어려움을 겪는 사람들을 돕습니다.
+                            분리수거가 어려운 사람들을 돕습니다.
                         </h3>
 
                         <h4 class="mt-4">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="col-5" style="margin: auto 0;">
-                    <img src="../assets/category3.webp" alt="home_img" style="width:100%;">
+                    <img src="../assets/category3.webp" alt="home_img" style="width:100%; height: auto;">
                 </div>
             </div>
         </article>
