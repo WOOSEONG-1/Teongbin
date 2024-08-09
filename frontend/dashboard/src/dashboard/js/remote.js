@@ -46,15 +46,13 @@ apiClient.interceptors.response.use(
   }
 );
 
-export function getUserInfo(reload) {
-  if (userStore.userName == null || reload) {
-    apiClient
-      .get("/api/v1/user/profile")
-      .then((res) => {
-        userStore.userName = res.data.data.name;
-      })
-      .catch((error) => {});
-  }
+export function getUserInfo() {
+  apiClient
+    .get("/api/v1/user/profile")
+    .then((res) => {
+      userStore.userInfo = res.data.data;
+    })
+    .catch((error) => {});
 }
 
 export function changeUserInfo(name, password) {

@@ -2,7 +2,13 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', () => {
-  const userName = ref();
+  const userInfo = ref({
+    email: "",
+    name: "",
+    latitude: 0,
+    longitude: 0,
+    zoom_level: 0,
+  });
 
-  return { userName }
+  return { userInfo }
 })
