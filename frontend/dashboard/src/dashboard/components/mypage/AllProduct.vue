@@ -84,6 +84,7 @@ button {
 .trashcan-info-container {
   border: 1px solid black;
   margin: 1rem 0 0 1rem;
+  height: fit-content;
 }
 .trashcan-info {
   display: flex;
