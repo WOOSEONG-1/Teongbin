@@ -1,27 +1,29 @@
 package com.ssafy.teongbin.mail.service;
 
+import com.ssafy.teongbin.common.exception.CustomException;
+import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.mail.dto.MailDto;
-import com.ssafy.teongbin.mail.dto.request.ApproveRequestDto;
-import com.ssafy.teongbin.mail.entity.Code;
-import com.ssafy.teongbin.mail.repository.CodeRepository;
 import com.ssafy.teongbin.user.entity.User;
+import com.ssafy.teongbin.user.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MailService {
 
     private final JavaMailSender javaMailSender;
-    private final CodeRepository codeRepository;
+    private final UserRepository userRepository;
+    private final RedisService redisService;
 
-    private static String senderEmail = "c2824463@gmail.com";
+    private static String senderEmail = "teongbin@gmail.com";
     private static int number;
-
 
     public static void createNumber() {
         number = (int)(Math.random()*90000) + 100000;
@@ -48,24 +50,17 @@ public class MailService {
     }
 
     public int sendMail(MailDto mailDto, PrincipalDetails userIn) {
-        String mail = mailDto.getMail().trim();
-        MimeMessage message = createMail(mail);
-        Code code = new Code();
-        code.setCodenumber(number);
-        code.setUser(userIn.getUser());
-        codeRepository.save(code);
+        User user;
 
-        javaMailSender.send(message);
-
-        return number;
-    }
-
-    public boolean approve(ApproveRequestDto approveRequestDto, PrincipalDetails userIn) {
-        User user = userIn.getUser();
-        if (approveRequestDto.getCode()==user.getCodes().get(0).getCodenumber()) {
-            return true;
+        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
+        if ( ou.isPresent() ) {
+            String mail = mailDto.getEmail().trim();
+            MimeMessage message = createMail(mail);
+            javaMailSender.send(message);
+            redisService.saveVerificationCode(mail, String.valueOf(number));
+            return number;
         } else {
-            return false;
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
     }
 }

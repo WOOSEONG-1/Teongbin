@@ -1,7 +1,6 @@
 package com.ssafy.teongbin.user.entity;
 
 import com.ssafy.teongbin.common.entity.BaseTime;
-import com.ssafy.teongbin.mail.entity.Code;
 import com.ssafy.teongbin.shortcut.entity.Shortcut;
 import com.ssafy.teongbin.trash.entity.Trashcan;
 import jakarta.persistence.*;
@@ -10,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,8 +65,5 @@ public class User extends BaseTime {
     public void updatePassword(String password) {
         this.password = password;
     }
-
-    @OneToMany(mappedBy = "user")
-    private List<Code> Codes = new ArrayList<>();
 
 }
