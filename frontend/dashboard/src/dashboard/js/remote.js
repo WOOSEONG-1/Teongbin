@@ -208,3 +208,15 @@ export function postRemoveShortcut(shortcut) {
     })
     .catch((error) => {});
 }
+
+export function postDefaultMapSetting(setting) {
+  const data = {
+    latitude: setting.center._lat,
+    longitude: setting.center._lng,
+    zoom_level: setting.zoom,
+  };
+  apiClient
+    .post("/api/v1/user/update", data)
+    .then((res) => {})
+    .catch((error) => {});
+}
