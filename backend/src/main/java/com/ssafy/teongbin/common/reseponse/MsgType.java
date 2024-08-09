@@ -12,6 +12,7 @@ public enum MsgType {
     ADD_SHORTCUT_SUCCESSFULLY("숏컷 등록 성공"),
     SEARCH_SHORTCUT_LIST_SUCCESSFULLY("숏컷 리스트 조회 성공"),
     DELETE_SHORTCUT_SUCCESSFULLY("숏컷 삭제 성공"),
+    UPDATE_SHORTCUT_SUCCESSFULLY("숏컷 수정 성공"),
     UPDATE_SUCCESSFULLY("수정 성공"),
     GENERATE_TOKEN_SUCCESSFULLY("토큰 생성 성공"),
     SEARCH_TRASH_LIST_SUCCESSFULLY("쓰레기통 리스트 조회 성공"),

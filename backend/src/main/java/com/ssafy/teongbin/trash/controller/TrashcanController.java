@@ -86,7 +86,7 @@ public class TrashcanController {
     }
 
     //3일 기준 필터링 + 성능 최적화
-    @GetMapping("/user/restlog")
+    @GetMapping("/user/restlogV2")
     public ResponseEntityDto<List<UserLogDto.RestDto>> userRestlogV2(@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userRestlogV2(user), MsgType.SEARCH_REST_LIST_SUCCESSFULLY);
     }
@@ -99,7 +99,7 @@ public class TrashcanController {
     }
 
     // 72 시간 이내 발생한 쓰레기통 로그 조회
-    @GetMapping("/user/trashcan/test")
+    @GetMapping("/user/restlog")
     public ResponseEntityDto<List<UserLogDto.RestDto>> userRecentLogs (@AuthenticationPrincipal PrincipalDetails user) {
         return ResponseUtils.ok(userTrashcanService.userRestLogWithCaching(user), MsgType.SEARCH_TRASH_LIST_SUCCESSFULLY);
     }
