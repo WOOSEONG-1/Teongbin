@@ -10,4 +10,7 @@ import lombok.*;
 public class UpdateUserRequestDto {
     String name;
     String password;
+    Double latitude;
+    Double longitude;
+    int zoom_level;
 }

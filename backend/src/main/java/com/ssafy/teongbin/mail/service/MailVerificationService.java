@@ -19,12 +19,7 @@ public class MailVerificationService {
     private final UserRepository userRepository;
 
     // 인증 코드 검증 메소드
-    public boolean verifyCode(ApproveRequestDto approveRequestDto, PrincipalDetails userIn) {
-        User user;
-        Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
-        if ( !ou.isPresent() ){
-            throw new CustomException(ErrorType.NOT_FOUND_USER);
-        }
+    public boolean verifyCode(ApproveRequestDto approveRequestDto) {
         String storedCode = redisService.getVerificationCode(approveRequestDto.getEmail());
         if (storedCode != null && storedCode.equals(approveRequestDto.getCode())) {
             redisService.deleteVerificationCode(approveRequestDto.getEmail());
