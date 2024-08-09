@@ -100,8 +100,7 @@ function deleteShortcut(idx) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 1rem;
+  padding-bottom: 0;
 }
 .shortcut-container {
   display: flex;
@@ -120,6 +119,7 @@ function deleteShortcut(idx) {
   min-width: 8rem;
   white-space: nowrap;
   align-items: center;
+  font-weight: bold;
 }
 .shortcut-btn {
   border: none;
@@ -151,9 +151,6 @@ function deleteShortcut(idx) {
   position: relative;
   padding-bottom: 6px;
   margin-bottom: 6px;
-}
-
-.scroll-container:hover {
 }
 
 .scroll-container::-webkit-scrollbar {
