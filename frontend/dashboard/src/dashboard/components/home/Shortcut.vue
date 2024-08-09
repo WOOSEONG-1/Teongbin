@@ -8,6 +8,8 @@ const props = defineProps({
   shortcut: Object,
 });
 
+const shortcutContainer = ref();
+
 const handleWheel = (event) => {
   if (event.deltaY !== 0) {
     event.preventDefault();
@@ -29,6 +31,8 @@ function colorStyle(idx) {
 const hoverTimeout = ref();
 const leaveTimeout = ref();
 const select = ref();
+const rename = ref();
+const renameInputVisible = ref(false);
 
 function mouseoverHandler(idx) {
   if (leaveTimeout.value) {
@@ -39,10 +43,13 @@ function mouseoverHandler(idx) {
   }
   hoverTimeout.value = setTimeout(() => {
     select.value = idx;
-  }, 1000);
+  }, 500);
 }
 
 function mouseleave() {
+  if (renameInputVisible.value) {
+    return;
+  }
   if (leaveTimeout.value) {
     clearTimeout(leaveTimeout.value);
   }
@@ -60,9 +67,6 @@ function mouseleave() {
 function toggleRename() {
   renameInputVisible.value = !renameInputVisible.value;
 }
-
-const rename = ref();
-const renameInputVisible = ref(false);
 
 function renameShortcut(shortcut) {}
 
