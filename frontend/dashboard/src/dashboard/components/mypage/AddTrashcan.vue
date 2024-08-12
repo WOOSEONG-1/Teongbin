@@ -1,14 +1,32 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { cloneDeep } from "lodash";
 import { addTrashcan } from "@/dashboard/js/remote";
+import Map from "@/dashboard/components/mypage/Map.vue";
+import { useTrashcanStore } from "@/dashboard/stores/trashcan";
+import { useUserStore } from "@/dashboard/stores/user";
+
+const trashcanStore = useTrashcanStore();
+const userStore = useUserStore();
 
 const trashcanData = ref({
   serialNumber: "",
-  latitude: 0,
-  longitude: 0,
+  latitude: userStore.userInfo.latitude,
+  longitude: userStore.userInfo.longitude,
   nickname: "",
 });
+
+userStore.$subscribe(() => {
+  resetInput();
+});
+
+watch(
+  () => trashcanStore.newTrashcanPosition,
+  (position) => {
+    trashcanData.value.latitude = position._lat;
+    trashcanData.value.longitude = position._lng;
+  }
+);
 
 function addNewTrashcan() {
   const data = cloneDeep(trashcanData.value);
@@ -21,8 +39,8 @@ function addNewTrashcan() {
 function resetInput() {
   trashcanData.value.serialNumber = "";
   trashcanData.value.nickname = "";
-  trashcanData.value.latitude = 0;
-  trashcanData.value.longitude = 0;
+  trashcanData.value.latitude = userStore.userInfo.latitude;
+  trashcanData.value.longitude = userStore.userInfo.longitude;
 }
 </script>
 
@@ -100,6 +118,9 @@ function resetInput() {
               v-model="trashcanData.longitude"
               aria-describedby="basic-addon1"
             />
+          </div>
+          <div>
+            <Map />
           </div>
         </div>
         <div class="modal-footer">

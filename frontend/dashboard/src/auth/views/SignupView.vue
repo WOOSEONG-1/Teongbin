@@ -1,31 +1,28 @@
 <script setup>
 import AuthLayout from "@/auth/layouts/AuthLayout.vue";
 import { cloneDeep } from "lodash";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import axios from "axios";
 import "@/auth/assets/css/account.css";
+import { signup } from "@/auth/js/auth";
 
 const router = useRouter();
 const signupData = ref({ email: "", name: "", password: "" });
 const passwordConfirm = ref("");
 const signupModal = ref();
 
-function signup() {
+async function handleSignup() {
   if (signupData.value.password != passwordConfirm.value) {
     return false;
   }
   const data = cloneDeep(signupData.value);
-  axios
-    .post("/api/v1/user/signup", data, {
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
-      const modalInstance = new Modal(signupModal.value);
-      modalInstance.show();
-    })
-    .catch((error) => {});
+
+  const success = await signup(data);
+  if (success) {
+    const modalInstance = new Modal(signupModal.value);
+    modalInstance.show();
+  }
 }
 
 function gotoLogin() {
@@ -87,8 +84,8 @@ function gotoLogin() {
           />
           <label class="input-label">회사명</label>
         </div>
-        <button type="button" @click="signup" class="box submit-btn">
-          Create Account
+        <button type="button" @click="handleSignup" class="box submit-btn">
+          계정 생성
         </button>
 
         <div
@@ -115,10 +112,12 @@ function gotoLogin() {
                 ></button>
               </div>
               <div class="modal-body">
-                {{ signupData.email }}의 회원가입이 완료되었습니다
-              </div>
-              <div class="modal-body">
-                확인을 눌러 로그인 페이지로 이동하세요
+                <div class="navigator-text">
+                  {{ signupData.email }}의 회원가입이 완료되었습니다
+                </div>
+                <div class="navigator-text">
+                  확인을 눌러 로그인 페이지로 이동하세요
+                </div>
               </div>
               <div class="modal-footer">
                 <button
@@ -139,6 +138,9 @@ function gotoLogin() {
 </template>
 
 <style scoped>
+.navigator-text {
+  font-size: 1.2rem;
+}
 .input-error {
   color: red;
 }
