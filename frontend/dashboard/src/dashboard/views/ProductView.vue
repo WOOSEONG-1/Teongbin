@@ -4,8 +4,8 @@ import UserMenu from "@/dashboard/components/mypage/UserMenu.vue";
 import AllProduct from "@/dashboard/components/mypage/AllProduct.vue";
 import { getTrashcanList, getUserInfo } from "@/dashboard/js/remote";
 
-getUserInfo(false);
-getTrashcanList(false);
+getUserInfo();
+getTrashcanList();
 </script>
 
 <template>
