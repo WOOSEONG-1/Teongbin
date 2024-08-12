@@ -5,17 +5,40 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import "@/auth/assets/css/account.css";
-import { signup } from "@/auth/js/auth";
+import { sendAuthCode, signup, verifyAuthCode } from "@/auth/js/auth";
 
 const router = useRouter();
 const signupData = ref({ email: "", name: "", password: "" });
 const passwordConfirm = ref("");
 const signupModal = ref();
 
+<<<<<<< HEAD
+=======
+const authStep = ref(1);
+const authCode = ref("");
+const authEmail = ref("");
+
+function clickSendAuthCode() {
+  sendAuthCode(signupData.value.email);
+  authStep.value = 2;
+}
+
+async function clickVerifyAuthCode() {
+  const success = await verifyAuthCode(authCode.value);
+  if(success) {
+    authStep.value = 3; 
+    authEmail.value = signupData.value.email;
+  }
+}
+
+>>>>>>> 95a86949afad56be84fc6b94cb97090c32c75e74
 async function handleSignup() {
   if (signupData.value.password != passwordConfirm.value) {
     return false;
+  } else if(authEmail.value != signupData.value.email) {
+    return false;
   }
+
   const data = cloneDeep(signupData.value);
 
   const success = await signup(data);
@@ -46,6 +69,44 @@ function gotoLogin() {
             placeholder=""
           />
           <label class="input-label">이메일 주소</label>
+        </div>
+        <div class="input-item">
+          <div class="auth-item">
+            <input
+              type="text"
+              inputmode="email"
+              v-model="authCode"
+              class="box input-field"
+              placeholder=""
+            />
+            <label class="input-label">인증번호</label>
+          </div>
+          <div class="auth-item">
+            <button
+              type="button"
+              @click="clickSendAuthCode"
+              class="box submit-btn"
+              v-if="authStep == 1"
+            >
+              인증번호 발송
+            </button>
+            <button type="button" class="box submit-btn" v-if="authStep == 2">
+              <div v-if="authCode.length == 6" @click="clickVerifyAuthCode">
+                인증 요청
+              </div>
+              <div v-if="authCode.length != 6" @click="clickSendAuthCode">
+                재발송
+              </div>
+            </button>
+            <button
+              type="button"
+              class="box submit-btn"
+              :disabled="true"
+              v-if="authStep == 3"
+            >
+              인증완료
+            </button>
+          </div>
         </div>
         <div class="input-item input-error">
           <input
@@ -141,6 +202,16 @@ function gotoLogin() {
 .navigator-text {
   font-size: 1.2rem;
 }
+<<<<<<< HEAD
+=======
+.input-item {
+  display: flex;
+  justify-content: space-between;
+}
+.auth-item {
+  width: 45%;
+}
+>>>>>>> 95a86949afad56be84fc6b94cb97090c32c75e74
 .input-error {
   color: red;
 }
