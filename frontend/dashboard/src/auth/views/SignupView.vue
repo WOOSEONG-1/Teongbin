@@ -12,8 +12,6 @@ const signupData = ref({ email: "", name: "", password: "" });
 const passwordConfirm = ref("");
 const signupModal = ref();
 
-<<<<<<< HEAD
-=======
 const authStep = ref(1);
 const authCode = ref("");
 const authEmail = ref("");
@@ -31,7 +29,6 @@ async function clickVerifyAuthCode() {
   }
 }
 
->>>>>>> 95a86949afad56be84fc6b94cb97090c32c75e74
 async function handleSignup() {
   if (signupData.value.password != passwordConfirm.value) {
     return false;
@@ -202,8 +199,6 @@ function gotoLogin() {
 .navigator-text {
   font-size: 1.2rem;
 }
-<<<<<<< HEAD
-=======
 .input-item {
   display: flex;
   justify-content: space-between;
@@ -211,7 +206,6 @@ function gotoLogin() {
 .auth-item {
   width: 45%;
 }
->>>>>>> 95a86949afad56be84fc6b94cb97090c32c75e74
 .input-error {
   color: red;
 }
