@@ -72,9 +72,16 @@ public class SecurityConfig {
             // /api/v1/admin/** 경로는 ROLE_ADMIN 권한을 가진 사용자만 접근 가능
 //            request.requestMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')");
             // 루트 경로는 모든 사용자 접근 가능
-            request.requestMatchers("/api/v1/user/signup", "api/v1/user/login",
-                            "/static/**", "/login",
-                            "/api/v1/trash/rest", "/api/v1/trash/catlog" ).permitAll()
+            request.requestMatchers(
+                   "/api/v1/user/signup",
+                            "api/v1/user/login",
+                            "/static/**",
+                            "/login",
+                            "/api/v1/trash/rest",
+                            "/api/v1/trash/catlog",
+                            "/api/v1/user/email",
+                            "/api/v1/user/verify"
+                    ).permitAll()
                     .anyRequest().authenticated();
         });
 
