@@ -50,8 +50,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 || request.getRequestURI().equals("/api/v1/trash/rest")
                 || request.getRequestURI().equals("/api/v1/trash/catlog")
                 || request.getRequestURI().equals("/api/v1/user/email")
-                || request.getRequestURI().equals("/api/v1/user/verify")
-        ) {
+                || request.getRequestURI().equals("/api/v1/user/verify")) {
             chain.doFilter(request, response);
             return;
         }
