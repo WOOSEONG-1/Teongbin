@@ -1,7 +1,7 @@
 <script setup>
 import AuthLayout from "@/auth/layouts/AuthLayout.vue";
 import { cloneDeep } from "lodash";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import "@/auth/assets/css/account.css";
