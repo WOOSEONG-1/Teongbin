@@ -4,6 +4,7 @@ import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.common.reseponse.MsgType;
 import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
+import com.ssafy.teongbin.user.dto.request.PasswordChangeDto;
 import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
 import com.ssafy.teongbin.user.dto.request.UpdateUserRequestDto;
 import com.ssafy.teongbin.user.dto.response.ProfileResponseDto;
@@ -42,5 +43,10 @@ public class UserController {
         return ResponseUtils.ok(MsgType.UPDATE_SUCCESSFULLY);
     }
 
-
+    // 비밀번호 수정
+    @PostMapping("/passwordchange")
+    public ResponseEntityDto<Void> passwordchange(@RequestBody PasswordChangeDto passwordChangeDto){
+        userService.passwordchange(passwordChangeDto);
+        return ResponseUtils.ok(MsgType.CHANGEPASSWORD_SUCCESSFULLY);
+    }
 }
