@@ -18,11 +18,9 @@ export async function verifyAuthCode(email, authCode) {
   return await axios
     .post("/api/v1/user/verify", data)
     .then((res) => {
-      console.log(res);
       return true;
     })
     .catch((error) => {
-      console.log(error);
       return false;
     });
 }
@@ -56,4 +54,17 @@ export async function login(data, saveEmail) {
     .catch((error) => {
       console.log(error);
     });
+}
+
+export async function changePassword(email, password) {
+  const data = {
+    email: email,
+    password: password,
+  };
+  await axios
+    .post("/api/v1/user/passwordchange", data)
+    .then((res) => {
+      router.push("/");
+    })
+    .catch((error) => {});
 }
