@@ -16,20 +16,32 @@ const authStep = ref(1);
 const authCode = ref("");
 const authEmail = ref("");
 
-function clickSendAuthCode() {
-  sendAuthCode(signupData.value.email);
-  authStep.value = 2;
+watch(() => signupData.value.email, email => {
+  if(signupData.value.email != authEmail.value || authEmail.value.length == 0) {
+    authStep.value = 1;
+  } else {
+    authStep.value = 3;
+  }
+});
+
+
+async function clickSendAuthCode() {
+  const success = await sendAuthCode(signupData.value.email);
+  if(success) {
+    authStep.value = 2;
+  }
 }
 
 async function clickVerifyAuthCode() {
-  const success = await verifyAuthCode(authCode.value);
+  const verifyEmail = signupData.value.email;
+  const success = await verifyAuthCode(signupData.value.email, authCode.value);
   if(success) {
     authStep.value = 3; 
     authEmail.value = signupData.value.email;
   }
 }
 
-async function handleSignup() {
+async function clickSignup() {
   if (signupData.value.password != passwordConfirm.value) {
     return false;
   } else if(authEmail.value != signupData.value.email) {
@@ -142,7 +154,7 @@ function gotoLogin() {
           />
           <label class="input-label">회사명</label>
         </div>
-        <button type="button" @click="handleSignup" class="box submit-btn">
+        <button type="button" @click="clickSignup" class="box submit-btn">
           계정 생성
         </button>
 

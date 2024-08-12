@@ -17,7 +17,7 @@ watch(
 );
 
 onMounted(() => {
-  username.value = userStore.userName;
+  username.value = userStore.userInfo.name;
 })
 
 getUserInfo();

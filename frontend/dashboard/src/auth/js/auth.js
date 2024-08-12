@@ -1,12 +1,16 @@
 import axios from "axios";
 import router from "@/router";
 
-export function sendAuthCode(email) {
+export async function sendAuthCode(email) {
   const data = { email: email };
-  axios
+  return await axios
     .post("/api/v1/user/email", data)
-    .then((res) => {})
-    .catch((error) => {});
+    .then((res) => {
+      return true;
+    })
+    .catch((error) => {
+      return false;
+    });
 }
 
 export async function verifyAuthCode(email, authCode) {
