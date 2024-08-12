@@ -85,7 +85,9 @@ public class UserService {
         }
 
         // zoom_level 수정
-        target.updateZoomLevel(dto.getZoom_level());
+        if ( dto.getZoom_level() != null ) {
+            target.updateZoomLevel(dto.getZoom_level());
+        }
 
         userRepository.save(ou.get());
     }
