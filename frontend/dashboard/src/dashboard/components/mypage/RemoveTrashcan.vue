@@ -50,9 +50,13 @@ function removeTrashcan() {
           ></button>
         </div>
         <div class="modal-body">
-          <div v-for="(trashcan, idx) in trashcanStore.selectTrashcanList">
-            {{ trashcanStore.trashcanList[trashcan].nickname }}(
-            {{ trashcanStore.trashcanList[trashcan].serialNumber }} )
+          <div
+            v-for="(trashcan, idx) in trashcanStore.selectTrashcanList"
+            class="remove-item"
+          >
+            {{ trashcanStore.trashcanList[trashcan].nickname }} ({{
+              trashcanStore.trashcanList[trashcan].serialNumber
+            }})
           </div>
         </div>
         <div class="modal-footer">
@@ -72,3 +76,13 @@ function removeTrashcan() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.remove-item {
+  font-weight: normal;
+  text-align: left;
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
+  letter-spacing: 0.03rem;
+}
+</style>

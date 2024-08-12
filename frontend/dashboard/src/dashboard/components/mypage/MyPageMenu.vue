@@ -12,6 +12,11 @@
         >개인정보 수정</router-link
       >
     </div>
+    <div class="submenu-box">
+      <router-link to="/myPage/map" class="submenu-item">
+        초기위치 설정
+      </router-link>
+    </div>
   </div>
 </template>
 
