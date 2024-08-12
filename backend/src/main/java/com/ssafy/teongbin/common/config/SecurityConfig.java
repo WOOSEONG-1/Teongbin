@@ -76,6 +76,7 @@ public class SecurityConfig {
                             "/static/**", "/login",
                             "/api/v1/trash/rest", "/api/v1/trash/catlog"
                             , "/api/v1/user/email"
+                            , "/api/v1/user/passwordchange"
                             , "/api/v1/user/verify").permitAll()
                     .anyRequest().authenticated();
         });

@@ -14,6 +14,7 @@ public enum MsgType {
     DELETE_SHORTCUT_SUCCESSFULLY("숏컷 삭제 성공"),
     UPDATE_SHORTCUT_SUCCESSFULLY("숏컷 수정 성공"),
     UPDATE_SUCCESSFULLY("수정 성공"),
+    CHANGEPASSWORD_SUCCESSFULLY("비밀번호 변경 성공"),
     GENERATE_TOKEN_SUCCESSFULLY("토큰 생성 성공"),
     //==================== 쓰레기통
     SEARCH_TRASH_LIST_SUCCESSFULLY("쓰레기통 리스트 조회 성공"),
