@@ -3,29 +3,38 @@ import { ref, onMounted } from "vue";
 import { useMapStore } from "@/dashboard/stores/map";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
+import { useUserStore } from "@/dashboard/stores/user";
 
 const mapStore = useMapStore();
 const shortcutStore = useShortcutStore();
 const trashcanStore = useTrashcanStore();
+const userStore = useUserStore();
 
 const map = ref();
-
-function initMap() {
-  const mapOptions = {
-    center: new naver.maps.LatLng(35.20389, 126.8069),
-    zoom: 16,
-  };
-
-  map.value = new naver.maps.Map("map", mapOptions);
-
-  naver.maps.Event.addListener(map.value, "bounds_changed", (bounds) => {
-    mapStore.bounds = bounds;
-  });
-}
 
 onMounted(() => {
   initMap();
 });
+
+function initMap() {
+  userStore.$subscribe(() => {
+    const center = new naver.maps.LatLng(
+      userStore.userInfo.latitude,
+      userStore.userInfo.longitude
+    );
+
+    map.value = new naver.maps.Map("map", {
+      center: center,
+      zoom: userStore.userInfo.zoom_level,
+    });
+
+    mapStore.bounds = map.value.bounds;
+
+    naver.maps.Event.addListener(map.value, "bounds_changed", (bounds) => {
+      mapStore.bounds = bounds;
+    });
+  });
+}
 
 function getSetting() {
   return {

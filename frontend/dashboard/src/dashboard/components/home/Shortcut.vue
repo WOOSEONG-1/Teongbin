@@ -1,16 +1,87 @@
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
-import { addShortcut, getShortcutList } from "@/dashboard/js/remote";
-
+import { addShortcut, getShortcutList, postRenameShortcut } from "@/dashboard/js/remote";
 const shortcutStore = useShortcutStore();
+
+const props = defineProps({
+  shortcut: Object,
+});
+
+const shortcutContainer = ref();
+
+const handleWheel = (event) => {
+  if (event.deltaY !== 0) {
+    event.preventDefault();
+    shortcutContainer.value.scrollLeft += event.deltaY;
+  }
+};
+
+onMounted(() => {
+  shortcutContainer.value.addEventListener("wheel", handleWheel);
+});
+
+function colorStyle(idx) {
+  const color = shortcutStore.colorList.at(idx);
+  return {
+    color: `rgb(${color.red}, ${color.green}, ${color.blue})`,
+  };
+}
+
+const hoverTimeout = ref();
+const leaveTimeout = ref();
+const select = ref();
+const rename = ref();
+const renameInputVisible = ref(false);
+
+function mouseoverHandler(idx) {
+  if (leaveTimeout.value) {
+    clearTimeout(leaveTimeout.value);
+  }
+  if (hoverTimeout.value) {
+    clearTimeout(hoverTimeout.value);
+  }
+  hoverTimeout.value = setTimeout(() => {
+    select.value = idx;
+  }, 500);
+}
+
+function mouseleave() {
+  if (renameInputVisible.value) {
+    return;
+  }
+  if (leaveTimeout.value) {
+    clearTimeout(leaveTimeout.value);
+  }
+  if (hoverTimeout.value) {
+    leaveTimeout.value = setTimeout(() => {
+      clearTimeout(hoverTimeout.value);
+      select.value = -1;
+      rename.value = "";
+      if (renameInputVisible.value) {
+        toggleRenameInput();
+      }
+    }, 500);
+  }
+}
+
+function toggleRenameInput() {
+  renameInputVisible.value = !renameInputVisible.value;
+}
+
+function renameShortcut(shortcut) {
+  postRenameShortcut(shortcut, rename.value);
+  toggleRenameInput();
+  rename.value = "";
+}
+
+function removeShortcut(shortcut) {
+  postRemoveShortcut(shortcut);
+}
 
 const shortcutInputVisible = ref(false);
 const menuText = ref("숏컷등록");
 const shortcutName = ref("");
-const props = defineProps({
-  shortcut: Object,
-});
 
 watch(
   () => props.shortcut,
@@ -40,33 +111,64 @@ function toggleInput() {
   }
 }
 
-function colorStyle(idx) {
-  const color = shortcutStore.colorList.at(idx);
-  return {
-    color: `rgb(${color.red}, ${color.green}, ${color.blue})`,
-  };
-}
-
 getShortcutList();
-
-function deleteShortcut(idx) {
-  shortcutStore.shortcutList.splice(idx, 1);
-}
 </script>
 
 <template>
   <div class="shortcut-section">
-    <div class="shortcut-container scroll-container">
-      <button
-        class="shortcut-item shortcut-btn"
-        v-for="(shortcut, idx) in shortcutStore.shortcutList"
-        :key="idx"
-        @click="$emit('changeSetting', shortcut)"
-      >
-        <div :style="colorStyle(idx)">
-          {{ shortcut.nickname }}
+    <div class="shortcut-container scroll-container" ref="shortcutContainer">
+      <div v-for="(shortcut, idx) in shortcutStore.shortcutList" :key="idx">
+        <div
+          class="shortcut-box"
+          @mouseover="mouseoverHandler(idx)"
+          @mouseleave="mouseleave()"
+        >
+          <button
+            class="shortcut-item"
+            @click="$emit('changeSetting', shortcut)"
+          >
+            <div :style="colorStyle(idx)">
+              {{ shortcut.nickname }}
+            </div>
+          </button>
+          <div class="manage-shortcut-container" v-if="select == idx">
+            <button>
+              <i
+                class="bi bi-pencil-square manage-img"
+                @click="toggleRenameInput()"
+              ></i>
+            </button>
+            <div
+              v-if="renameInputVisible"
+              class="input-group mb-3 rename-popup"
+            >
+              <input
+                type="text"
+                class="form-control"
+                v-model="rename"
+                placeholder="nickname"
+                aria-label="nickname"
+                aria-describedby="button-addon2"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+                :disabled="rename == ''"
+                @click="renameShortcut(shortcut)"
+              >
+                변경
+              </button>
+            </div>
+            <button>
+              <i
+                class="bi bi-x-square manage-img"
+                @click="removeShortcut(shortcut)"
+              ></i>
+            </button>
+          </div>
         </div>
-      </button>
+      </div>
     </div>
     <div class="shortcut-menu-container">
       <button @click="toggleInput" class="shortcut-menu-item shortcut-btn">
@@ -105,25 +207,34 @@ function deleteShortcut(idx) {
 .shortcut-container {
   display: flex;
   align-items: center;
-  margin: 1rem;
   width: 860px;
   position: relative;
+  margin: 1rem;
+}
+.shortcut-box {
+  display: flex;
+  margin-right: 1rem;
 }
 .shortcut-item {
   float: left;
   justify-content: center;
-  padding: 0;
-  margin-right: 1rem;
   max-width: 8rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   min-width: 8rem;
   white-space: nowrap;
   align-items: center;
   font-weight: bold;
 }
-.shortcut-btn {
+.manage-shortcut-container {
+  display: flex;
+  padding: 0;
+}
+button {
   border: none;
   background: none;
+}
+.manage-img {
+  font-size: 1rem;
 }
 .shortcut-menu-container {
   position: relative;
@@ -142,6 +253,16 @@ function deleteShortcut(idx) {
   border: 1px solid #ccc;
   background-color: #fff;
   padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.rename-popup {
+  position: absolute;
+  left: 10rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  width: 12rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }

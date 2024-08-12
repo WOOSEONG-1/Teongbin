@@ -2,74 +2,90 @@ import axios from "axios";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { useUserStore } from "@/dashboard/stores/user";
+import { useAuthStore } from "@/auth/stores/auth";
 import { cloneDeep } from "lodash";
+import router from "@/router";
 
 const shortcutStore = useShortcutStore();
 const trashcanStore = useTrashcanStore();
 const userStore = useUserStore();
+const authStore = useAuthStore();
 
-export function getUserInfo(reload) {
-  if (userStore.userName == null || reload) {
-    axios
-      .get("/api/v1/user/profile", {
-        headers: {
-          Authorization: sessionStorage.getItem("teongbinToken"),
-        },
-      })
-      .then((res) => {
-        userStore.userName = res.data.data.name;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+function logoutUser() {
+  sessionStorage.removeItem("teongbinToken");
+  sessionStorage.removeItem("teongbinUserName");
+  authStore.loginState = false;
+
+  alert("로그인 시간 만료");
+
+  router.push("/user/login");
+}
+
+const apiClient = axios.create();
+
+apiClient.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = sessionStorage.getItem("teongbinToken");
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
+);
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.data.status == 401) {
+      logoutUser();
+    } else {
+      console.log(error);
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export function getUserInfo() {
+  apiClient
+    .get("/api/v1/user/profile")
+    .then((res) => {
+      userStore.userInfo = res.data.data;
+    })
+    .catch((error) => {});
 }
 
 export function changeUserInfo(name, password) {
   const data = {
     password: password,
     name: name,
-  }
-  axios.post("/api/v1/user/update", data, {
-    headers: {
-      Authorization: sessionStorage.getItem("teongbinToken"),
-    },
-  }).then((res) => {
-    getUserInfo();
-  }).catch((error) => {
-
-  })
+  };
+  apiClient
+    .post("/api/v1/user/update", data)
+    .then((res) => {
+      getUserInfo();
+    })
+    .catch((error) => {});
 }
 
 export function addTrashcan(data) {
-  axios
-    .post("/api/v1/trash/new", data, {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
+  apiClient
+    .post("/api/v1/trash/new", data)
     .then((res) => {
       getTrashcanList();
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
 }
 
 export async function getTrashcanList() {
   let success = true;
-  await axios
-    .get("/api/v1/trash/user/trashcan", {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
+  await apiClient
+    .get("/api/v1/trash/user/trashcan")
     .then((res) => {
       trashcanStore.trashcanList = res.data.data;
       getTrashcanRest();
     })
     .catch((error) => {
-      console.log(error);
       success = false;
     });
 
@@ -77,12 +93,8 @@ export async function getTrashcanList() {
 }
 
 export function getTrashcanRest() {
-  axios
-    .get("/api/v1/trash/user/trashcan/rest", {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
+  apiClient
+    .get("/api/v1/trash/user/trashcan/rest")
     .then((res) => {
       const trashcanStateList = res.data.data;
       if (trashcanStateList.length == trashcanStore.trashcanList.length) {
@@ -96,9 +108,7 @@ export function getTrashcanRest() {
         });
       }
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
 }
 
 export function modifyTrashcanInfo() {
@@ -110,12 +120,8 @@ export function modifyTrashcanInfo() {
     nickname: data.nickname,
   };
 
-  axios
-    .post(`/api/v1/trash/${data.trashcanId}/update`, postData, {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
+  apiClient
+    .post(`/api/v1/trash/${data.trashcanId}/update`, postData)
     .then((res) => {
       getTrashcanList();
       trashcanStore.selectTrashcanList.splice(0, 1);
@@ -129,28 +135,21 @@ export async function removeSubscribeTrashcan() {
     idList.push(trashcanStore.trashcanList[trashcanIdx].trashcanId);
   });
 
-  idList.forEach(async (id) => {
-    await axios
-      .post(`/api/v1/trash/${id}/delete`, null, {
-        headers: {
-          Authorization: sessionStorage.getItem("teongbinToken"),
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const deletePromises = idList.map((id) => {
+    return apiClient
+      .post(`/api/v1/trash/${id}/delete`, null)
+      .then((res) => {})
+      .catch((error) => {});
   });
-  
+
   try {
     await Promise.all(deletePromises);
-    trashcanStore.selectTrashcanList.splice(0, trashcanStore.selectTrashcanList.length);
+    trashcanStore.selectTrashcanList.splice(
+      0,
+      trashcanStore.selectTrashcanList.length
+    );
     getTrashcanList();
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }
 
 function getRandomNum(seed) {
@@ -158,17 +157,12 @@ function getRandomNum(seed) {
 }
 
 export async function addShortcut(setting) {
-  const success = await axios
-    .post("/api/v1/user/shortcut/new", setting, {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
+  const success = await apiClient
+    .post("/api/v1/user/shortcut/new", setting)
     .then((res) => {
       return true;
     })
     .catch((error) => {
-      console.log(error);
       return false;
     });
 
@@ -176,12 +170,8 @@ export async function addShortcut(setting) {
 }
 
 export function getShortcutList() {
-  axios
-    .get("/api/v1/user/shortcut", {
-      headers: {
-        Authorization: sessionStorage.getItem("teongbinToken"),
-      },
-    })
+  apiClient
+    .get("/api/v1/user/shortcut")
     .then((res) => {
       shortcutStore.shortcutList = res.data.data;
       shortcutStore.shortcutList.forEach((shortcut, idx) => {
@@ -195,7 +185,38 @@ export function getShortcutList() {
         });
       });
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
+}
+
+export function postRenameShortcut(shortcut, newNickname) {
+  const data = {
+    nickname: newNickname,
+  };
+  apiClient
+    .post(`/api/v1/user/shortcut/${shortcut.shortcut_id}/update`, data)
+    .then((res) => {
+      getShortcutList();
+    })
+    .catch((res) => {});
+}
+
+export function postRemoveShortcut(shortcut) {
+  apiClient
+    .post(`/api/v1/user/shortcut/${shortcut.shortcut_id}/delete`, null)
+    .then((res) => {
+      getShortcutList();
+    })
+    .catch((error) => {});
+}
+
+export function postDefaultMapSetting(setting) {
+  const data = {
+    latitude: setting.center._lat,
+    longitude: setting.center._lng,
+    zoom_level: setting.zoom,
+  };
+  apiClient
+    .post("/api/v1/user/update", data)
+    .then((res) => {})
+    .catch((error) => {});
 }
