@@ -12,5 +12,5 @@ public class UpdateUserRequestDto {
     String password;
     Double latitude;
     Double longitude;
-    int zoom_level;
+    Integer zoom_level;
 }
