@@ -83,7 +83,7 @@ shortcutStore.$subscribe((mutation, state) => {
     });
     mapStore.shortcutMarkerList = [];
 
-    const shortcutList = mutation.events.target._value;
+    const shortcutList = mutation.events.newValue;
 
     shortcutList.forEach((shortcut, idx) => {
       const marker = createShortcutMarker(
@@ -132,7 +132,7 @@ trashcanStore.$subscribe((mutation, state) => {
     });
     mapStore.trashcanMarkerList = [];
 
-    const trashcanList = mutation.events.target._value;
+    const trashcanList = mutation.events.newValue;
 
     trashcanList.forEach((trashcan) => {
       const marker = createTrashcanMarker(trashcan);
