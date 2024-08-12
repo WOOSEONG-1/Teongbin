@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import AuthLayout from "@/auth/layouts/AuthLayout.vue";
 import "@/auth/assets/css/account.css";
 import { changePassword, sendAuthCode, verifyAuthCode } from "@/auth/js/auth";
