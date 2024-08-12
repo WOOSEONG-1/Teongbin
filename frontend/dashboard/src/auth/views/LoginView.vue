@@ -1,14 +1,12 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-import axios from "axios";
 import { cloneDeep } from "lodash";
 import AuthLayout from "@/auth/layouts/AuthLayout.vue";
 import "@/auth/assets/css/account.css";
+import { login } from "@/auth/js/auth";
 
 const loginData = ref({ email: "", password: "" });
 const saveEmail = ref(false);
-const router = useRouter();
 
 if (localStorage.getItem("teongbinEmail")) {
   saveEmail.value = true;
@@ -19,24 +17,9 @@ function toggleSaveEmail() {
   saveEmail.value = !saveEmail.value;
 }
 
-async function handleSubmit() {
+function handleLogin() {
   const data = cloneDeep(loginData.value);
-  await axios
-    .post("/api/v1/user/login", data, {
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
-      sessionStorage.setItem("teongbinToken", res.headers.authorization);
-      sessionStorage.setItem("teongbinLoginState", true);
-      if (saveEmail) {
-        localStorage.setItem("teongbinEmail", data.email);
-      } else {
-        localStorage.removeItem("teongbinEmail");
-      }
-
-      router.push("/");
-    })
-    .catch((error) => {});
+  login(data, saveEmail.value)
 }
 </script>
 
@@ -80,7 +63,7 @@ async function handleSubmit() {
 
           <div class="save-email-label">이메일 저장</div>
         </button>
-        <button type="button" @click="handleSubmit" class="box login-btn">
+        <button type="button" @click="handleLogin" class="box login-btn">
           로그인
         </button>
       </div>

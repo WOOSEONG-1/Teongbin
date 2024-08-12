@@ -14,11 +14,16 @@ const router = createRouter({
       name: 'product',
       component: () => import('@/dashboard/views/ProductView.vue')
     },
-    // {
-    //   path: '/myPage/pwd',
-    //   name: 'pwd',
-    //   component: () => import('@/dashboard/views/PwdChange.vue')
-    // },
+    {
+      path: '/myPage/pwd',
+      name: 'pwd',
+      component: () => import('@/dashboard/views/ChangeMyInfo.vue')
+    },
+    {
+      path: '/myPage/map',
+      name: 'map',
+      component: () => import('@/dashboard/views/ChangeDefaultMap.vue')
+    },
     {
       path: '/user/login',
       name: 'login',
@@ -40,7 +45,6 @@ const router = createRouter({
 router.beforeEach((from, to, next) => {
   const token = sessionStorage.getItem("teongbinToken");
 
-  console.log(from);
   const allowPages = ['login', 'join', 'find'];
   
   if(token) {
