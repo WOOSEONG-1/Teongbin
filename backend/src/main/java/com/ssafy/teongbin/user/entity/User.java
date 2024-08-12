@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 public class User extends BaseTime {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -30,6 +30,11 @@ public class User extends BaseTime {
     private List<String> roleList = new ArrayList<>();
     private String password;
 
+    // 기본 지도 정보
+    private Double latitude = 35.20389;
+    private Double longitude = 126.8069;
+    private int zoom_level = 15;
+
     @OneToMany(mappedBy = "user")
     private List<Trashcan> Trashcans = new ArrayList<>();
 
@@ -37,7 +42,7 @@ public class User extends BaseTime {
     private List<Shortcut> Shortcuts = new ArrayList<>();
 
     @Builder
-    private User(String email, String name, String password){
+    private User(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
@@ -67,6 +72,16 @@ public class User extends BaseTime {
         this.password = password;
     }
 
+    public void updateLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
+    public void updateLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void updateZoomLevel(int zoom_level) {
+        this.zoom_level = zoom_level;
+    }
 
 }

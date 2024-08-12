@@ -6,6 +6,7 @@ import com.ssafy.teongbin.common.reseponse.ResponseEntityDto;
 import com.ssafy.teongbin.common.reseponse.ResponseUtils;
 import com.ssafy.teongbin.shortcut.dto.request.AddShortcutRequestDto;
 import com.ssafy.teongbin.shortcut.dto.request.DeleteShortcutRequestDto;
+import com.ssafy.teongbin.shortcut.dto.request.UpdateShortcutRequestDto;
 import com.ssafy.teongbin.shortcut.dto.response.ShortcutResponseDto;
 import com.ssafy.teongbin.shortcut.entity.Shortcut;
 import com.ssafy.teongbin.shortcut.service.ShortcutService;
@@ -32,17 +33,26 @@ public class ShortcutController {
         return ResponseUtils.ok(MsgType.ADD_SHORTCUT_SUCCESSFULLY);
     }
 
-    // 숏컷 삭제
-    @PostMapping("/delete")
-    public ResponseEntityDto<Void> deleteShortcut(@AuthenticationPrincipal PrincipalDetails user, @RequestBody DeleteShortcutRequestDto deleteShortcutRequestDto) {
-        shortcutService.deleteShortcut(user, deleteShortcutRequestDto);
-        return ResponseUtils.ok(MsgType.DELETE_SHORTCUT_SUCCESSFULLY);
-    }
-
     // 숏컷 리스트
     @GetMapping("")
     public ResponseEntityDto<List<ShortcutResponseDto>> getShortcutList(@AuthenticationPrincipal PrincipalDetails user) {
         List<ShortcutResponseDto> shortcuts = shortcutService.getShortcutList(user);
         return ResponseUtils.ok(shortcuts, MsgType.SEARCH_SHORTCUT_LIST_SUCCESSFULLY);
     }
+
+    // 숏컷 삭제
+    @PostMapping("/{shortcut_id}/delete")
+    public ResponseEntityDto<Void> deleteShortcut(@AuthenticationPrincipal PrincipalDetails user, @PathVariable("shortcut_id") Long shortcut_id) {
+        shortcutService.deleteShortcut(user, shortcut_id);
+        return ResponseUtils.ok(MsgType.DELETE_SHORTCUT_SUCCESSFULLY);
+    }
+
+    // 숏컷 이름 변경
+    @PostMapping("/{shortcut_id}/update")
+    public ResponseEntityDto<Void> deleteShortcut(@AuthenticationPrincipal PrincipalDetails user, @PathVariable("shortcut_id") Long shortcut_id, @RequestBody UpdateShortcutRequestDto updateShortcutRequestDto) {
+        shortcutService.updateShortcut(user, shortcut_id, updateShortcutRequestDto);
+        return ResponseUtils.ok(MsgType.UPDATE_SHORTCUT_SUCCESSFULLY);
+    }
+
+
 }
