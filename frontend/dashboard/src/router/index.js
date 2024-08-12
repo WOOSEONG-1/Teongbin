@@ -45,7 +45,6 @@ const router = createRouter({
 router.beforeEach((from, to, next) => {
   const token = sessionStorage.getItem("teongbinToken");
 
-  console.log(from);
   const allowPages = ['login', 'join', 'find'];
   
   if(token) {
