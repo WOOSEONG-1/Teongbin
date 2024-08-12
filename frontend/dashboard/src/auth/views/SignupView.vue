@@ -5,6 +5,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import "@/auth/assets/css/account.css";
+import { signup } from "@/auth/js/auth";
 
 const router = useRouter();
 const signupData = ref({ email: "", name: "", password: "" });
