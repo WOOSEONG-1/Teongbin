@@ -5,6 +5,7 @@ import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
 import com.ssafy.teongbin.shortcut.dto.request.AddShortcutRequestDto;
 import com.ssafy.teongbin.shortcut.dto.request.DeleteShortcutRequestDto;
+import com.ssafy.teongbin.shortcut.dto.request.UpdateShortcutRequestDto;
 import com.ssafy.teongbin.shortcut.dto.response.ShortcutResponseDto;
 import com.ssafy.teongbin.shortcut.entity.Shortcut;
 import com.ssafy.teongbin.shortcut.repository.ShortcutRepository;
@@ -61,14 +62,14 @@ public class ShortcutService {
 
     // 숏컷 삭제
     @Transactional
-    public void deleteShortcut(PrincipalDetails user, DeleteShortcutRequestDto deleteShortcutRequestDto) {
+    public void deleteShortcut(PrincipalDetails user, Long shortcut_id) {
         // User 존재 여부 검사
         Optional<User> ou = userRepository.findByEmail(user.getUsername());
         if (ou.isEmpty()) {
             throw new CustomException(ErrorType.NOT_FOUND_USER);
         }
         // Shortcut 존재 여부 검사
-        Optional<Shortcut> optionalShortcut = shortcutRepository.findById(deleteShortcutRequestDto.getShortcut_id());
+        Optional<Shortcut> optionalShortcut = shortcutRepository.findById(shortcut_id);
         if (optionalShortcut.isEmpty()) {
             throw new CustomException(ErrorType.NOT_FOUND_SHORTCUT);
         }
@@ -77,8 +78,39 @@ public class ShortcutService {
             throw new CustomException(ErrorType.USER_SHORTCUT_MISMATCH);
         }
         // 삭제 로직
-        shortcutRepository.deleteById(deleteShortcutRequestDto.getShortcut_id());
+        shortcutRepository.deleteById(shortcut_id);
     }
+
+
+    // 숏컷 수정
+    @Transactional
+    public void updateShortcut(PrincipalDetails user, Long shortcut_id, UpdateShortcutRequestDto dto) {
+        // User 존재 여부 검사
+        Optional<User> ou = userRepository.findByEmail(user.getUsername());
+        if (ou.isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+        }
+        // Shortcut 존재 여부 검사
+        Optional<Shortcut> optionalShortcut = shortcutRepository.findById(shortcut_id);
+        if (optionalShortcut.isEmpty()) {
+            throw new CustomException(ErrorType.NOT_FOUND_SHORTCUT);
+        }
+        // 유저와 shortcut의 user가 다르다면?
+        if (ou.get() != optionalShortcut.get().getUser()) {
+            throw new CustomException(ErrorType.USER_SHORTCUT_MISMATCH);
+        }
+
+        // 수정 로직
+        Shortcut shortcut = optionalShortcut.get();
+        shortcut.setNickname(dto.getNickname());
+
+        shortcutRepository.save(shortcut);
+    }
+
+
+
+
+
 
 
     // 숏컷 리스트
@@ -94,6 +126,7 @@ public class ShortcutService {
                 .map(shortcut ->
                         ShortcutResponseDto
                                 .fromEntity(
+                                        shortcut.getId(),
                                         shortcut.getNickname(),
                                         shortcut.getLatitude(),
                                         shortcut.getLongitude(),
