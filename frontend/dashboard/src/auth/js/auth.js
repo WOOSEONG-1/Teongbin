@@ -1,6 +1,28 @@
 import axios from "axios";
 import router from "@/router";
 
+export function sendAuthCode(email) {
+  const data = { email: email };
+  axios
+    .post("/api/v1/user/email", data)
+    .then((res) => {})
+    .catch((error) => {});
+}
+
+export async function verifyAuthCode(email, authCode) {
+  const data = { email: email, code: authCode };
+  return await axios
+    .post("/api/v1/user/verify", data)
+    .then((res) => {
+      console.log(res);
+      return true;
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+}
+
 export async function signup(data) {
   let success = true;
   await axios
