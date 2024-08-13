@@ -84,7 +84,6 @@ shortcutStore.$subscribe((mutation, state) => {
     mapStore.shortcutMarkerList = [];
 
     const shortcutList = state.shortcutList;
-
     shortcutList.forEach((shortcut, idx) => {
       const marker = createShortcutMarker(
         shortcut,
@@ -131,7 +130,6 @@ trashcanStore.$subscribe((mutation, state) => {
       marker.setMap(null);
     });
     mapStore.trashcanMarkerList = [];
-    
     const trashcanList = state.trashcanList;
 
     trashcanList.forEach((trashcan) => {
