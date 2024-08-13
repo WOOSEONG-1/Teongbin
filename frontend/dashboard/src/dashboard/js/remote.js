@@ -5,6 +5,17 @@ import { useUserStore } from "@/dashboard/stores/user";
 import { useAuthStore } from "@/auth/stores/auth";
 import { cloneDeep } from "lodash";
 import router from "@/router";
+import {
+  toastExpireToken,
+  toastSuccessAddShortcut,
+  toastSuccessAddTrashcan,
+  toastSuccessChangeUserInfo,
+  toastSuccessModifyTrashcanInfo,
+  toastSuccessRemoveShortcut,
+  toastSuccessRemoveTrashcan,
+  toastSuccessRenameShortcut,
+  toastSuccessSetDefaultMap,
+} from "@/dashboard/js/toast";
 
 const shortcutStore = useShortcutStore();
 const trashcanStore = useTrashcanStore();
@@ -16,9 +27,11 @@ function logoutUser() {
   sessionStorage.removeItem("teongbinUserName");
   authStore.loginState = false;
 
-  alert("로그인 시간 만료");
+  toastExpireToken();
 
-  router.push("/user/login");
+  setTimeout(() => {
+    router.push("/user/login");
+  }, 1000);
 }
 
 const apiClient = axios.create();
@@ -39,7 +52,6 @@ apiClient.interceptors.response.use(
     if (error.response && error.response.data.status == 401) {
       logoutUser();
     } else {
-      console.log(error);
     }
 
     return Promise.reject(error);
@@ -63,6 +75,7 @@ export function changeUserInfo(name, password) {
   apiClient
     .post("/api/v1/user/update", data)
     .then((res) => {
+      toastSuccessChangeUserInfo();
       getUserInfo();
     })
     .catch((error) => {});
@@ -72,6 +85,7 @@ export function addTrashcan(data) {
   apiClient
     .post("/api/v1/trash/new", data)
     .then((res) => {
+      toastSuccessAddTrashcan();
       getTrashcanList();
     })
     .catch((error) => {});
@@ -123,6 +137,7 @@ export function modifyTrashcanInfo() {
   apiClient
     .post(`/api/v1/trash/${data.trashcanId}/update`, postData)
     .then((res) => {
+      toastSuccessModifyTrashcanInfo();
       getTrashcanList();
       trashcanStore.selectTrashcanList.splice(0, 1);
     })
@@ -148,6 +163,7 @@ export async function removeSubscribeTrashcan() {
       0,
       trashcanStore.selectTrashcanList.length
     );
+    toastSuccessRemoveTrashcan();
     getTrashcanList();
   } catch (error) {}
 }
@@ -160,6 +176,7 @@ export async function addShortcut(setting) {
   const success = await apiClient
     .post("/api/v1/user/shortcut/new", setting)
     .then((res) => {
+      toastSuccessAddShortcut();
       return true;
     })
     .catch((error) => {
@@ -195,6 +212,7 @@ export function postRenameShortcut(shortcut, newNickname) {
   apiClient
     .post(`/api/v1/user/shortcut/${shortcut.shortcut_id}/update`, data)
     .then((res) => {
+      toastSuccessRenameShortcut();
       getShortcutList();
     })
     .catch((res) => {});
@@ -204,6 +222,7 @@ export function postRemoveShortcut(shortcut) {
   apiClient
     .post(`/api/v1/user/shortcut/${shortcut.shortcut_id}/delete`, null)
     .then((res) => {
+      toastSuccessRemoveShortcut();
       getShortcutList();
     })
     .catch((error) => {});
@@ -217,6 +236,8 @@ export function postDefaultMapSetting(setting) {
   };
   apiClient
     .post("/api/v1/user/update", data)
-    .then((res) => {})
+    .then((res) => {
+      toastSuccessSetDefaultMap();
+    })
     .catch((error) => {});
 }
