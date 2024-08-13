@@ -102,8 +102,7 @@ watch(
 
       toggleInput();
       shortcutName.value = "";
-      const success = await addShortcut(shortcut);
-      if (success) getShortcutList();
+      addShortcut(shortcut);
     }
   }
 );

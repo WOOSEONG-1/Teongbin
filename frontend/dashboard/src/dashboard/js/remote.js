@@ -177,6 +177,7 @@ export async function addShortcut(setting) {
     .post("/api/v1/user/shortcut/new", setting)
     .then((res) => {
       toastSuccessAddShortcut();
+      getShortcutList();
       return true;
     })
     .catch((error) => {
@@ -191,6 +192,7 @@ export function getShortcutList() {
     .get("/api/v1/user/shortcut")
     .then((res) => {
       shortcutStore.shortcutList = res.data.data;
+      shortcutStore.colorList.splice(0, shortcutStore.colorList.length);
       shortcutStore.shortcutList.forEach((shortcut, idx) => {
         const r = getRandomNum(idx);
         const g = getRandomNum(r);
