@@ -10,4 +10,12 @@ import lombok.Data;
 public class UserTrashcanRestDtoV2 {
     private Long trashcanId;
     private int restPercent;
+
+    public UserTrashcanRestDtoV2(Trashcan trashcan) {
+        this.trashcanId = trashcan.getId();
+        this.restPercent = trashcan.getRestlogs().stream()
+                .map(Restlog::getRestPercent)
+                .reduce((first, second) -> second)
+                .orElse(0);
+    }
 }
