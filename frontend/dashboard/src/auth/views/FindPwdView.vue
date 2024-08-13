@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import AuthLayout from "@/auth/layouts/AuthLayout.vue";
 import "@/auth/assets/css/account.css";
 import { changePassword, sendAuthCode, verifyAuthCode } from "@/auth/js/auth";
+import { toastEmailMissMatch, toastPasswordMissmatch } from "@/auth/js/toast";
 
 const authStep = ref(1);
 const email = ref("");
@@ -12,7 +13,7 @@ const verifyPassword = ref("");
 const authEmail = ref("");
 
 watch(() => email.value, email => {
-  if(email.value != authEmail.value || authEmail.value.length == 0) {
+  if(email != authEmail.value || authEmail.value.length == 0) {
     authStep.value = 1;
   } else {
     authStep.value = 3;
@@ -36,9 +37,15 @@ async function clickVerifyAuthCode() {
 }
 
 function clickChangePassword() {
-  if (password.value == verifyPassword.value && authEmail.value != "") {
-    changePassword(authEmail.value, password.value);
+  if (password.value != verifyPassword.value) {
+    toastPasswordMissmatch();
+    return false;
+  } else if (authEmail.value != email.value) {
+    toastEmailMissMatch();
+    return false;
   }
+
+  changePassword(authEmail.value, password.value);
 }
 </script>
 
