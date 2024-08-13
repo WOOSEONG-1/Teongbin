@@ -17,7 +17,7 @@ const trashcanStore = useTrashcanStore();
           <th>사명</th>
         </tr>
         <tr>
-          <td>{{ userStore.userName }}</td>
+          <td>{{ userStore.userInfo.name }}</td>
         </tr>
         <tr>
           <th>제품 수</th>
