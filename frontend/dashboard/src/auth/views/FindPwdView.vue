@@ -9,16 +9,19 @@ const authStep = ref(1);
 const email = ref("");
 const authCode = ref("");
 const password = ref("");
-const verifyPassword = ref("");
+const passwordConfirm = ref("");
 const authEmail = ref("");
 
-watch(() => email.value, email => {
-  if(email != authEmail.value || authEmail.value.length == 0) {
-    authStep.value = 1;
-  } else {
-    authStep.value = 3;
+watch(
+  () => email.value,
+  (email) => {
+    if (email != authEmail.value || authEmail.value.length == 0) {
+      authStep.value = 1;
+    } else {
+      authStep.value = 3;
+    }
   }
-});
+);
 
 async function clickSendAuthCode() {
   const success = await sendAuthCode(email.value);
@@ -37,7 +40,7 @@ async function clickVerifyAuthCode() {
 }
 
 function clickChangePassword() {
-  if (password.value != verifyPassword.value) {
+  if (password.value != passwordConfirm.value) {
     toastPasswordMissmatch();
     return false;
   } else if (authEmail.value != email.value) {
@@ -121,10 +124,14 @@ function clickChangePassword() {
             <input
               type="password"
               inputmode="text"
-              v-model="verifyPassword"
+              v-model="passwordConfirm"
               class="box input-field"
               placeholder=""
               autocomplete="off"
+              :class="{
+                'input-error':
+                  0 < passwordConfirm.length && password != passwordConfirm,
+              }"
             />
             <label class="input-label">새로운 비밀번호 확인</label>
           </div>
@@ -148,5 +155,8 @@ function clickChangePassword() {
 }
 .auth-item {
   width: 45%;
+}
+.input-error {
+  color: red;
 }
 </style>
