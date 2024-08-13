@@ -24,7 +24,7 @@ const trashcanStore = useTrashcanStore();
             <div class="trashcan-text-info nickname">
               {{ trashcan.nickname }}
             </div>
-            <div class="trashcan-text-info">{{ trashcan.restPercent }}</div>
+            <div class="trashcan-text-info">{{ trashcan.restPercent }} %</div>
           </div>
           <div>
             <i

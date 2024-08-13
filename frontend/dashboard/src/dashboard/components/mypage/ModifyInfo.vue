@@ -112,3 +112,10 @@ function modifyInfo() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.btn:hover {
+  font-weight: bold;
+  background-color: rgba(20, 200, 20, 0.1);
+}
+</style>

@@ -85,4 +85,8 @@ function removeTrashcan() {
   padding-bottom: 0.5rem;
   letter-spacing: 0.03rem;
 }
+.btn:hover {
+  font-weight: bold;
+  background-color: rgba(20, 200, 20, 0.1);
+}
 </style>

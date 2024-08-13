@@ -148,4 +148,8 @@ function resetInput() {
   width: 4rem;
   justify-content: center;
 }
+.btn:hover {
+  font-weight: bold;
+  background-color: rgba(20, 200, 20, 0.1);
+}
 </style>
