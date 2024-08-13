@@ -10,14 +10,14 @@ const password = ref();
 const checkPassword = ref();
  
 watch(
-  () => userStore.userName,
+  () => userStore.userInfo,
   (newUsername) => {
-    username.value = newUsername;
+    username.value = userStore.userInfo.name;
   }
 );
 
 onMounted(() => {
-  username.value = userStore.userName;
+  username.value = userStore.userInfo.name;
 })
 
 getUserInfo();

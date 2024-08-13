@@ -1,21 +1,53 @@
 <script setup>
 import AuthLayout from "@/auth/layouts/AuthLayout.vue";
 import { cloneDeep } from "lodash";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import "@/auth/assets/css/account.css";
-import { signup } from "@/auth/js/auth";
+import { sendAuthCode, signup, verifyAuthCode } from "@/auth/js/auth";
 
 const router = useRouter();
 const signupData = ref({ email: "", name: "", password: "" });
 const passwordConfirm = ref("");
 const signupModal = ref();
 
-async function handleSignup() {
+const authStep = ref(1);
+const authCode = ref("");
+const authEmail = ref("");
+
+watch(() => signupData.value.email, email => {
+  if(signupData.value.email != authEmail.value || authEmail.value.length == 0) {
+    authStep.value = 1;
+  } else {
+    authStep.value = 3;
+  }
+});
+
+
+async function clickSendAuthCode() {
+  const success = await sendAuthCode(signupData.value.email);
+  if(success) {
+    authStep.value = 2;
+  }
+}
+
+async function clickVerifyAuthCode() {
+  const verifyEmail = signupData.value.email;
+  const success = await verifyAuthCode(signupData.value.email, authCode.value);
+  if(success) {
+    authStep.value = 3; 
+    authEmail.value = signupData.value.email;
+  }
+}
+
+async function clickSignup() {
   if (signupData.value.password != passwordConfirm.value) {
     return false;
+  } else if(authEmail.value != signupData.value.email) {
+    return false;
   }
+
   const data = cloneDeep(signupData.value);
 
   const success = await signup(data);
@@ -46,6 +78,44 @@ function gotoLogin() {
             placeholder=""
           />
           <label class="input-label">이메일 주소</label>
+        </div>
+        <div class="input-item">
+          <div class="auth-item">
+            <input
+              type="text"
+              inputmode="email"
+              v-model="authCode"
+              class="box input-field"
+              placeholder=""
+            />
+            <label class="input-label">인증번호</label>
+          </div>
+          <div class="auth-item">
+            <button
+              type="button"
+              @click="clickSendAuthCode"
+              class="box submit-btn"
+              v-if="authStep == 1"
+            >
+              인증번호 발송
+            </button>
+            <button type="button" class="box submit-btn" v-if="authStep == 2">
+              <div v-if="authCode.length == 6" @click="clickVerifyAuthCode">
+                인증 요청
+              </div>
+              <div v-if="authCode.length != 6" @click="clickSendAuthCode">
+                재발송
+              </div>
+            </button>
+            <button
+              type="button"
+              class="box submit-btn"
+              :disabled="true"
+              v-if="authStep == 3"
+            >
+              인증완료
+            </button>
+          </div>
         </div>
         <div class="input-item input-error">
           <input
@@ -84,7 +154,7 @@ function gotoLogin() {
           />
           <label class="input-label">회사명</label>
         </div>
-        <button type="button" @click="handleSignup" class="box submit-btn">
+        <button type="button" @click="clickSignup" class="box submit-btn">
           계정 생성
         </button>
 
@@ -140,6 +210,13 @@ function gotoLogin() {
 <style scoped>
 .navigator-text {
   font-size: 1.2rem;
+}
+.input-item {
+  display: flex;
+  justify-content: space-between;
+}
+.auth-item {
+  width: 45%;
 }
 .input-error {
   color: red;

@@ -1,7 +1,12 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
-import { addShortcut, getShortcutList, postRenameShortcut } from "@/dashboard/js/remote";
+import {
+  addShortcut,
+  getShortcutList,
+  postRemoveShortcut,
+  postRenameShortcut,
+} from "@/dashboard/js/remote";
 const shortcutStore = useShortcutStore();
 
 const props = defineProps({
@@ -42,6 +47,7 @@ function mouseoverHandler(idx) {
     clearTimeout(hoverTimeout.value);
   }
   hoverTimeout.value = setTimeout(() => {
+    renameInputVisible.value = false;
     select.value = idx;
   }, 500);
 }
@@ -219,21 +225,25 @@ getShortcutList();
   float: left;
   justify-content: center;
   max-width: 8rem;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   min-width: 8rem;
   white-space: nowrap;
   align-items: center;
   font-weight: bold;
+  overflow-x: hidden;
 }
 .manage-shortcut-container {
   display: flex;
   padding: 0;
+  height: 2rem;
+  align-items: center;
 }
 button {
   border: none;
   background: none;
 }
 .manage-img {
+  justify-content: center;
   font-size: 1rem;
 }
 .shortcut-menu-container {
@@ -250,17 +260,15 @@ button {
   position: absolute;
   top: 100%;
   left: 0;
-  border: 1px solid #ccc;
   background-color: #fff;
-  padding: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 
 .rename-popup {
-  position: absolute;
-  left: 10rem;
-  border: 1px solid #ccc;
+  position: relative;
+  left: 0;
+  top: 0.7rem;
   background-color: #fff;
   width: 12rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

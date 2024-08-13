@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { Modal } from "bootstrap";
 import { modifyTrashcanInfo } from "@/dashboard/js/remote";
 import { cloneDeep } from "lodash";
+import ModifyCoordMap from "@/dashboard/components/mypage/ModifyCoordMap.vue";
 
 const trashcanStore = useTrashcanStore();
 
@@ -93,6 +94,9 @@ function modifyInfo() {
               aria-describedby="basic-addon1"
               disabled="true"
             />
+          </div>
+          <div>
+            <ModifyCoordMap />
           </div>
         </div>
         <div class="modal-footer">

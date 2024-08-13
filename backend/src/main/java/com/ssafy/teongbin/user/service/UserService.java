@@ -3,6 +3,7 @@ package com.ssafy.teongbin.user.service;
 import com.ssafy.teongbin.common.exception.CustomException;
 import com.ssafy.teongbin.common.exception.ErrorType;
 import com.ssafy.teongbin.common.jwt.PrincipalDetails;
+import com.ssafy.teongbin.user.dto.request.PasswordChangeDto;
 import com.ssafy.teongbin.user.dto.request.SignUpRequestDto;
 import com.ssafy.teongbin.user.dto.request.UpdateUserRequestDto;
 import com.ssafy.teongbin.user.dto.response.ProfileResponseDto;
@@ -85,8 +86,27 @@ public class UserService {
         }
 
         // zoom_level 수정
-        target.updateZoomLevel(dto.getZoom_level());
+        if ( dto.getZoom_level() != null ) {
+            target.updateZoomLevel(dto.getZoom_level());
+        }
 
         userRepository.save(ou.get());
+    }
+
+    public void passwordchange(PasswordChangeDto passwordChangeDto) {
+        Optional<User> ou = userRepository.findByEmail(passwordChangeDto.getEmail());
+
+        if ( ou.isEmpty() )
+            throw new CustomException(ErrorType.NOT_FOUND_USER);
+
+        User target = ou.get();
+        // password 수정
+        if ( passwordChangeDto.getPassword() != null ){
+            String enc_pw = passwordEncoder.encode(passwordChangeDto.getPassword());
+            target.updatePassword(enc_pw);
+            userRepository.save(ou.get());
+        } else {
+            throw new CustomException(ErrorType.NOT_FOUND_NEW_PASSWORD);
+        }
     }
 }

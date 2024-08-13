@@ -13,6 +13,7 @@ public enum ErrorType {
     NOT_TOKEN(401, "토큰이 없습니다.", ErrorCategory.TOKEN_ERROR.getCategory()),
     NOT_VALID_TOKEN(401, "토큰이 유효하지 않습니다.", ErrorCategory.TOKEN_ERROR.getCategory()),
     EXPIRED_TOKEN(401, "토큰이 만료되었습니다.", ErrorCategory.TOKEN_ERROR.getCategory()),
+    NOT_FOUND_NEW_PASSWORD(401, "입력된 새 비밀번호가 없습니다.", ErrorCategory.EMAILVERIFY_ERROR.getCategory()),
     //-----------------------쓰레기통 관련 부분---------------------------
     USER_TRASHCAN_MISMATCH(401, "유저와 쓰레기통의 유저 정보가 일치하지 않습니다.", ErrorCategory.TRASHCAN_ERROR.getCategory()),
     NOT_FOUND_TRASHCAN(401, "등록된 쓰레기통이 없습니다", ErrorCategory.TRASHCAN_ERROR.getCategory()),
