@@ -6,6 +6,12 @@ import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import "@/auth/assets/css/account.css";
 import { sendAuthCode, signup, verifyAuthCode } from "@/auth/js/auth";
+import {
+  toastEmailMissMatch,
+  toastEmailVerifyNotComplete,
+  toastNotTypeCompanyName,
+  toastPasswordMissmatch,
+} from "@/auth/js/toast";
 
 const router = useRouter();
 const signupData = ref({ email: "", name: "", password: "" });
@@ -16,18 +22,23 @@ const authStep = ref(1);
 const authCode = ref("");
 const authEmail = ref("");
 
-watch(() => signupData.value.email, email => {
-  if(signupData.value.email != authEmail.value || authEmail.value.length == 0) {
-    authStep.value = 1;
-  } else {
-    authStep.value = 3;
+watch(
+  () => signupData.value.email,
+  (email) => {
+    if (
+      signupData.value.email != authEmail.value ||
+      authEmail.value.length == 0
+    ) {
+      authStep.value = 1;
+    } else {
+      authStep.value = 3;
+    }
   }
-});
-
+);
 
 async function clickSendAuthCode() {
   const success = await sendAuthCode(signupData.value.email);
-  if(success) {
+  if (success) {
     authStep.value = 2;
   }
 }
@@ -35,16 +46,23 @@ async function clickSendAuthCode() {
 async function clickVerifyAuthCode() {
   const verifyEmail = signupData.value.email;
   const success = await verifyAuthCode(signupData.value.email, authCode.value);
-  if(success) {
-    authStep.value = 3; 
-    authEmail.value = signupData.value.email;
+  if (success) {
+    authStep.value = 3;
+    authEmail.value = verifyEmail;
   }
 }
 
 async function clickSignup() {
   if (signupData.value.password != passwordConfirm.value) {
+    toastPasswordMissmatch();
     return false;
-  } else if(authEmail.value != signupData.value.email) {
+  } else if (authEmail.value == "") {
+    toastEmailVerifyNotComplete();
+  } else if (authEmail.value != signupData.value.email) {
+    toastEmailMissMatch();
+    return false;
+  } else if (signupData.value.name == "") {
+    toastNotTypeCompanyName();
     return false;
   }
 
