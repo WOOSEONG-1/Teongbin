@@ -18,19 +18,21 @@ function logout() {
     <div class="menu-container menu-split">
       <div>
         <div class="blank-space"></div>
-        <div class="menu-box">
+        <div
+          class="menu-box"
+          :class="$route.path === '/' ? 'active-box' : 'nonactive'"
+        >
           <RouterLink to="/" class="menu-item">Main</RouterLink>
         </div>
-        <div class="menu-box">
-          <RouterLink to="/myPage/product" class="menu-item"
-            >My Page</RouterLink
-          >
+        <div
+          class="menu-box"
+          :class="$route.path.startsWith('/my') ? 'active-box' : 'nonactive'"
+        >
+          <RouterLink to="/my/product" class="menu-item">My Page</RouterLink>
         </div>
       </div>
-      <div>
-        <div class="menu-box">
-          <button class="menu-item logout-btn" @click="logout">Logout</button>
-        </div>
+      <div class="menu-box nonactive">
+        <button class="logout-btn" @click="logout">Logout</button>
       </div>
     </div>
   </aside>
@@ -57,7 +59,18 @@ aside {
   height: 100%;
 }
 .menu-box {
-  padding: 1.5rem 0;
+  padding: 0.75rem 0;
+  margin: 0.75rem 0;
+}
+.nonactive:hover {
+  background-color: rgba(240, 240, 240, 0.5);
+  border-radius: 5px;
+}
+.active-box {
+  background-color: rgba(240, 240, 240);
+  border-radius: 5px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 .menu-item {
   text-decoration: none;
