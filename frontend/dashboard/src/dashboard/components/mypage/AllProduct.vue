@@ -58,7 +58,7 @@ button {
   margin: 0;
 }
 .select {
-  background: #EEE;
+  background-color: rgba(20, 200, 20, 0.05);
 }
 .scroll-container {
   overflow-y: scroll;

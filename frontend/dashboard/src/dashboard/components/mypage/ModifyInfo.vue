@@ -59,7 +59,7 @@ function modifyInfo() {
               class="form-control"
               v-model="trashcanStore.trashcanInfo.serialNumber"
               aria-describedby="basic-addon1"
-              readonly
+              disabled="true"
             />
           </div>
           <div class="input-group mb-3">
@@ -82,6 +82,7 @@ function modifyInfo() {
               class="form-control"
               v-model="trashcanStore.trashcanInfo.latitude"
               aria-describedby="basic-addon1"
+              disabled="true"
             />
             <span class="input-group-text info-input" id="longitude-label"
               >경도</span
@@ -91,6 +92,7 @@ function modifyInfo() {
               class="form-control"
               v-model="trashcanStore.trashcanInfo.longitude"
               aria-describedby="basic-addon1"
+              disabled="true"
             />
           </div>
           <div>
@@ -114,3 +116,10 @@ function modifyInfo() {
     </div>
   </div>
 </template>
+
+<style scoped>
+.btn:hover {
+  font-weight: bold;
+  background-color: rgba(20, 200, 20, 0.1);
+}
+</style>

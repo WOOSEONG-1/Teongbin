@@ -108,6 +108,7 @@ function resetInput() {
               class="form-control"
               v-model="trashcanData.latitude"
               aria-describedby="basic-addon1"
+              disabled="true"
             />
             <span class="input-group-text info-input" id="longitude-label"
               >경도</span
@@ -117,6 +118,7 @@ function resetInput() {
               class="form-control"
               v-model="trashcanData.longitude"
               aria-describedby="basic-addon1"
+              disabled="true"
             />
           </div>
           <div>
@@ -145,5 +147,9 @@ function resetInput() {
 .info-input {
   width: 4rem;
   justify-content: center;
+}
+.btn:hover {
+  font-weight: bold;
+  background-color: rgba(20, 200, 20, 0.1);
 }
 </style>

@@ -10,17 +10,17 @@ const router = createRouter({
       component: () => import('@/dashboard/views/HomeView.vue')
     },
     {
-      path: '/myPage/product',
+      path: '/my/product',
       name: 'product',
       component: () => import('@/dashboard/views/ProductView.vue')
     },
     {
-      path: '/myPage/pwd',
+      path: '/my/pwd',
       name: 'pwd',
       component: () => import('@/dashboard/views/ChangeMyInfo.vue')
     },
     {
-      path: '/myPage/map',
+      path: '/my/map',
       name: 'map',
       component: () => import('@/dashboard/views/ChangeDefaultMap.vue')
     },
