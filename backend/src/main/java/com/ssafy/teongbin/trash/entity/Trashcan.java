@@ -34,10 +34,10 @@ public class Trashcan extends BaseTime {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "trashcan")
+    @OneToMany(mappedBy = "trashcan",cascade = CascadeType.ALL)
     private List<Catlog> catlogs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "trashcan")
+    @OneToMany(mappedBy = "trashcan", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Restlog> restlogs = new ArrayList<>();
 }
