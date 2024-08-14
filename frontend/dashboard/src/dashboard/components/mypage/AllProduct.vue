@@ -91,6 +91,8 @@ button {
   padding: 0.5rem 0;
   align-items: center;
   margin: 0 0.5rem;
+  white-space: nowrap;
+  overflow-x: hidden;
 }
 .horizontal-line {
   border-bottom: 1px double lightgrey;
