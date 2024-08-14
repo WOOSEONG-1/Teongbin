@@ -65,9 +65,6 @@ public class UserTrashcanService {
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
         if (ou.isPresent()) {
             List<UserTrashcanRestDtoV2> utd = trashcanRepository.findTrashcanRestDtoV2ByUser(ou.get());
-            if (utd.isEmpty()) {
-                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
-            }
             return utd;
         }
         else {
@@ -110,9 +107,6 @@ public class UserTrashcanService {
         Optional<User> ou = userRepository.findByEmail(userIn.getUsername());
         if ( ou.isPresent() ){
             List<UserTrashcanDto> lt = trashcanRepository.findTrashcanDtosByUser(ou.get());
-            if (lt.isEmpty()) {
-                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
-            }
             return lt;
         }
         else {
@@ -176,7 +170,8 @@ public class UserTrashcanService {
         if (ou.isPresent()) {
             List<Trashcan> lt = trashcanRepository.findByUser(ou.get());
             if (lt.isEmpty()) {
-                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+                List<UserLogDto.RestDto> allLogs = new ArrayList<>();
+                return allLogs;
             }
             List<Long> trashcanIds = lt.stream()
                     .map(Trashcan::getId)
@@ -239,8 +234,6 @@ public class UserTrashcanService {
                         tcd2.setCount(tcd2.getCount()+1);
                     } else if (categoryId==3L) {
                         tcd3.setCount(tcd3.getCount()+1);
-                    } else {
-                        throw new CustomException(ErrorType.NOT_FOUND_CATEGORYID);
                     }
                 }
                 Map<Long, TrashcanCatlogDto> categoryMap = new HashMap<>();
