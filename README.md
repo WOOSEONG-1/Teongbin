@@ -17,11 +17,11 @@
 | Contributors | Role | Position |
 | ------------ | ---- | -------- |
 | 지예찬 | 팀장, <br /> Backend  | - 숏컷 기능 개발 <br> - 백엔드 오류 수정 <br> |
-| 황우성  | 팀원, <br /> Backend,<br />Infra | - WebSocket 채팅 서버 <br> - 롤 API 담당하여 명세서 작성 <br> - 롤 LOCAL API 이용한 크롤링 <br> - socket s3를 이용한 이미지 업로드 |
+| 황우성  | 팀원, <br /> Backend,<br />Infra | |
 | 김민아 | 팀원, <br /> Backend  | - 쓰레기통 관련 기능 개발 <br> - 카테고리, 잔량 관련 기능 개발 <br> - 이메일 인증, 비밀번호 변경 기능 개발 <br> - DB 조회 성능 최적화, 에러 수정 |
-| 오혜성 | 팀원, <br /> Frontend | - 일렉트론 포팅 및 개발 & PWA 포팅 <br> - 클라이언트 & 라이브 채팅창 연동 <br> - 선행기술 연구 <br> - UCC 제작 |
+| 오혜성 | 팀원, <br /> Frontend |  |
 | 전기철 | 팀원, <br /> Embedded, <br /> AI| - 3D 프린팅 및 하드웨어 제작<br> - YOLO 이용 GPU서버에서 재활용 이미지 분류 모델 제작<br>- YOLO와 GPIO 연결을 통한 인식 결과에 맞춘 LED 제어<br> - Jetson Orin nano 환경 세팅 및 코드 결합 <br>   |
-| 여현대 | 팀원, <br /> Embedded, <br /> | - WebSocket 채팅 프론트 <br> - 웹 UI/UX <br> - PWA 반응형 모바일 UI |
+| 여현대 | 팀원, <br /> Embedded, <br /> | |
 
 
 
@@ -125,15 +125,23 @@
 
 ![submit](readmeImage/submit.png)
 
-### 프레스 기능
+### 하드웨어 전체
 
 <img src="readmeImage/trashcan.jpg" alt="trashcan" width="400" height="300">
+
+### 프레스 기능
+
 <img src="readmeImage/press.jpg" alt="press" width="400" height="300">
+
+- 프레스 기능을 통해 쓰레기통 내부 공간을 효율적으로 관리함
+
 
 
 ### 재활용 분류 모델
 
-- ![Yoloimage](readmeImage/Yolo.png)
+![Yoloimage](readmeImage/Yolo.png)
+
+- 페트병과 캔을 인식하여 그 데이터를 전송하고, 그에 맞게 LED를 제어하여 쓰레기 분류를 안내함
 
 # 4. UCC
 
