@@ -36,7 +36,7 @@ function colorStyle(idx) {
 const hoverTimeout = ref();
 const leaveTimeout = ref();
 const select = ref();
-const rename = ref();
+const rename = ref("");
 const renameInputVisible = ref(false);
 
 function mouseoverHandler(idx) {
