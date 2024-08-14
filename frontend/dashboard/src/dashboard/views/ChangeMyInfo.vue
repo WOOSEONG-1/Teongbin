@@ -3,12 +3,14 @@ import { onMounted, ref, watch } from "vue";
 import MyPageLayout from "@/dashboard/layouts/MyPageLayout.vue";
 import { useUserStore } from "@/dashboard/stores/user";
 import { changeUserInfo, getUserInfo } from "@/dashboard/js/remote";
+import { toastEnterUsername } from "@/dashboard/js/toast";
+import { toastPasswordMissmatch, toastPasswordNotFit } from "@/auth/js/toast";
 
 const userStore = useUserStore();
 const username = ref();
 const password = ref();
-const checkPassword = ref();
- 
+const passwordConfirm = ref();
+
 watch(
   () => userStore.userInfo,
   (newUsername) => {
@@ -18,22 +20,33 @@ watch(
 
 onMounted(() => {
   username.value = userStore.userInfo.name;
-})
+});
 
 getUserInfo();
 
 function changeInfo() {
-  if(checkPassword.value == password.value) {
-    changeUserInfo(username.value, password.value);
+  if (username.value == "") {
+    toastEnterUsername();
+    return false;
+  } else if (
+    password.value.length < 0 &&
+    password.value.length < 8 &&
+    password.value.length > 16
+  ) {
+    toastPasswordNotFit();
+    return false;
+  } else if (password.value != passwordConfirm.value) {
+    toastPasswordMissmatch();
+    return false;
   }
+
+  changeUserInfo(username.value, password.value);
 }
 </script>
 
 <template>
   <MyPageLayout>
-    <div class="pwd-notice">
-      ※ 비밀번호는 8~20자의 영문, 숫자 및 특수문자로 설정해주세요.
-    </div>
+    <div class="pwd-notice">※ 비밀번호는 8~16자로 설정해주세요.</div>
     <div class="pwd-table">
       <div name="changeInfo">
         <table>
@@ -44,11 +57,32 @@ function changeInfo() {
             </tr>
             <tr>
               <th>신규 비밀번호</th>
-              <td><input type="password" v-model="password" autocomplete="off"/></td>
+              <td>
+                <input
+                  type="password"
+                  v-model="password"
+                  autocomplete="off"
+                  :class="{
+                    'input-error':
+                      (0 < password.length && password.length < 8) ||
+                      password.length > 16,
+                  }"
+                />
+              </td>
             </tr>
             <tr>
               <th>신규 비밀번호 확인</th>
-              <td><input type="password" v-model="checkPassword" autocomplete="off"/></td>
+              <td>
+                <input
+                  type="password"
+                  v-model="passwordConfirm"
+                  autocomplete="off"
+                  :class="{
+                    'input-error':
+                      0 < passwordConfirm.length && password != passwordConfirm,
+                  }"
+                />
+              </td>
             </tr>
           </tbody>
         </table>
