@@ -26,6 +26,8 @@ async function getTrashcan() {
 
 onMounted(() => {
   initMap();
+  getShortcutList();
+  getTrashcan();
 });
 
 function initMap() {
