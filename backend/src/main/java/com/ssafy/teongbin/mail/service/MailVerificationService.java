@@ -25,7 +25,7 @@ public class MailVerificationService {
             redisService.deleteVerificationCode(approveRequestDto.getEmail());
             return true;
         } else {
-            return false;
+            throw new CustomException(ErrorType.FAILED_TO_EMAILVERIFY);
         }
     }
 }
