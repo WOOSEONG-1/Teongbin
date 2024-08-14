@@ -1,0 +1,244 @@
+[33m56a0101[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m  fix
+[33md098b17[m   frontend fix 내역 reset
+[33m7905f2d[m Merge branch 'frontend' into 'master'
+[33m2c805cc[m Frontend
+[33m4fcfe2d[m Merge branch 'frontend' into 'master'
+[33mec9379a[m Frontend
+[33m34863c8[m Merge branch 'frontend' into 'master'
+[33m88e97dd[m fix: store subscribe을 통한 marker 생성 시 스토어 데이터를 가져오지 못하는 상황 수정
+[33mb4bbf16[m Merge branch 'frontend' into 'master'
+[33md826aed[m fix: signupView에 signup 메소드 추가
+[33m7cd6d51[m Merge branch 'frontend' into 'master'
+[33m30ca73e[m Frontend
+[33mefd347e[m Merge branch 'backend' into 'master'
+[33m21cf1b8[m[33m ([m[1;31morigin/backend-emailverify[m[33m, [m[1;31morigin/backend[m[33m)[m Merge branch 'backend-YECHAN' into 'backend'
+[33m4119d0c[m feat: 회원 맵 정보 backend 브랜치에 추가
+[33m5315e0a[m Merge branch 'embed' into 'master'
+[33mad34599[m[33m ([m[1;31morigin/embed[m[33m)[m feat: 임베디드 코드 업로드
+[33mab9ab68[m refactor:유저정보없어도되게수정
+[33md3ab4fb[m Merge branch 'master' into backend
+[33m032d28e[m Merge branch 'backend-refactor' into backend
+[33m3254bd4[m[33m ([m[1;31morigin/backend-refactor[m[33m)[m feat:이메일인증구현
+[33ma4f2adf[m Merge branch 'frontend' into 'master'
+[33mf42df7c[m Merge branch 'frontend-YECHAN' into 'frontend'
+[33mbcdcabc[m Frontend yechan
+[33m661b04b[m Merge branch 'frontend-YECHAN' into 'master'
+[33m277b506[m Frontend yechan
+[33m8870a8f[m Merge branch 'backend' into 'master'
+[33mcdb351f[m Backend
+[33meba0f7d[m fix: shortcut 에러 수정 끝
+[33md261a9b[m Merge branch 'backend-YECHAN' into 'backend'
+[33mc847789[m fix: 숏컷 에러 수정
+[33mb38df57[m Merge branch 'master' into backend-refactor
+[33m1b8ab2d[m Merge branch 'frontend' into 'master'
+[33mfe95f50[m refactor: 상품 소개 페이지
+[33m460385f[m Merge branch 'frontend' into 'master'
+[33m0456d50[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into frontend
+[33m2b8f76f[m Merge branch 'backend' into 'master'
+[33m87134b6[m fix: build error fix - delete abnormal file
+[33m54c6652[m[33m ([m[1;32mbackend[m[33m)[m fix: b1uild error - delete abnormal file
+[33m998c9a9[m refactor: 상품 소개 페이지
+[33m650fcf8[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend
+[33m01a1df5[m refactor: User Trashcan Log Reds Caching with Look aside + write around Strategy
+[33mb483c8a[m Merge branch 'frontend-YECHAN' into 'frontend'
+[33m74de276[m Frontend yechan
+[33m0f2b220[m style: shortcut의 스타일 변경
+[33m4bd8e17[m feat: 비밀번호 및 사명 변경 구현
+[33m10e5a0e[m fix: 쓰레기통 등록 제거 오류 수정
+[33m0195210[m Merge branch 'frontend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33m4fc7d1c[m feat:이메일인증초안
+[33m5835d1c[m Merge branch 'frontend' into 'master'
+[33m84a6a3c[m feat: 등록 쓰레기통 삭제 구현(임시)
+[33m42f604a[m feat: 등록 쓰레기통 삭제 구현
+[33mca19ff2[m fix: 정보 수정 시 productView에서도 같이 변경되는 상황 수정
+[33m62b8792[m[33m ([m[1;31morigin/backend-MinA-Error[m[33m)[m Merge branch 'frontend' into 'master'
+[33m1d5c47d[m feat: 제품 선택 및 정보 수정 구현
+[33mfcf310a[m Merge branch 'backend-YECHAN' into 'backend'
+[33m62e8187[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend-YECHAN
+[33mbea003a[m Merge branch 'frontend' into 'master'
+[33mf5ee857[m feat: AllProduct 스크롤바 추가
+[33mdd14e55[m feat: 쓰레기통 등록시 즉시 업데이트 구현
+[33m7df8964[m Merge branch 'frontend' into 'master'
+[33m51ab16f[m feat: 현재 지도의 쓰레기통 정보만 보이도록 구현
+[33m8aad06c[m refactor: 에러타입 및 위도 오류 범위 수정
+[33m934b01d[m[33m ([m[1;32mbackend-WOOSEONG[m[33m)[m merge
+[33m7d751d4[m refactor:유저전체쓰레기통조회기능최적화
+[33m76ea14d[m Merge branch 'backend-MinA' into 'backend'
+[33md4de6ac[m[33m ([m[1;31morigin/backend-MinA[m[33m)[m fix: .idea DIR delete
+[33m3d5c03a[m fix: .idea DIR delete
+[33m31c3225[m fix: .IDEA DIR delete
+[33m0dcb96c[m Merge branch 'frontend' into 'master'
+[33m4907d8a[m fix: NaverMap add trashcanStore
+[33m2a06f0b[m Merge branch 'frontend' into 'master'
+[33me7f31a3[m fix: productView import getTrashcan
+[33m3c8377e[m pull remote origin
+[33mbc3d7c8[m fix: getTrashcanList
+[33mf404657[m Merge branch 'frontend' into 'master'
+[33mcb56ea6[m Merge branch 'master' into 'frontend'
+[33m175f0bd[m feat: Shortcut마커 및 이름 색상 추가
+[33m910d17f[m feat: Trashcan마커 아이콘 추가 구현
+[33mce869a4[m feat: Shortcut마커 아이콘 추가 구현
+[33m01a8af5[m refactor: Shortcut 관련 통신 작업ㅇ르 remote.js로 이동
+[33m64de0d9[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend
+[33m38f99cd[m Revert "refactor:유저전체쓰레기통성ë조회기능성능최적화"
+[33m24a7ec6[m Revert "Merge branch 'master' into backend-MinA"
+[33mfee253b[m Merge branch 'master' into backend-MinA
+[33maaa708b[m refactor:유저전체쓰레기통성ë조회기능성능최적화
+[33m1f02a90[m Merge branch 'master' into backend
+[33mbceccfb[m Merge branch 'frontend' into 'master'
+[33m793302d[m feat:ë db indexing test
+[33m9031efc[m Merge branch 'backend'
+[33m503a7f4[m Merge remote-tracking branch 'origin/backend' into backend-MinA
+[33m48da932[m refactor:잔량로그3일기준으로필터링
+[33m7eb7cdb[m feat: trashcan 리스트 구현
+[33m0d83b34[m feat: 쓰레기통 클릭 시 쓰레기통 위치로 지동 이동
+[33m3901186[m feat: 쓰레기통 잔량 확인 기능 추가
+[33m92d1859[m feat: 쓰레기통 잔량 업데이트 기능 구현
+[33m0b2dd87[m Merge branch 'frontend' into 'master'
+[33m0f50840[m Merge branch 'frontend-YECHAN' into 'frontend'
+[33m7f9929b[m Merge branch 'frontend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into frontend-YECHAN
+[33m1abb6dc[m feat: 상품 소개 페이지
+[33m55a4c5c[m fix: 새로고침 시 데이터를 못받는 경우 및 view 이동시 데이터를 다시 받는 경우 수정
+[33m4b6da13[m fix: SERVER TIME
+[33mf6a0703[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33m69c4723[m Merge branch 'backend'
+[33mfd9741c[m fix: SERVER TIME
+[33m68c0a62[m Merge branch 'frontend' into 'master'
+[33m535fd5a[m feat: 모든 제품을 확인할 수 있는 뷰 구현
+[33medec501[m feat: UserMenu 구현
+[33m06c806c[m refactor: ProductView를 UserMenu와 AllProduct로 분리
+[33m6d24362[m feat: 소유 쓰레기통 추가 기능 구현
+[33m56a05fc[m feat: 임시
+[33m02c9b33[m refactor:ㄱrest조회성능최적화시도
+[33mfd48c67[m Mergg branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33m1ac16cf[m refactor:response type 통일
+[33m6b57875[m feat: product view 정보창 및 제품 관련 작업 추가
+[33m5785934[m fix: profile조회 오류 수정
+[33m07b5758[m ㄹfeat:유저의쓰레기통조회기능
+[33m9275650[m "fix: DB - update"
+[33m19d22e8[m feat: MyPageMenu 구현
+[33m5912dac[m feat: MyPageLayout 작성
+[33mc383b45[m feat: 숏컷 클릭 이벤트 수정 및 숏컷 디자인 수정
+[33m44ecc18[m Merge branch 'frontend' into 'master'
+[33madc9596[m Merge branch 'feature/naverMap' into feature/dashboard
+[33me1e6d7b[m feat: 숏컷 저장 및 이동
+[33mbbe133f[m fix: latitude, longitude 순서 디버그
+[33m0ab3cce[m feat:카테고리통계기능
+[33mf7f4c21[m cfeat:category통계반환
+[33m9201db7[m feat: 로그아웃
+[33me327126[m feat:카테고리통계구현시도
+[33mf382e25[m refactor: 예외 코드 수정
+[33m546fc58[m refactor: 예외 카테고리 처리
+[33m6c7908f[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33mdc4c9cb[m Merge branch 'frontend'
+[33m9e57729[m Merge branch 'frontend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into frontend
+[33m2814ab6[m Merge branch 'frontend'
+[33m82570ef[m feat: Login 구현
+[33mc7aa8b2[m fix: 회원가입 post 주소 변경
+[33m6cbe130[m Update frontend/product-page/Dockerfile
+[33m45ed408[m fix: dockerifle
+[33mf1c5fab[m fix: DB 수정
+[33mdb2dda8[m fix: server DB 갈아엎기
+[33m6425b25[m DockerFile
+[33md221621[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33mdc3d017[m Merge branch 'frontend' into 'master'
+[33m1572c33[m Frontend
+[33m5d40ff2[m Merge branch 'master' into 'frontend'
+[33m7d6dc6f[m refactor: DB location-> longitude, latitude로 수정
+[33m57b55a4[m refactor: DB latitude, longitude 수정 및 trashcan 예외처리
+[33mc92814b[m feat: 로그인 구현
+[33m29fe61a[m refactor: DB latitude, longitude 수정 및 trashcan 예외처리
+[33m6a148af[m feat: frontend Signup
+[33m3090b44[m feat: base url 변경
+[33m315041a[m feat: 회원가입 구현
+[33m28d2594[m feat: AuthLayout 작성
+[33m5281340[m feat: 네비게이션 가드 적용
+[33mab71b38[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend-YECHAN
+[33mc829bca[m refactor: test
+[33mf93e106[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33m0260c42[m feat: Exception Category
+[33mf004810[m A Merge branch 'backend-MinA'
+[33m75446bf[m 잔refactor:잔량로그객체수정
+[33m4aa49c6[m fix: User up정보 수정 기능 보완 & JLogin ResponseBody Class String -> Dict
+[33m416373e[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend
+[33mb061119[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend
+[33m824e82f[m fix: CORS ERROR FIX
+[33mdfdb270[m feat: ADD DOCKER FILE & CONF
+[33m6ecf42a[m 오ífix: 오타수정
+[33m9dc2dcf[m backend->master merge
+[33mb488667[m backend->master병합
+[33m361cca8[m refactor: API URL 통일(api/v1) 다시
+[33md683c8c[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33mdb1a929[m refactor: API URL 통일(api/v1)
+[33m807b671[m fix: security fix(log)
+[33me538e63[m refactor:url수정
+[33m6b4ab4c[m Merge branch 'backend-MinA' into 'backend'
+[33md3b9c10[m refactor:로그ê에러기능추가
+[33m9be7594[m feat: shortcut 추가
+[33m3cf8080[m fix: Login ErrorMassage & ResponseBody CHANGE
+[33m55baa56[m refactor:catlog에러추가
+[33m377c577[m refactor:카테고리로그예외처리
+[33mbb4a871[m refactor:잔량기록예외처리
+[33ma8e9c66[m fix: USER 수정 기능 에ì fix + 예외처  처리
+[33mb30e5fe[m fix: USER Exception Handling & change Login URL
+[33mf531399[m refactor:entity를dto로변환,ì에러코드추가
+[33m0c241c9[m fix: shortcut 백엔드 merge 에러 수정
+[33m06d48ca[m feat: shortcut 기능
+[33m9615e35[m signup경로접근가능하게수정
+[33m34d18a5[m feat: shortcut 기능 완료
+[33m9fe0151[m aa
+[33mf2e7707[m feat: Shortcut 추가 및 이동 구현
+[33mfedb5f4[m feat: shortcut 기능 1차 완료
+[33m6fd780f[m Merge remote-tracking branch 'origin/master'
+[33meb28c02[m feat: frontend 추가
+[33mbcc14f2[m "feat:유저의쓰레기통조회:"
+[33m18e280f[m feat: 네이버맵 추가
+[33m17ec677[m feat:ë¡유저의 쓰레기통 잔량 조회
+[33m447d3d3[m Merge branch 'frontend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33me51ee04[m feat: DashboardLayout, 하위 컴포넌트 구현
+[33m074c111[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend
+[33m27ca622[m feat: DOCKERFILE 추가
+[33m239fa84[m fix: jenkins test3
+[33m5b231d3[m fix: DB 초기화 에러 fix
+[33meabeb16[m test: jenkins test2
+[33m9158703[m fix: DB 초기화 에러 fix
+[33mf611f4e[m Merge branch 'master' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33m3135d7d[m fix: DB 생성 에러 fix
+[33ma3aa22f[m fix: JPA settings fix
+[33m0936f16[m fix: 사진 삭제
+[33m82a47b0[m test: JENKINS TEST
+[33m6b6dc26[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33m4206e1f[m fix: 정적리소스 로딩 에러 해결
+[33m6e8a01d[m fix: properties
+[33md389fe4[m 0725-usertrashcan조회연test
+[33m6f73a82[m fix: JWT FIX
+[33m7e2a038[m fix: JWT FIX
+[33m5266193[m feat:로그인병합
+[33m21369be[m feat:log기능
+[33m242ef77[m feat:log기능
+[33mac22880[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend-YECHAN
+[33mace6ee8[m feat: shortcut 기능구현 (회원X)
+[33me3e3ad4[m fix: error
+[33mc97f637[m feat: JWT+SECURITY+RESPONSEENTITY
+[33m5c797e5[m[33m ([m[1;31morigin/backend-WOOSEONG[m[33m)[m feat: JWT + SECURITY + RESPONSE API
+[33m5f6c380[m feat: Security and JWT
+[33m300dd8a[m Merge branch 'backend-WOOSEONG' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101
+[33m89f9785[m feat:log
+[33m84da5ad[m ㅅtest
+[33m2e6c49b[m feat:쓰레기통등록/수정/삭제
+[33m25c4149[m feat: 프로젝트 생성 및 패키징 설계
+[33mbc65de5[m test: User테스트용 머지
+[33mc0056c3[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend-MinA
+[33m5a1afb9[m test:유저테스트
+[33m0d65b3f[m Merge branch 'backend' of https://lab.ssafy.com/s11-webmobile3-sub2/S11P12C101 into backend-YECHAN
+[33m65a9309[m feat: shortcut작업진행중
+[33m77aca00[m test
+[33m276aef1[m gittest
+[33m074aa78[m test
+[33m5b5e687[m test
+[33mfae7796[m refactor: BASETIME CLASS 추가
+[33mf75450f[m feat : shortcut  ê¸초기설정"
+[33m7825144[m feat:mariadb연결
+[33m712d653[m feat:entity작성
+[33m132923f[m 0722-test
+[33mc3b9c55[m initial

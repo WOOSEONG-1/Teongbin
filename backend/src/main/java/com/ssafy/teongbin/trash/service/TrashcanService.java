@@ -94,6 +94,9 @@ public class TrashcanService {
         if ( ou.isPresent() ) {
             Trashcan trashcan = trashcanRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("쓰레기통이 존재하지 않습니다."));
+            if (nickname==null || nickname.isEmpty()) {
+                throw new CustomException(ErrorType.NOT_FOUND_NICKNAME);
+            }
             trashcan.setNickname(nickname);
             if (90<latitude || latitude<-90) {
                 throw new CustomException(ErrorType.INVALID_LOCATION);
