@@ -4,6 +4,11 @@ import { useMapStore } from "@/dashboard/stores/map";
 import { useShortcutStore } from "@/dashboard/stores/shortcut";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { useUserStore } from "@/dashboard/stores/user";
+import {
+  getShortcutList,
+  getTrashcanList,
+  getTrashcanRest,
+} from "@/dashboard/js/remote";
 
 const mapStore = useMapStore();
 const shortcutStore = useShortcutStore();
@@ -12,8 +17,17 @@ const userStore = useUserStore();
 
 const map = ref();
 
+async function getTrashcan() {
+  const success = await getTrashcanList(false);
+  if (success) {
+    setInterval(() => getTrashcanRest(), 15000);
+  }
+}
+
 onMounted(() => {
   initMap();
+  getShortcutList();
+  getTrashcan();
 });
 
 function initMap() {
