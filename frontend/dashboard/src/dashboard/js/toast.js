@@ -75,3 +75,11 @@ export function toastSuccessRemoveShortcut() {
     pauseOnHover: false,
   });
 }
+
+export function toastEnterUsername() {
+  toast.warning("유저이름을 입력해주세요", {
+    autoClose: warningTime,
+    position: toast.POSITION.BOTTOM_RIGHT,
+    pauseOnHover: false,
+  })
+}
