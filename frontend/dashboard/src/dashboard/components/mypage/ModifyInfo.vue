@@ -122,4 +122,8 @@ function modifyInfo() {
   font-weight: bold;
   background-color: rgba(20, 200, 20, 0.1);
 }
+.info-input {
+  width: 4rem;
+  justify-content: center;
+}
 </style>
