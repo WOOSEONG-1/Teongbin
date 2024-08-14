@@ -1,16 +1,4 @@
-version: '3.8'
-
 services:
-  backend:
-    build:
-      context: ./backend
-    image: ssafy/teongbin
-    container_name: teongbin
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env.backend  # Spring Boot용 환경 파일
-
   dashboard:
     build:
       context: ./frontend/dashboard
