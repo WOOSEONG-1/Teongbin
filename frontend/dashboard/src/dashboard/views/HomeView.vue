@@ -5,12 +5,7 @@ import Shortcut from "@/dashboard/components/home/Shortcut.vue";
 import NaverMap from "@/dashboard/components/home/NaverMap.vue";
 import TrashcanList from "@/dashboard/components/home/TrashcanList.vue";
 
-import {
-  getShortcutList,
-  getTrashcanList,
-  getTrashcanRest,
-  getUserInfo,
-} from "@/dashboard/js/remote";
+import { getUserInfo } from "@/dashboard/js/remote";
 
 const $mapRef = ref();
 const center = ref();
@@ -28,16 +23,6 @@ function moveCenter(trashcan) {
 }
 
 getUserInfo(false);
-getShortcutList();
-
-async function getTrashcan() {
-  const success = await getTrashcanList(false);
-  if (success) {
-    setInterval(() => getTrashcanRest(), 15000);
-  }
-}
-
-getTrashcan();
 </script>
 
 <template>
