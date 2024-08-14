@@ -149,8 +149,8 @@
 <img src="readmeImage/trashcan.jpg" alt="trashcan" width="400" height="300">
 <img src="readmeImage/press.jpg" alt="press" width="400" height="300">
 
+![press animation](readmeImage/Press.gif)
 - 프레스 기능을 통해 쓰레기통 내부 공간을 효율적으로 관리함
-
 
 
 ### 재활용 분류 모델
@@ -161,4 +161,4 @@
 
 # 4. UCC
 
-UCC 링크
+- 추후 UCC 링크 추가 예정
