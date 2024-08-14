@@ -7,9 +7,9 @@ import { toastEnterUsername } from "@/dashboard/js/toast";
 import { toastPasswordMissmatch, toastPasswordNotFit } from "@/auth/js/toast";
 
 const userStore = useUserStore();
-const username = ref();
-const password = ref();
-const passwordConfirm = ref();
+const username = ref("");
+const password = ref("");
+const passwordConfirm = ref("");
 
 watch(
   () => userStore.userInfo,
