@@ -69,6 +69,7 @@ function moveCenter(trashcan) {
   map.value.setCenter(
     new naver.maps.LatLng(trashcan.latitude, trashcan.longitude)
   );
+  map.value.setZoom(17);
 }
 
 function createShortcutMarker(shortcut, color) {

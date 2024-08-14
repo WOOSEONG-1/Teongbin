@@ -6,6 +6,7 @@ import { useAuthStore } from "@/auth/stores/auth";
 import { cloneDeep } from "lodash";
 import router from "@/router";
 import {
+  toastAlreadyRegisterTrashcan,
   toastExpireToken,
   toastSuccessAddShortcut,
   toastSuccessAddTrashcan,
@@ -88,7 +89,9 @@ export function addTrashcan(data) {
       toastSuccessAddTrashcan();
       getTrashcanList();
     })
-    .catch((error) => {});
+    .catch((error) => {
+      toastAlreadyRegisterTrashcan();
+    });
 }
 
 export async function getTrashcanList() {

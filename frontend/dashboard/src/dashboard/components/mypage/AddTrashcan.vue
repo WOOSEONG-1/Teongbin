@@ -8,6 +8,7 @@ import { useUserStore } from "@/dashboard/stores/user";
 
 const trashcanStore = useTrashcanStore();
 const userStore = useUserStore();
+const addTrashcanModal = ref();
 
 const trashcanData = ref({
   serialNumber: "",
@@ -31,9 +32,11 @@ watch(
 function addNewTrashcan() {
   const data = cloneDeep(trashcanData.value);
 
-  addTrashcan(data);
-
-  resetInput();
+  addTrashcan(data).then(() => {
+    resetInput();
+    const modalInstance = new Modal(addTrashcanModal.value);
+    modalInstance.hide();
+  });
 }
 
 function resetInput() {
@@ -62,6 +65,7 @@ function resetInput() {
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
+    ref="addTrashcanModal"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -126,13 +130,17 @@ function resetInput() {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" data-bs-dismiss="modal">
+          <button
+            type="button"
+            class="btn"
+            data-bs-dismiss="modal"
+            @click="resetInput"
+          >
             취소
           </button>
           <button
             type="button"
             class="btn"
-            data-bs-dismiss="modal"
             @click="addNewTrashcan"
           >
             등록

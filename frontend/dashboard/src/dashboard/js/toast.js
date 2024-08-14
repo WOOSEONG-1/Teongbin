@@ -37,7 +37,7 @@ export function toastSuccessModifyTrashcanInfo() {
 }
 
 export function toastSuccessRemoveTrashcan() {
-  toast.success("선택한 제품 등록이 취소되었습니다.", {
+  toast.success("선택한 제품 등록이 해제되었습니다.", {
     autoClose: successTime,
     position: toast.POSITION.BOTTOM_RIGHT,
     pauseOnHover: false,
@@ -82,4 +82,12 @@ export function toastEnterUsername() {
     position: toast.POSITION.BOTTOM_RIGHT,
     pauseOnHover: false,
   })
+}
+
+export function toastAlreadyRegisterTrashcan() {
+  toast.warning("이미 등록된 시리얼넘버입니다", {
+    autoClose: warningTime,
+    position: toast.POSITION.BOTTOM_RIGHT,
+    pauseOnHover: false,
+  });
 }
