@@ -19,7 +19,7 @@
 | 지예찬 | 팀장, <br /> Backend  | - 숏컷 기능 개발 <br> - 백엔드 오류 수정 <br> |
 | 황우성  | 팀원, <br /> Backend,<br />Infra | - 아키텍쳐 설계 <br/> - 인프라 구축(EC2, DOCKER, JENKINS)<br/>- 프로젝트 기반 기능 구성(Spring Security 설정, JWT 인증, ResponseApiDto)<br/>- User Entity 관련 기능 개발<br/>-Redis, MariaDB 구축 및 관련 기능 구현, DB 인덱싱 최적화|
 | 김민아 | 팀원, <br /> Backend  | - 쓰레기통 관련 기능 개발 <br> - 카테고리, 잔량 관련 기능 개발 <br> - 이메일 인증, 비밀번호 변경 기능 개발 <br> - DB 조회 성능 최적화, 에러 수정 |
-| 오혜성 | 팀원, <br /> Frontend |- 계정 관련 웹페이지 개발, </br> - 쓰레기통 상태를 확인을 위한 대시보드 개발 ,</br> - 계정 및 제품 등록 등 마이페이지 개발 |
+| 오혜성 | 팀원, <br /> Frontend |- 계정 관련 웹페이지 개발, <br /> - 쓰레기통 상태를 확인을 위한 대시보드 개발 ,<br /> - 계정 및 제품 등록 등 마이페이지 개발 |
 | 전기철 | 팀원, <br /> Embedded, <br /> AI| - 3D 프린팅 및 하드웨어 제작<br> - YOLO 이용 GPU서버에서 재활용 이미지 분류 모델 제작<br>- YOLO와 GPIO 연결을 통한 인식 결과에 맞춘 LED 제어<br> - Jetson Orin nano 환경 세팅 및 코드 결합 <br>   |
 | 여현대 | 팀원, <br /> Embedded, <br /> |- 3D 프린팅 및 하드웨어 제작,<br/>- 쓰레기통 잔량 측정 코드 구현,<br/>- 쓰레기통 프레스 코드 구현 |
 
