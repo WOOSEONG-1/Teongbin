@@ -6,6 +6,7 @@ import { useAuthStore } from "@/auth/stores/auth";
 import { cloneDeep } from "lodash";
 import router from "@/router";
 import {
+  toastAlreadyRegisterTrashcan,
   toastExpireToken,
   toastSuccessAddShortcut,
   toastSuccessAddTrashcan,
@@ -26,7 +27,7 @@ function logoutUser() {
   sessionStorage.removeItem("teongbinToken");
   sessionStorage.removeItem("teongbinUserName");
   authStore.loginState = false;
-
+  
   toastExpireToken();
 
   setTimeout(() => {
@@ -81,14 +82,18 @@ export function changeUserInfo(name, password) {
     .catch((error) => {});
 }
 
-export function addTrashcan(data) {
-  apiClient
+export async function addTrashcan(data) {
+  return apiClient
     .post("/api/v1/trash/new", data)
     .then((res) => {
       toastSuccessAddTrashcan();
       getTrashcanList();
+      return true;
     })
-    .catch((error) => {});
+    .catch((error) => {
+      toastAlreadyRegisterTrashcan();
+      return false;
+    });
 }
 
 export async function getTrashcanList() {

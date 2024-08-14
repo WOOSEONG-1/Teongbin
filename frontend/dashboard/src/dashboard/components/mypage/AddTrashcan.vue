@@ -1,13 +1,20 @@
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { cloneDeep } from "lodash";
 import { addTrashcan } from "@/dashboard/js/remote";
 import Map from "@/dashboard/components/mypage/Map.vue";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
 import { useUserStore } from "@/dashboard/stores/user";
+import { Modal } from "bootstrap";
 
 const trashcanStore = useTrashcanStore();
 const userStore = useUserStore();
+const addTrashcanModal = ref();
+const modalInstance = ref();
+
+onMounted(() => {
+  modalInstance.value = new Modal(addTrashcanModal.value);
+});
 
 const trashcanData = ref({
   serialNumber: "",
@@ -28,12 +35,15 @@ watch(
   }
 );
 
-function addNewTrashcan() {
+async function addNewTrashcan() {
   const data = cloneDeep(trashcanData.value);
 
-  addTrashcan(data);
+  const success = await addTrashcan(data);
 
-  resetInput();
+  if(success) {
+    resetInput();
+    modalInstance.value.toggle();
+  }
 }
 
 function resetInput() {
@@ -62,6 +72,7 @@ function resetInput() {
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
+    ref="addTrashcanModal"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -126,15 +137,15 @@ function resetInput() {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" data-bs-dismiss="modal">
-            취소
-          </button>
           <button
             type="button"
             class="btn"
             data-bs-dismiss="modal"
-            @click="addNewTrashcan"
+            @click="resetInput"
           >
+            취소
+          </button>
+          <button type="button" class="btn" @click="addNewTrashcan">
             등록
           </button>
         </div>
