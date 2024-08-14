@@ -31,7 +31,8 @@ const trashcanStore = useTrashcanStore();
               class="bi bi-trash2-fill trashcan-img"
               :class="{
                 'trashcan-lack': trashcan.restPerceont >= 70,
-                'trashcan-half': trashcan.restPercent >= 30,
+                'trashcan-half':
+                  30 <= trashcan.restPercent && trashcan.restPercent < 70,
                 'trashcan-enough': trashcan.restPercent < 30,
               }"
             ></i>

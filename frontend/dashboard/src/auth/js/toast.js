@@ -43,6 +43,14 @@ export function toastAlreadyRegister() {
   });
 }
 
+export function toastPasswordNotFit() {
+  toast.error("비밀번호는 8~16자로 설정해주세요.", {
+    autoClose: errorTime,
+    position: toast.POSITION.BOTTOM_RIGHT,
+    pauseOnHover: false,
+  });
+}
+
 export function toastPasswordMissmatch() {
   toast.error("비밀번호가 일치하지 않습니다.", {
     autoClose: errorTime,

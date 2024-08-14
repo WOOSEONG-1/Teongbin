@@ -11,6 +11,7 @@ import {
   toastEmailVerifyNotComplete,
   toastNotTypeCompanyName,
   toastPasswordMissmatch,
+  toastPasswordNotFit,
 } from "@/auth/js/toast";
 
 const router = useRouter();
@@ -53,11 +54,15 @@ async function clickVerifyAuthCode() {
 }
 
 async function clickSignup() {
-  if (signupData.value.password != passwordConfirm.value) {
+  if (signupData.value.password < 8 || signupData.value.password.length > 16) {
+    toastPasswordNotFit();
+    return false;
+  } else if (signupData.value.password != passwordConfirm.value) {
     toastPasswordMissmatch();
     return false;
   } else if (authEmail.value == "") {
     toastEmailVerifyNotComplete();
+    return false;
   } else if (authEmail.value != signupData.value.email) {
     toastEmailMissMatch();
     return false;
@@ -135,7 +140,10 @@ function gotoLogin() {
             </button>
           </div>
         </div>
-        <div class="input-item input-error">
+        <div class="form-text pwd-notice" id="basic-addon4">
+          ※ 비밀번호는 8~16자로 설정해주세요.
+        </div>
+        <div class="input-item input-error" >
           <input
             type="password"
             inputmode="text"
@@ -143,6 +151,12 @@ function gotoLogin() {
             class="box input-field"
             placeholder=""
             autoComplete="off"
+            :class="{
+              'input-error':
+                (0 < signupData.password.length &&
+                  signupData.password.length < 8) ||
+                signupData.password.length > 16,
+            }"
           />
           <label class="input-label">비밀번호</label>
         </div>
@@ -238,5 +252,9 @@ function gotoLogin() {
 }
 .input-error {
   color: red;
+}
+.pwd-notice {
+  font-size: 1rem;
+  text-align: left;
 }
 </style>

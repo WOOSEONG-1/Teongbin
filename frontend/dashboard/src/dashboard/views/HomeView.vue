@@ -6,6 +6,7 @@ import NaverMap from "@/dashboard/components/home/NaverMap.vue";
 import TrashcanList from "@/dashboard/components/home/TrashcanList.vue";
 
 import {
+  getShortcutList,
   getTrashcanList,
   getTrashcanRest,
   getUserInfo,
@@ -27,6 +28,7 @@ function moveCenter(trashcan) {
 }
 
 getUserInfo(false);
+getShortcutList();
 
 async function getTrashcan() {
   const success = await getTrashcanList(false);
@@ -34,6 +36,7 @@ async function getTrashcan() {
     setInterval(() => getTrashcanRest(), 15000);
   }
 }
+
 getTrashcan();
 </script>
 

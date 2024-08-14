@@ -40,7 +40,10 @@ async function clickVerifyAuthCode() {
 }
 
 function clickChangePassword() {
-  if (password.value != passwordConfirm.value) {
+  if(password.value.length < 8 && password.value.length > 16) {
+    toastPasswordNotFit();
+    return false;
+  } else if (password.value != passwordConfirm.value) {
     toastPasswordMissmatch();
     return false;
   } else if (authEmail.value != email.value) {
