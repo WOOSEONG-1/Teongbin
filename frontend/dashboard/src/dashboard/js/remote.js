@@ -27,7 +27,7 @@ function logoutUser() {
   sessionStorage.removeItem("teongbinToken");
   sessionStorage.removeItem("teongbinUserName");
   authStore.loginState = false;
-
+  
   toastExpireToken();
 
   setTimeout(() => {
@@ -82,15 +82,17 @@ export function changeUserInfo(name, password) {
     .catch((error) => {});
 }
 
-export function addTrashcan(data) {
-  apiClient
+export async function addTrashcan(data) {
+  return apiClient
     .post("/api/v1/trash/new", data)
     .then((res) => {
       toastSuccessAddTrashcan();
       getTrashcanList();
+      return true;
     })
     .catch((error) => {
       toastAlreadyRegisterTrashcan();
+      return false;
     });
 }
 
