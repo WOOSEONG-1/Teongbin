@@ -151,10 +151,7 @@ export async function removeSubscribeTrashcan() {
   });
 
   const deletePromises = idList.map((id) => {
-    return apiClient
-      .post(`/api/v1/trash/${id}/delete`, null)
-      .then((res) => {})
-      .catch((error) => {});
+    return apiClient.post(`/api/v1/trash/${id}/delete`, null);
   });
 
   try {
