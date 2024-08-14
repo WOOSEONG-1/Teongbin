@@ -26,8 +26,6 @@ async function getTrashcan() {
 
 onMounted(() => {
   initMap();
-  getShortcutList();
-  getTrashcan();
 });
 
 function initMap() {
@@ -47,6 +45,9 @@ function initMap() {
     naver.maps.Event.addListener(map.value, "bounds_changed", (bounds) => {
       mapStore.bounds = bounds;
     });
+
+    getShortcutList();
+    getTrashcan();
   });
 }
 
