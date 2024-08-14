@@ -64,9 +64,6 @@ public class UserService {
 
         User target = ou.get();
 
-        if (dto.getName().isEmpty() || dto.getName()==null) {
-            throw new CustomException(ErrorType.CONTENT_IS_NULL);
-        }
         // name 수정
         if ( dto.getName() != null ){
             target.updateName(dto.getName());
