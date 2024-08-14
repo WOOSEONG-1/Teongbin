@@ -1,9 +1,18 @@
 <script setup>
-import { useMapStore } from "@/dashboard/stores/map";
 import { useTrashcanStore } from "@/dashboard/stores/trashcan";
+import { useMapStore } from "@/dashboard/stores/map";
+import { ref } from "vue";
 
-const mapStore = useMapStore();
 const trashcanStore = useTrashcanStore();
+const mapStore = useMapStore();
+const lackList = ref([]);
+
+trashcanStore.$subscribe((mutation, state) => {
+  const list = state.trashcanList.filter(
+    (trashcan) => trashcan.restPercent >= 70
+  );
+  lackList.value = list;
+});
 </script>
 
 <template>
@@ -18,7 +27,7 @@ const trashcanStore = useTrashcanStore();
             trashcan.longitude <= mapStore.bounds._max._lng
           "
           @click="$emit('moveCenter', trashcan)"
-          class="product-state-item"
+          class="product-state-item list-btn"
         >
           <div class="text-info-container">
             <div class="trashcan-text-info nickname">
@@ -38,6 +47,36 @@ const trashcanStore = useTrashcanStore();
             ></i>
           </div>
         </button>
+      </div>
+    </div>
+    <div
+      v-if="lackList.length > 0"
+      class="toast-container position-fixed bottom-0 end-0 p-3 toast-width"
+    >
+      <div
+        id="liveToast"
+        class="toast show"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        ref="toastElement"
+      >
+        <div class="toast-header">
+          <strong class="me-auto warning">WARNING</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body warning-list">
+          <div class="toast-name" v-for="(trashcan, idx) in lackList">
+            <button class="warning-item list-btn" @click="$emit('moveCenter', trashcan)">
+              {{ trashcan.nickname }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -61,7 +100,7 @@ const trashcanStore = useTrashcanStore();
   margin: 1rem;
   margin-bottom: 0;
 }
-button {
+.list-btn{ 
   background: none;
   border: none;
 }
@@ -94,6 +133,22 @@ button {
   color: yellow;
 }
 .trashcan-lack {
+  color: red;
+}
+.warning-list {
+  justify-content: left;
+}
+.toast-width {
+  max-width: 14rem;
+}
+.toast-name {
+  white-space: nowrap;
+  overflow-x: hidden;
+  font-size: 1.5rem;
+  display: flex;
+}
+.warning {
+  font-size: 1.5rem;
   color: red;
 }
 </style>
