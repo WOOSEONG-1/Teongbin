@@ -16,7 +16,7 @@ public enum ErrorType {
     NOT_FOUND_NEW_PASSWORD(401, "입력된 새 비밀번호가 없습니다.", ErrorCategory.EMAILVERIFY_ERROR.getCategory()),
     //-----------------------쓰레기통 관련 부분---------------------------
     USER_TRASHCAN_MISMATCH(401, "유저와 쓰레기통의 유저 정보가 일치하지 않습니다.", ErrorCategory.TRASHCAN_ERROR.getCategory()),
-    NOT_FOUND_TRASHCAN(401, "등록된 쓰레기통이 없습니다", ErrorCategory.TRASHCAN_ERROR.getCategory()),
+    NOT_FOUND_TRASHCAN(401, "등록된 쓰레", ErrorCategory.TRASHCAN_ERROR.getCategory()),
     REGISTERED_TRASHCAN(401, "이미 등록된 쓰레기통입니다", ErrorCategory.TRASHCAN_ERROR.getCategory()),
     NOT_FOUND_USERNAME(401, "등록된 사용자 이름이 없습니다", ErrorCategory.TRASHCAN_ERROR.getCategory()),
     NOT_FOUND_REST(401, "잔량 기록이 없습니다", ErrorCategory.TRASHCAN_ERROR.getCategory()),
