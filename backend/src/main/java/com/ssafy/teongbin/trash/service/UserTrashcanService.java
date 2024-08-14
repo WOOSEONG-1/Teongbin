@@ -123,7 +123,8 @@ public class UserTrashcanService {
         if ( ou.isPresent() ){
             List<Trashcan> lt = trashcanRepository.findByUser(ou.get());
             if (lt.isEmpty()) {
-                throw new CustomException(ErrorType.NOT_FOUND_TRASHCAN);
+                List<UserLogDto.RestDto> uld = new ArrayList<>();
+                return uld;
             }
             List<UserLogDto.RestDto> uld = lt.stream()
                     .flatMap(trashcan -> trashcan.getRestlogs().stream())
