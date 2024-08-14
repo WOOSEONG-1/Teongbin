@@ -35,7 +35,7 @@ function changeInfo() {
       ※ 비밀번호는 8~20자의 영문, 숫자 및 특수문자로 설정해주세요.
     </div>
     <div class="pwd-table">
-      <form name="changeInfo">
+      <div name="changeInfo">
         <table>
           <tbody>
             <tr>
@@ -53,7 +53,7 @@ function changeInfo() {
           </tbody>
         </table>
         <button class="post-button" @click="changeInfo">변경</button>
-      </form>
+      </div>
     </div>
   </MyPageLayout>
 </template>

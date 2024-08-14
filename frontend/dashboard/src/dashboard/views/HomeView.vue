@@ -31,7 +31,7 @@ getUserInfo(false);
 async function getTrashcan() {
   const success = await getTrashcanList(false);
   if (success) {
-    setInterval(() => getTrashcanRest(), 600000);
+    setInterval(() => getTrashcanRest(), 15000);
   }
 }
 getTrashcan();
