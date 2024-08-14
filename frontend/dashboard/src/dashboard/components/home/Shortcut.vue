@@ -46,10 +46,14 @@ function mouseoverHandler(idx) {
   if (hoverTimeout.value) {
     clearTimeout(hoverTimeout.value);
   }
-  hoverTimeout.value = setTimeout(() => {
+  
+  if (select.value != idx) {
+    hoverTimeout.value = setTimeout(() => {
     renameInputVisible.value = false;
     select.value = idx;
   }, 500);
+  }
+  
 }
 
 function mouseleave() {
@@ -102,8 +106,7 @@ watch(
 
       toggleInput();
       shortcutName.value = "";
-      const success = await addShortcut(shortcut);
-      if (success) getShortcutList();
+      addShortcut(shortcut);
     }
   }
 );

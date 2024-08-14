@@ -70,7 +70,7 @@ export async function login(data, saveEmail) {
         const authStore = useAuthStore();
         authStore.loginState = true;
         router.push("/");
-      }, 2000);
+      }, 1000);
     })
     .catch((error) => {
       if (error.response.status == 401) {
@@ -90,7 +90,7 @@ export async function changePassword(email, password) {
       toastSuccessChangePassword();
       setTimeout(() => {
         router.push("/");
-      }, 2000);
+      }, 1000);
     })
     .catch((error) => {});
 }

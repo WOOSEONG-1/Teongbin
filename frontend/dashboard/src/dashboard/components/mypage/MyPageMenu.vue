@@ -12,14 +12,14 @@
       class="submenu-box"
       :class="$route.path == '/my/pwd' ? 'active-box' : 'nonactive'"
     >
-      <router-link to="/my/pwd" class="submenu-item">개인정보 수정</router-link>
+      <router-link to="/my/pwd" class="submenu-item">개인정보 변경</router-link>
     </div>
     <div
       class="submenu-box"
       :class="$route.path == '/my/map' ? 'active-box' : 'nonactive'"
     >
       <router-link to="/my/map" class="submenu-item">
-        초기위치 설정
+        기본위치 설정
       </router-link>
     </div>
   </div>
