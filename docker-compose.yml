@@ -18,8 +18,6 @@ services:
     container_name: dashboard
     ports:
       - "8083:80"
-    env_file:
-      - .env  # Vue.js + Vite용 환경 파일
 
   product_page:
     build:
