@@ -94,7 +94,7 @@
 
 ## 서비스 아키텍쳐
 
-서비스 아키텍쳐 그림
+![archi](readmeImage/Architecture.png)
 
 ## ERD
 
