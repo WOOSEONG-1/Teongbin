@@ -65,12 +65,12 @@ public class UserService {
         User target = ou.get();
 
         // name 수정
-        if ( dto.getName() != null ){
+        if ( dto.getName() != null && !dto.getName().isEmpty() ){
             target.updateName(dto.getName());
         }
 
         // password 수정
-        if ( dto.getPassword() != null ){
+        if ( dto.getPassword() != null && !dto.getPassword().isEmpty() ){
             String enc_pw = passwordEncoder.encode(dto.getPassword());
             target.updatePassword(enc_pw);
         }
@@ -101,7 +101,7 @@ public class UserService {
 
         User target = ou.get();
         // password 수정
-        if ( passwordChangeDto.getPassword() != null ){
+        if ( passwordChangeDto.getPassword() != null && !passwordChangeDto.getPassword().isEmpty() ){
             String enc_pw = passwordEncoder.encode(passwordChangeDto.getPassword());
             target.updatePassword(enc_pw);
             userRepository.save(ou.get());
